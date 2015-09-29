@@ -49,7 +49,7 @@ end
 
 
 % normalize projection cell value
-maximum_value = m_find_max_value(projection);
+maximum_value = find_max_value(projection);
 if maximum_value >= 255
     for i = 1: num_theta
         for j = 1:num_psi
