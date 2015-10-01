@@ -1,8 +1,8 @@
-function subscript = m_corr_method_function(exp_data, projection_cell)
+function [subscript ]= m_corr_method_function(exp_data, projection_cell)
 
 [nx, ny, nz] = size(projection_cell);
 
-Corr = [];
+Corr = zeros(1,nx*ny);
 C2_exp = m_corr_function_fft(exp_data);
 C2_exp(1,:) = [];  % 第一行有极大的误差 
 
@@ -12,14 +12,16 @@ C2_exp(1,:) = [];  % 第一行有极大的误差
 % ny = round(ny/2);
 %%
 
+index_Corr = 1;
+
 for i = 1:nx
     for j = 1:ny
         C2_projection = m_corr_function_fft( projection_cell{i,j,1});
         C2_projection(1,:) = []; % 第一行有极大的误差
         scale_factor = C2_exp(:) \ C2_projection(:);
 %         scale_factor = 1.0;
-        Corr = [Corr, ...
-                sum(sum( (C2_exp - scale_factor * C2_projection ).^2  ./ (-2 * C2_exp ) )) ];
+        Corr(index_Corr)=sum(sum( (C2_exp - scale_factor * C2_projection ).^2  ./ (-2 * C2_exp ) ));
+        index_Corr = index_Corr + 1;
     end
 end
 
@@ -43,7 +45,7 @@ for n = 1: length(sub_i)
 end
 
 %% add
-max_sub = max_prob_k == max(max_prob_k) ;
+max_sub = (max_prob_k == max(max_prob_k) );
 % max_sub = find(max_prob_k == max(max_prob_k) );
 %%
 subscript = [sub_i; sub_j; sub_k]';

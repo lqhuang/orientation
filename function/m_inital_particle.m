@@ -68,7 +68,7 @@ for i = 1:4
     y = randi(num_psi);
     z = randi(num_phi);
     imagesc(projection{x, y, z});
-    xlabel(['theta=',num2str(x*step),',psi=',num2str(y*step),',phi=',num2str(z*step)]);
+    xlabel(['theta=',num2str((x-1)*step),',psi=',num2str((y-1)*step),',phi=',num2str((z-1)*step)]);
 end
 
 % add noise, create simlated experiment projection
@@ -89,7 +89,7 @@ for i = 1:4
     y = randi(num_psi);
     z = randi(num_phi);
     imagesc(exp_projection{x, y, z});
-    xlabel(['theta=',num2str(x*step),',psi=',num2str(y*step),',phi=',num2str(z*step)]);
+    xlabel(['theta=',num2str((x-1)*step),',psi=',num2str((y-1)*step),',phi=',num2str((z-1)*step)]);
 end
 
 
@@ -97,7 +97,7 @@ particle = struct;
 particle.filename = filename;
 particle.fileter = filter;
 particle.simulated_projection = projection;
-particle.exp_projection_1_sigma = exp_projection;
+particle.exp_projection = exp_projection;
 particle.step = step;
 particle.siumlated_size = [num_theta, num_psi, num_phi];
 particle.object = object;
@@ -115,7 +115,7 @@ for i = 1:nx
         for k = 1:nz
            
             max_value = max( max( projection{i,j,k} ) );
-            min_value = min( min( projection{i,j,k} ) );
+%             min_value = min( min( projection{i,j,k} ) );
             if max_value > maximum
                 maximum = max_value;
             end

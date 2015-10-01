@@ -5,14 +5,13 @@ function [success, varargout] = m_test_success(particle, method)
 success = [];
 for i= 2:nx-1
     for j = 2:ny-1
-        for k = 2:nz-1
+        for k = 7
             num_suc = 0;
             for loop = 1:4;
-%                 exp_data = projection_cell{i, j, k} + 1;
-                exp_data = particle.exp_projection_1_sigma{i,j,k};
+                exp_data = particle.exp_projection{i,j,k};
                 switch method
                     case 'relion'
-                        [~, subscript] = m_relion_function(exp_data, particle.simulated_projection);
+                        [prob_curve, subscript] = m_relion_function(exp_data, particle.simulated_projection);
                     case 'correlation'
                         [subscript] = m_corr_method_function(exp_data, particle.simulated_projection);
                 end
