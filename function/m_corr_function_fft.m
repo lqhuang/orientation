@@ -1,4 +1,4 @@
-function C2 = m_corr_function_fft(img)
+function C2 = m_corr_function_fft(img, weight_method)
     % Using imgpolarcoord function and 
     % fourier space to creat correlation image
     
@@ -8,4 +8,15 @@ function C2 = m_corr_function_fft(img)
     pcimg = m_imgpolarcoord(img, cx, cy);
     F = fftshift( fft(pcimg, [], 2) );
     C2 = ifft( ifftshift( F .* conj(F) ), [], 2);
+    
+    if exist('weight_method','var') != 0
+        switch weight_method
+            case 'linear'
+                [rows, cols] = size(C2);
+                weight = 1:rows;
+                weight_Matrix = repmat(weight',cols);
+                C2 = C2 .* weight_Matrix;
+        end
+    end
+
 end
