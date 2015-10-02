@@ -9,12 +9,12 @@ function C2 = m_corr_function_fft(img, weight_method)
     F = fftshift( fft(pcimg, [], 2) );
     C2 = ifft( ifftshift( F .* conj(F) ), [], 2);
     
-    if exist('weight_method','var') != 0
+    if exist('weight_method','var') ~= 0
         switch weight_method
             case 'linear'
                 [rows, cols] = size(C2);
                 weight = 1:rows;
-                weight_Matrix = repmat(weight',cols);
+                weight_Matrix = repmat(weight',1,cols);
                 C2 = C2 .* weight_Matrix;
         end
     end
