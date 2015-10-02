@@ -77,7 +77,7 @@ exp_projection = cell(num_theta, num_psi, num_phi);
 for i = 1:num_theta
     for j = 1:num_psi
         for k = 1:num_phi
-            exp_projection{i,j,k} = m_create_exp_data( projection{i,j,k}+100 );
+            exp_projection{i,j,k} = m_create_exp_data(projection{i,j,k}) + 1;
         end
     end
 end
