@@ -5,7 +5,7 @@ function [success, varargout] = m_test_success(particle, method)
 success = [];
 for i= 2:nx-1
     for j = 2:ny-1
-        for k = 7
+        for k = 2:nz-1
             num_suc = 0;
             for loop = 1:4;
                 exp_data = particle.exp_projection{i,j,k};
@@ -43,4 +43,4 @@ index = find(success == 4);
 sub = [sub_i;sub_j;sub_k]'
 length(sub)
 success_rate = length(sub)/(nx*ny*nz)
-varargout = success_rate;
+varargout{1} = success_rate;
