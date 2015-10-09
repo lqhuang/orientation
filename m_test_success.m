@@ -1,4 +1,7 @@
 function [success, varargout] = m_test_success(particle, method)
+% particle = EMD_2325_30;
+% method='relion';
+
 
 [nx, ny, nz] = size(particle.simulated_projection);
 
@@ -40,7 +43,7 @@ title(['Match Test of ',method]);
 
 index = find(success == 4);
 [sub_k, sub_j, sub_i] = ind2sub([nz, ny, nx], index);
-sub = [sub_i;sub_j;sub_k]'
-length(sub)
-success_rate = length(sub)/(nx*ny*nz)
+sub = [sub_i;sub_j;sub_k]';
+length(sub);
+success_rate = length(sub)/(nx*ny*nz);
 varargout{1} = success_rate;
