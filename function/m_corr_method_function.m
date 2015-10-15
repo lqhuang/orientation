@@ -8,7 +8,7 @@ end
 
 Corr = zeros(1,nx*ny);
 C2_exp = m_corr_function_fft(exp_data, weight);
-C2_exp(1,:) = [];  % 第一行有极大的误差 
+C2_exp(1:2,:) = [];  % 第一行有极大的误差 
 
 
 %% add
@@ -21,7 +21,7 @@ index_Corr = 1;
 for i = 1:nx
     for j = 1:ny
         C2_projection = m_corr_function_fft( projection_cell{i,j,1}, weight);
-        C2_projection(1,:) = []; % 第一行有极大的误差
+        C2_projection(1:2,:) = []; % 第一行有极大的误差
         scale_factor = C2_exp(:) \ C2_projection(:);
         Corr(index_Corr)=sum(sum( (C2_exp - scale_factor * C2_projection ).^2  ./ (-2 * C2_exp ) ));
         index_Corr = index_Corr + 1;

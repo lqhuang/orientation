@@ -1,8 +1,8 @@
-num_theta = length(EMD_2325_30.theta);
-num_psi = length(EMD_2325_30.psi);
-num_phi = length(EMD_2325_30.phi);
-projection = EMD_2325_30.simulated_projection;
-step = EMD_2325_30.step;
+num_theta = length(EMD_6044_30.theta);
+num_psi = length(EMD_6044_30.psi);
+num_phi = length(EMD_6044_30.phi);
+projection = EMD_6044_30.simulated_projection;
+step = EMD_6044_30.step;
 
 figure(1)
 for i = 1:4
