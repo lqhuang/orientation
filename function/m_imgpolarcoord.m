@@ -30,33 +30,37 @@ function pcimg=imgpolarcoord(img,cx,cy,radius,angle)
 %  support and suggestions, while studying polar-coordinates.
 %  Authors: Juan Carlos Gutierrez & Javier Montoya.
 
-   if nargin < 1
-      error('Please specify an image!');
-   end
+	if nargin < 1
+		error('Please specify an image!');
+	end
    
-   img         = double(img);
-   [rows,cols] = size(img);
-%    cy          = round(rows/2);
-%    cx          = round(cols/2);
+    img         = double(img);
+    [rows,cols] = size(img);
+	if exist('cx','var') == 0
+		cy = round(rows/2);
+	end
+	if exist('cy','var') == 0
+		cx = round(cols/2);
+	end
    
-   if exist('radius','var') == 0
+	if exist('radius','var') == 0
       %radius = min(round(rows/2),round(cols/2))-1;
-      radius = min([rows-cy, cols-cx])-1;
-   end
+		radius = min([rows-cy, cols-cx])-1;
+	end
    
-   if exist('angle','var') == 0
-      angle = 360;
-   end
+	if exist('angle','var') == 0
+		angle = 360;
+	end
   
-   pcimg = [];
-   i     = 1;
-   
-   for r=0:radius
-      j = 1;
-      for a=0 : 2*pi/angle : 2*pi-2*pi/angle
-         pcimg(i,j) = img(cy+round(r*sin(a)),cx+round(r*cos(a)));
-         j = j + 1;
-      end
-      i = i + 1;
-   end
+	pcimg = [];
+	i     = 1;
+
+	for r=0:radius
+		j = 1;
+		for a=0 : 2*pi/angle : 2*pi-2*pi/angle
+			pcimg(i,j) = img(cy+round(r*sin(a)),cx+round(r*cos(a)));
+			j = j + 1;
+		end
+		i = i + 1;
+	end
 end
