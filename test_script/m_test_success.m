@@ -1,22 +1,26 @@
-function [success, varargout] = m_test_success(particle, method)
+function [success, varargout] = m_test_success(particle, method, pcimg_method, weight)
 % particle = EMD_2325_30;
 % method='relion';
 
+% method='correlation';
+% pcimg_method = 'none';
+% weight='linear';
+% particle = EMD_6044_30;
 
 [nx, ny, nz] = size(particle.simulated_projection);
 
 success = [];
-for i= 2:nx-1
-    for j = 2:ny-1
-        for k = 2:nz-1
+for i= 2:2:nx-1
+    for j = 2:2:ny-1
+        for k = 2:2:nz-1
             num_suc = 0;
-            for loop = 1:4;
-                exp_data = particle.exp_projection{i,j,k};
+            for loop = 1:50;
+                exp_data = m_create_exp_data(particle.simulated_projection{i,j,k}, 3)+1;
                 switch method
                     case 'relion'
-                        [prob_curve, subscript] = m_relion_function(exp_data, particle.simulated_projection);
+                        [~, subscript] = m_relion_function(exp_data, particle.simulated_projection);
                     case 'correlation'
-                        [subscript] = m_corr_method_function(exp_data, particle.simulated_projection);
+                        [subscript] = m_corr_method_function(exp_data, particle.simulated_projection, pcimg_method, weight);
                 end
                 
                 index = [i, j, k];
