@@ -1,11 +1,8 @@
-function [success, varargout] = m_test_success(particle, method, pcimg_method, weight)
+function [success, varargout] = m_test_success(particle, method, pcimg_interpolation, weight)
 % particle = EMD_2325_30;
-% method='relion';
-
 % method='correlation';
-% pcimg_method = 'none';
+% pcimg_interpolation = 'none';
 % weight='linear';
-% particle = EMD_6044_30;
 
 [nx, ny, nz] = size(particle.simulated_projection);
 
