@@ -1,4 +1,8 @@
 function [subscript, varargout]= m_corr_method_function(exp_data, projection_cell, pcimg_interpolation, weight)
+% information
+% in:
+% out:
+
 if exist('pcimg_interpolation', 'var') == 0;
     pcimg_interpolation = 'none';
 end
@@ -24,9 +28,13 @@ for i = 1:nx
     end
 end
 
-% Corr = exp(Corr ./ 1e11 );
+% normlization ????
+minimum = min(Corr);
+maximum = max(Corr);
+Corr = (Corr-minimum)./(maximum-minimum);
 
-%% centrosymmetry effect
+
+% centrosymmetry effect
 [~, index_sort] = sort(Corr);
 index = index_sort(end-1 : end);
 
@@ -53,7 +61,12 @@ end
 
 max_sub = find( max_prob_k == max(max_prob_k) );
 
-%% Output information
+% normalization ???
+minimum = min(max_prob_k);
+maximum = max(max_prob_k);
+max_prob_k = (max_prob_k-minimum)./(maximum-minimum);
+
+% Output information
 subscript = [sub_i; sub_j; sub_k]';
 subscript = subscript(max_sub, :);
 

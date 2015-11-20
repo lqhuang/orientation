@@ -1,4 +1,7 @@
 function particle = m_inital_particle(filter)
+% in:
+% out:
+
 % read EMD map file
 [filename, filepath] = uigetfile([pwd,'\particle\*'],'Select the EMD map file')
 file = [filepath,filename];
@@ -72,32 +75,31 @@ for i = 1:4
 end
 
 % add noise, create simlated experiment projection
-exp_projection = cell(num_theta, num_psi, num_phi);
+% exp_projection = cell(num_theta, num_psi, num_phi);
+% 
+% for i = 1:num_theta
+%     for j = 1:num_psi
+%         for k = 1:num_phi
+%             exp_projection{i,j,k} = m_create_exp_data(projection{i,j,k});
+%         end
+%     end
+% end
+% figure(2)
+% for i = 1:4
+%     subplot(1,4,i)
+%     x = randi(num_theta);
+%     y = randi(num_psi);
+%     z = randi(num_phi);
+%     imagesc(exp_projection{x, y, z});
+%     xlabel(['theta=',num2str((x-1)*step),',psi=',num2str((y-1)*step),',phi=',num2str((z-1)*step)]);
+% end
 
-for i = 1:num_theta
-    for j = 1:num_psi
-        for k = 1:num_phi
-            exp_projection{i,j,k} = m_create_exp_data( projection{i,j,k}+100 );
-        end
-    end
-end
-
-figure(2)
-for i = 1:4
-    subplot(1,4,i)
-    x = randi(num_theta);
-    y = randi(num_psi);
-    z = randi(num_phi);
-    imagesc(exp_projection{x, y, z});
-    xlabel(['theta=',num2str((x-1)*step),',psi=',num2str((y-1)*step),',phi=',num2str((z-1)*step)]);
-end
-
-
+% output information:
 particle = struct;
 particle.filename = filename;
 particle.fileter = filter;
 particle.simulated_projection = projection;
-particle.exp_projection = exp_projection;
+% particle.exp_projection = exp_projection;
 particle.step = step;
 particle.siumlated_size = [num_theta, num_psi, num_phi];
 particle.object = object;

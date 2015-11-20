@@ -8,7 +8,7 @@ for i= 1:length(T);
     for loop=1:25
         % RELION
 		exp_data = m_create_exp_data(sim_data, t) + 1;
-        [~, subscript]=m_relion_function(exp_data, particle.simulated_projection);
+        subscript=m_relion_function(exp_data, particle.simulated_projection);
         Match = m_find_correct(index, subscript);
         if Match == 1
             Curve(1,i) = Curve(1,i)+1;       
