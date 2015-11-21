@@ -29,9 +29,9 @@ for i = 1:nx
 end
 
 % normlization ????
-minimum = min(Corr);
-maximum = max(Corr);
-Corr = (Corr-minimum)./(maximum-minimum);
+% minimum = min(Corr);
+% maximum = max(Corr);
+% Corr = (Corr-minimum)./(maximum-minimum);
 
 
 % centrosymmetry effect
@@ -62,9 +62,9 @@ end
 max_sub = find( max_prob_k == max(max_prob_k) );
 
 % normalization ???
-minimum = min(max_prob_k);
-maximum = max(max_prob_k);
-max_prob_k = (max_prob_k-minimum)./(maximum-minimum);
+% minimum = min(max_prob_k);
+% maximum = max(max_prob_k);
+% max_prob_k = (max_prob_k-minimum)./(maximum-minimum);
 
 % Output information
 subscript = [sub_i; sub_j; sub_k]';
