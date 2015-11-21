@@ -1,4 +1,4 @@
-function [subscript, varargout]= m_corr_method_function(exp_data, projection_cell, pcimg_interpolation, weight)
+function [subscript, varargout]= m_corr_method_function(exp_data, projection_cell, pcimg_cell, pcimg_interpolation, weight)
 % information
 % in:
 % out:
@@ -20,7 +20,7 @@ index_Corr = 1;
 
 for i = 1:nx
     for j = 1:ny
-        C2_projection = m_corr_function_fft(projection_cell{i,j,1}, pcimg_interpolation, weight);
+        C2_projection = pcimg_cell{i,j};
         C2_projection(1, :) = []; % 第一行有极大的误差
         scale_factor = C2_exp(:) \ C2_projection(:);
         Corr(index_Corr)=sum( sum( (C2_exp - scale_factor * C2_projection ) .^2 ./ (-2 * C2_exp) ) );

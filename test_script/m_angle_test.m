@@ -1,4 +1,4 @@
-function success = m_angle_test(particle, euler_angle, angle_range, test_num, method, pcimg_method, weight)
+function success = m_angle_test(particle, pcimg_cell, euler_angle, angle_range, test_num, method, pcimg_method, weight)
 % global maximum object
 save_success = zeros(1, test_num);
 theta = euler_angle(1) - 1;
@@ -7,6 +7,7 @@ Phi = euler_angle(3) - 1;
 step = particle.step;
 % wrong_subscript = [];
 parfor iteration = 1:test_num
+    match = 0;
     angle1 = randi([-angle_range(1)*100, angle_range(1)*100])/100;
     angle2 = randi([-angle_range(2)*100, angle_range(2)*100])/100;
     angle3 = randi([-angle_range(3)*100, angle_range(3)*100])/100;
@@ -17,7 +18,7 @@ parfor iteration = 1:test_num
         case 'ml'
             subscript = m_relion_function(exp_data, particle.simulated_projection);
         case 'corr'
-            subscript = m_corr_method_function(exp_data, particle.simulated_projection, pcimg_method, weight);
+            subscript = m_corr_method_function(exp_data, particle.simulated_projection, pcimg_cell, pcimg_method, weight);
     end
     match = m_find_correct(euler_angle, subscript);
     if match == 1
