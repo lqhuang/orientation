@@ -7,8 +7,8 @@ tic
 total_success1 = zeros(1,leng);
 parfor n = 1:length(angle_range)
    success = m_angle_test(EMD_6044_3, pcimg_cell, [21,21,21], [n n n], 100, 'ml', 'none', 'none');
-   disp(['range:',num2str(n),'accuracy:'])
-   total_success1(n) = success
+   disp(['range:',num2str(n),'accuracy:',num2str(success)]);
+   total_success1(n) = success;
 end
 toc
 disp('Finish 1')
@@ -19,8 +19,8 @@ total_success2 = zeros(1,leng);
 load /mnt/data/lqhuang/corr_none_none.mat pcimg_cell
 parfor n = 1:length(angle_range)
    success = m_angle_test(EMD_6044_3, pcimg_cell, [21,21,21], [n n n], 100, 'corr', 'none', 'none');
-   disp(['range:',num2str(n),'accuracy:'])
-   total_success2(n) = success
+   disp(['range:',num2str(n),'accuracy:',num2str(success)]);
+   total_success2(n) = success;
 end
 toc
 disp('Finish 2')
@@ -31,8 +31,8 @@ total_success3 = zeros(1,leng);
 load /mnt/data/lqhuang/corr_bilinear_none.mat pcimg_cell
 parfor n = 1:length(angle_range)
    success = m_angle_test(EMD_6044_3, pcimg_cell, [21,21,21], [n n n], 100, 'corr', 'bilinear', 'none');
-   disp(['range:',num2str(n),'accuracy:'])
-   total_success3(n) = success
+   disp(['range:',num2str(n),'accuracy:',num2str(success)]);
+   total_success3(n) = success;
 end
 toc
 disp('Finish 3')
@@ -42,8 +42,8 @@ total_success4 = zeros(1,leng);
 load /mnt/data/lqhuang/corr_none_linear.mat pcimg_cell
 parfor n = 1:length(angle_range)
    success = m_angle_test(EMD_6044_3, pcimg_cell, [21,21,21], [n n n], 100, 'corr', 'none', 'linear');
-   disp(['range:',num2str(n),'accuracy:'])
-   total_success4(n) = success
+   disp(['range:',num2str(n),'accuracy:',num2str(success)]);
+   total_success4(n) = success;
 end
 disp('Finish 4')
 
@@ -53,8 +53,8 @@ total_success5 = zeros(1,leng);
 load /mnt/data/lqhuang/corr_bilinear_linear.mat pcimg_cell
 parfor n = 1:length(angle_range)
    success = m_angle_test(EMD_6044_3, pcimg_cell, [21,21,21], [n n n], 100, 'corr', 'bilinear', 'linear');
-   disp(['range:',num2str(n),'accuracy:'])
-   total_success5(n) = success
+   disp(['range:',num2str(n),'accuracy:',num2str(success)]);
+   total_success5(n) = success;
 end
 disp('Finish 5')
 

@@ -12,7 +12,7 @@ delR = (rMax - rMin)/(M-1);
 delT = 2*pi/N;
 
 % loop in radius and 
-parfor ri = 1:M
+for ri = 1:M
 	for ti = 1:N
 		r = rMin + (ri - 1)*delR;
 		t = (ti - 1)*delT;
