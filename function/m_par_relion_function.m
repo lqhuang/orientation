@@ -1,13 +1,13 @@
-function [subscript, varargout] = m_par_relion_function(exp_projection, projection_cell)
+function [subscript, varargout] = m_par_relion_function(exp_projection, particle)
 
-[nx, ny, nz] = size(projection_cell);
+nx = particle.simulated_size(1);
+ny = particle.simulated_size(2);
+nz = particle.simulated_size(3);
 prob = zeors(1, nx*ny*nz);
-m = zeros(nx,ny,10000);
-parfor index = 1: nx*ny*nz
-    img = m(:,:,index);
-    [k, j, i] = ind2sub([nz, ny, nx], index);
-    sim_projection = projection_cell{i,j,k};
-    scale_factor = exp_projection(:) \ (:);
+
+for index = 1: nx*ny*nz
+    sim_projection = particle.simulated_projection(:,:,index);
+    scale_factor = exp_projection(:) \ sim_projection(:);
     prob(index) = sum( sum( ( exp_projection - scale_factor * sim_projection ) .^2 ./ (-2 .* exp_projection) ) );
 end
 
