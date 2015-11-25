@@ -1,12 +1,14 @@
 
 angle_range = [0, 0.5, 1, 1.5, 2, 2.5, 3];
 leng = length(angle_range);
+euler_angle = [21, 21, 21];
+particle = EMD_6044_3;
 
 % relion
 tic
 total_success1 = zeros(1,leng);
-parfor n = 1:length(angle_range)
-   success = m_angle_test(EMD_6044_3, pcimg_cell, [21,21,21], [n n n], 100, 'ml', 'none', 'none');
+for n = 1:length(angle_range)
+   success = m_angle_test(particle, pcimg_cell, euler_angle, [n n n], 100, 'ml', 'none', 'none');
    disp(['range:',num2str(n),'accuracy:',num2str(success)]);
    total_success1(n) = success;
 end
@@ -17,8 +19,8 @@ disp('Finish 1')
 tic
 total_success2 = zeros(1,leng);
 load /mnt/data/lqhuang/corr_none_none.mat pcimg_cell
-parfor n = 1:length(angle_range)
-   success = m_angle_test(EMD_6044_3, pcimg_cell, [21,21,21], [n n n], 100, 'corr', 'none', 'none');
+for n = 1:length(angle_range)
+   success = m_angle_test(particle, pcimg_cell, euler_angle, [n n n], 100, 'corr', 'none', 'none');
    disp(['range:',num2str(n),'accuracy:',num2str(success)]);
    total_success2(n) = success;
 end
@@ -29,8 +31,8 @@ disp('Finish 2')
 tic
 total_success3 = zeros(1,leng);
 load /mnt/data/lqhuang/corr_bilinear_none.mat pcimg_cell
-parfor n = 1:length(angle_range)
-   success = m_angle_test(EMD_6044_3, pcimg_cell, [21,21,21], [n n n], 100, 'corr', 'bilinear', 'none');
+for n = 1:length(angle_range)
+   success = m_angle_test(particle, pcimg_cell, euler_angle, [n n n], 100, 'corr', 'bilinear', 'none');
    disp(['range:',num2str(n),'accuracy:',num2str(success)]);
    total_success3(n) = success;
 end
@@ -40,8 +42,8 @@ disp('Finish 3')
 % corr + none + weight
 total_success4 = zeros(1,leng);
 load /mnt/data/lqhuang/corr_none_linear.mat pcimg_cell
-parfor n = 1:length(angle_range)
-   success = m_angle_test(EMD_6044_3, pcimg_cell, [21,21,21], [n n n], 100, 'corr', 'none', 'linear');
+for n = 1:length(angle_range)
+   success = m_angle_test(particle, pcimg_cell, euler_angle, [n n n], 100, 'corr', 'none', 'linear');
    disp(['range:',num2str(n),'accuracy:',num2str(success)]);
    total_success4(n) = success;
 end
@@ -51,8 +53,8 @@ disp('Finish 4')
 % corr + bilinear + weight
 total_success5 = zeros(1,leng);
 load /mnt/data/lqhuang/corr_bilinear_linear.mat pcimg_cell
-parfor n = 1:length(angle_range)
-   success = m_angle_test(EMD_6044_3, pcimg_cell, [21,21,21], [n n n], 100, 'corr', 'bilinear', 'linear');
+for n = 1:length(angle_range)
+   success = m_angle_test(particle, pcimg_cell, euler_angle, [n n n], 100, 'corr', 'bilinear', 'linear');
    disp(['range:',num2str(n),'accuracy:',num2str(success)]);
    total_success5(n) = success;
 end
