@@ -5,7 +5,7 @@ leng = matrix_size(3);
 prob = zeros(1,leng);
 corr = zeros(1,leng);
 
-C2_exp = m_corr_function_fft(exp_projection);
+C2_exp = m_corr_function_fft(exp_projection, pcimg_interpolation, weight);
 C2_exp(1,:) = [];
 
 parfor index = 1:leng

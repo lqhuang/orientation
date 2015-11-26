@@ -9,7 +9,6 @@ object_radius = round(object_size(1)/2)-1;
 resize_range = object_radius-resize_radius+1 : object_radius+resize_radius;
 object = object(resize_range, resize_range, resize_range);
 
-
 theta_range = 0:0.5:180;
 psi_range = 0:0.5:90;
 theta_length = length(theta_range);
@@ -23,7 +22,7 @@ parfor index = 1: theta_length*psi_length
     disp(['now, index=',num2str(index)]);
 end
 save /mnt/data/lqhuang/2Dmap/sim_projection_matrix.mat sim_projection_matrix
-exp_index = sub2ind([theta_length, psi_length], 2, 1);
+exp_index = sub2ind([theta_length, psi_length], 121, 121);
 exp_projection = m_create_exp_data(sim_projection_matrix(:,:,exp_index), 1) + 1;
 disp('complete build sim_projection_matrix')
 [Theta, Psi] = meshgrid(theta_range, psi_range);
