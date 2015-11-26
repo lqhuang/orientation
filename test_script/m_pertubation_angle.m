@@ -1,7 +1,7 @@
 % addtional information
 angle_range = [0, 0.5, 1, 1.5, 2, 2.5, 3];
 leng = length(angle_range);
-euler_angle = [21, 21, 21]; % input euler angle 
+euler_angle = [21, 21, 21]; % input euler angle 60 60 60
 particle = EMD_6044_3;
 path = '/mnt/data/lqhuang/EMD_6044_3/';
 test_num = 100;
@@ -67,5 +67,6 @@ xlabel('angle range [-, +]');
 ylabel('accuracy');
 title('input angle (60, 60, 60) degree,\it t value in sigma noise equal to 1')
 legend('Maximum Likelihood', 'Corr+None+None', 'Corr+Bilinear+None', 'Corr+None+Linear Weight', 'Corr+Bilinear+Linear Weight')
-% print('-painters','-d
+
+save([path,'total_success'], 'total_success');
 % savefig('/mnt/data/lqhuang/angle_pertubation_test.fig')
