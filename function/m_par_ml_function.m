@@ -1,4 +1,4 @@
-function [subscript, varargout] = m_par_ml_function(exp_projection, particle)
+function [subscript, varargout] = m_par_ML_function(exp_projection, particle)
 % parallel version of Maximum Likelihood method in orientation
 % input:
 % exp_projection: experiment image need to orientate

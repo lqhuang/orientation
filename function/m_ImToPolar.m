@@ -1,4 +1,4 @@
-function imP = ImToPolar (imR, rMin, rMax, M, N)
+function imP = m_ImToPolar (imR, rMin, rMax, M, N)
 
 [Mr Nr] = size(imR); % size of rectangular image
 Om = (Mr+1)/2; % co-ordinates of the center of the image

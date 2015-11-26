@@ -1,6 +1,9 @@
 function particle = m_initial_particle(filter)
-% in:
-% out:
+% use to initial a EMD object
+% In:
+% filter: filter number of object
+% Out:
+% particle: struct format. inlude different information
 
 % read EMD map file
 [filename, filepath] = uigetfile([pwd,'\particle\*'],'Select the EMD map file')
@@ -10,7 +13,6 @@ object = m_readMRCfile(file);
 object(object < filter) = 0; % filter
 
 % Does the object need to resize or not
-
 resize_radius = input('radius after resize object, default as a cube, input a number is better:')
 object_size = size(object);
 object_radius = round(object_size(1)/2)-1;
@@ -48,7 +50,6 @@ parfor i = 1: num_theta
         end
     end
 end
-
 
 % normalize projection cell value
 maximum_value = find_max_value(projection);
