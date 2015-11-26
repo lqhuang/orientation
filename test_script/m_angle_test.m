@@ -22,8 +22,8 @@ for iteration = 1:test_num
     reprojection = reprojection ./ maximum * 255;
     exp_data = m_create_exp_data(reprojection, 1)+1;
     switch method
-        case 'ml'
-            subscript = m_par_ml_function(exp_data, simulated_projection);
+        case 'ML'
+            subscript = m_par_ML_function(exp_data, simulated_projection);
         case 'corr'
             subscript = m_par_corr_method_function(exp_data, simulated_projection, pcimg_cell, pcimg_method, weight);
     end

@@ -11,7 +11,7 @@ C2_exp(1,:) = [];
 parfor index = 1:leng
 	sim_projection = sim_projection_matrix(:,:,index);
 	switch method
-	case  'ml'
+	case  'ML'
 		scale_factor = exp_projection(:) \ sim_projection(:);
 		prob(index) = sum( sum( ( exp_projection - scale_factor * sim_projection ) .^2 ./ (-2 .* exp_projection) ) );
 	case  'corr'
@@ -24,7 +24,7 @@ end
 
 % output information
 switch method
-case  'ml'
+case  'ML'
 varargout{1} = prob;
 case 'corr'
 varargout{1} = corr;

@@ -28,7 +28,7 @@ exp_projection = m_create_exp_data(sim_projection_matrix(:,:,exp_index), 1) + 1;
 disp('complete build sim_projection_matrix')
 [Theta, Psi] = meshgrid(theta_range, psi_range);
 % 'Maximum Likelihood'
-[prob] = m_2d_map_plot_function(exp_projection, sim_projection_matrix, 'ml', 'none', 'none');
+[prob] = m_2d_map_plot_function(exp_projection, sim_projection_matrix, 'ML', 'none', 'none');
 prob = reshape(prob, theta_length, psi_length);
 disp('finish ML');
 %%
