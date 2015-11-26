@@ -12,7 +12,7 @@ phi = 0 : step : 360;
 % save projections into a cell
 num_theta = length(theta);
 num_psi = length(psi);
-num_phi = length(phi);
+% num_phi = length(phi);
 
 pcimg_cell = cell(num_theta, num_psi);
 disp('begin to caculate projection');

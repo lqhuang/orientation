@@ -3,7 +3,7 @@ angle_range = [0, 0.5, 1, 1.5, 2, 2.5, 3];
 leng = length(angle_range);
 euler_angle = [21, 21, 21];
 particle = EMD_6044_3;
-path = '/mnt/data/lqhuang/
+path = '/mnt/data/lqhuang/'
 
 % relion
 tic
@@ -19,7 +19,7 @@ disp('Finish 1')
 % corr + none + none
 tic
 total_success2 = zeros(1,leng);
-load /mnt/data/lqhuang/corr_none_none.mat pcimg_cell
+load([path,'corr_none_none.mat'], 'pcimg_cell')
 for n = 1:length(angle_range)
    success = m_angle_test(particle, pcimg_cell, euler_angle, [n n n], 100, 'corr', 'none', 'none');
    disp(['range:',num2str(n),'accuracy:',num2str(success)]);
@@ -31,7 +31,7 @@ disp('Finish 2')
 % corr + Bilinear + none
 tic
 total_success3 = zeros(1,leng);
-load /mnt/data/lqhuang/corr_bilinear_none.mat pcimg_cell
+load([path,'corr_bilinear_none.mat'], 'pcimg_cell')
 for n = 1:length(angle_range)
    success = m_angle_test(particle, pcimg_cell, euler_angle, [n n n], 100, 'corr', 'bilinear', 'none');
    disp(['range:',num2str(n),'accuracy:',num2str(success)]);
@@ -42,7 +42,7 @@ disp('Finish 3')
 
 % corr + none + weight
 total_success4 = zeros(1,leng);
-load /mnt/data/lqhuang/corr_none_linear.mat pcimg_cell
+load([path,'corr_none_linear.mat'], 'pcimg_cell')
 for n = 1:length(angle_range)
    success = m_angle_test(particle, pcimg_cell, euler_angle, [n n n], 100, 'corr', 'none', 'linear');
    disp(['range:',num2str(n),'accuracy:',num2str(success)]);
@@ -53,7 +53,7 @@ disp('Finish 4')
 
 % corr + bilinear + weight
 total_success5 = zeros(1,leng);
-load /mnt/data/lqhuang/corr_bilinear_linear.mat pcimg_cell
+load([path,'corr_bilinear_linear.mat'], 'pcimg_cell')
 for n = 1:length(angle_range)
    success = m_angle_test(particle, pcimg_cell, euler_angle, [n n n], 100, 'corr', 'bilinear', 'linear');
    disp(['range:',num2str(n),'accuracy:',num2str(success)]);
@@ -70,4 +70,4 @@ ylabel('accuracy');
 title('input angle (60, 60, 60) degree,\it t value in sigma noise equal to 1')
 legend('Maximum Likelihood', 'Corr+None+None', 'Corr+Bilinear+None', 'Corr+None+Linear Weight', 'Corr+Bilinear+Linear Weight')
 % print('-painters','-d
-savefig('/mnt/data/lqhuang/angle_pertubation_test.fig')
+% savefig('/mnt/data/lqhuang/angle_pertubation_test.fig')

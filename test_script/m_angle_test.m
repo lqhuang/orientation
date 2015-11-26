@@ -13,7 +13,7 @@ theta_angle_range = angle_range(1);
 psi_angle_range = angle_range(2);
 phi_angle_range = angle_range(3);
 
-parfor iteration = 1:test_num
+for iteration = 1:test_num
     angle1 = randi([-theta_angle_range*100, theta_angle_range*100])/100;
     angle2 = randi([-psi_angle_range*100, psi_angle_range*100])/100;
     angle3 = randi([-phi_angle_range*100, phi_angle_range*100])/100;
@@ -23,7 +23,7 @@ parfor iteration = 1:test_num
     exp_data = m_create_exp_data(reprojection, 1)+1;
     switch method
         case 'ml'
-            subscript = m_par_relion_function(exp_data, simulated_projection);
+            subscript = m_par_ml_function(exp_data, simulated_projection);
         case 'corr'
             subscript = m_par_corr_method_function(exp_data, simulated_projection, pcimg_cell, pcimg_method, weight);
     end

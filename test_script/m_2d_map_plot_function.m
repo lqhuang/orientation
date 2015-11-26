@@ -1,6 +1,7 @@
 function [varargout] = m_2d_map_plot_function(exp_projection, sim_projection_matrix, method, pcimg_interpolation, weight)
 
-leng = length(sim_projection_matrix);
+matrix_size = size(sim_projection_matrix);
+leng = matrix_size(3);
 prob = zeros(1,leng);
 corr = zeros(1,leng);
 
