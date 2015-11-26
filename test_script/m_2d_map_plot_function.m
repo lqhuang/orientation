@@ -14,7 +14,7 @@ parfor index = 1:leng
 	case  'ml'
 		scale_factor = exp_projection(:) \ sim_projection(:);
 		prob(index) = sum( sum( ( exp_projection - scale_factor * sim_projection ) .^2 ./ (-2 .* exp_projection) ) );
-	case  'correlation'
+	case  'corr'
 		C2_sim = m_corr_function_fft(sim_projection, pcimg_interpolation, weight);
 		C2_sim(1,:) = [];
 		scale_factor = C2_exp(:) \ C2_sim(:);
@@ -26,7 +26,7 @@ end
 switch method
 case  'ml'
 varargout{1} = prob;
-case 'correlation'
+case 'corr'
 varargout{1} = corr;
 end
 

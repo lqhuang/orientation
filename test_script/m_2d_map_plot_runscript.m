@@ -31,7 +31,8 @@ disp('complete build sim_projection_matrix')
 [prob] = m_2d_map_plot_function(exp_projection, sim_projection_matrix, 'ml', 'none', 'none');
 prob = reshape(prob, theta_length, psi_length);
 disp('finish ML');
-method = 'correlation';
+%%
+method = 'corr';
 % 'Corr+None+None'
 [corr_1] = m_2d_map_plot_function(exp_projection, sim_projection_matrix, method, 'none', 'none');
 corr_1=reshape(corr_1, theta_length, psi_length);
