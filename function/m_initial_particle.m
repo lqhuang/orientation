@@ -1,4 +1,4 @@
-function particle = m_inital_particle(filter)
+function particle = m_initial_particle(filter)
 % in:
 % out:
 

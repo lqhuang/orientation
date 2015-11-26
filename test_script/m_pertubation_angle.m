@@ -3,6 +3,7 @@ angle_range = [0, 0.5, 1, 1.5, 2, 2.5, 3];
 leng = length(angle_range);
 euler_angle = [21, 21, 21];
 particle = EMD_6044_3;
+path = '/mnt/data/lqhuang/
 
 % relion
 tic

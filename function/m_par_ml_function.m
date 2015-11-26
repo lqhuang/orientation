@@ -1,4 +1,4 @@
-function [subscript, varargout] = m_par_relion_function(exp_projection, particle)
+function [subscript, varargout] = m_par_ml_function(exp_projection, particle)
 
 nx = particle.simulated_size(1);
 ny = particle.simulated_size(2);
