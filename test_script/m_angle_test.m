@@ -18,7 +18,7 @@ for iteration = 1:test_num
     angle2 = randi([-psi_angle_range*100, psi_angle_range*100])/100;
     angle3 = randi([-phi_angle_range*100, phi_angle_range*100])/100;
     reprojection = m_projector(object,...
-                             [theta*step + angle1, psi*step + angle2, phi*step + angle3]) ;
+                   [theta*step + angle1, psi*step + angle2, phi*step + angle3]) ;
     reprojection = reprojection ./ maximum * 255;
     exp_data = m_create_exp_data(reprojection, 1)+1;
     switch method
