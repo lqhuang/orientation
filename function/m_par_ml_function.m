@@ -12,7 +12,7 @@ function [subscript, varargout] = m_par_ML_function(exp_projection, particle)
 nx = particle.simulated_size(1);
 ny = particle.simulated_size(2);
 nz = particle.simulated_size(3);
-prob = zeors(1, nx*ny*nz);
+prob = zeros(1, nx*ny*nz);
 simulated_projection = particle.simulated_projection;
 
 parfor index = 1: nx*ny*nz

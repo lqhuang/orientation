@@ -7,7 +7,7 @@ phi = euler_angle(3) - 1;
 step = particle.step;
 maximum = particle.maximum_value;
 object = particle.object;
-simulated_projection = particle.simulated_projection;
+% simulated_projection = particle.simulated_projection;
 
 theta_angle_range = angle_range(1);
 psi_angle_range = angle_range(2);
@@ -23,9 +23,9 @@ for iteration = 1:test_num
     exp_data = m_create_exp_data(reprojection, 1)+1;
     switch method
         case 'ML'
-            subscript = m_par_ML_function(exp_data, simulated_projection);
+            subscript = m_par_ML_function(exp_data, particle);
         case 'corr'
-            subscript = m_par_corr_method_function(exp_data, simulated_projection, pcimg_cell, pcimg_method, weight);
+            subscript = m_par_corr_method_function(exp_data, particle, pcimg_cell, pcimg_method, weight);
     end
     match = m_find_correct(euler_angle, subscript);
     if match == 1
