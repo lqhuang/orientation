@@ -8,6 +8,7 @@ test_num = 100;
 % Maximum Likelihood
 tic
 total_success1 = zeros(1,leng);
+pcimg_cell = cell(1);
 for n = 1:length(angle_range)
     success = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'ml', 'none', 'none');
     disp(['range:',num2str(n),'accuracy:',num2str(success)]);
