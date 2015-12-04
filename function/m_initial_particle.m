@@ -1,15 +1,22 @@
-function particle = m_initial_particle(filter)
+function particle = m_initial_particle(file, filter, step, range)
 % use to initial a EMD object
 % In:
+% file: input file. Full filepath and filename is required(.map format).
 % filter: filter number of object
+% range: 'full' -> 0:360 degree,  'half' -> 0:180 degree
 % Out:
 % particle: struct format. inlude different information
 
-% read EMD map file
-[filename, filepath] = uigetfile([pwd,'\particle\*'],'Select the EMD map file')
-file = [filepath,filename];
-object = m_readMRCfile(file);
+if exist('range','var') == 0
+		cy = 'full';
+end
 
+% read EMD map file
+if exist('file','var') == 0
+    [filename, filepath] = uigetfile([pwd,'\particle\*'],'Select the EMD map file')
+    file = [filepath,filename];
+end
+object = m_readMRCfile(file);
 object(object < filter) = 0; % filter
 
 % Does the object need to resize or not
@@ -20,20 +27,23 @@ resize_range = object_radius-resize_radius+1 : object_radius+resize_radius;
 object = object(resize_range, resize_range, resize_range);
 close
 
-
 % create simulated projections
 % set intervals of simlated projections
-step = 7;
-while mod(180, step) not 0
-step = input('input interval of projection:');
+switch range
+    case 'half'
+        maxangle = 180;
+    case 'full'
+        maxangle = 360;
+end
+
 if mod(180, step) == 0
-    theta = 0 : step : 360;
-    psi = 0 : step : 180;
-    phi = 0 : step : 360;
+    theta = 0 : step : maxangle;
+    psi = 0 : step : maxangle/2;
+    phi = 0 : step : maxangle;
 else
-    disp('this interval is not allowed, please input again.')
+    disp('this interval is not recommended, please consider to input again.')
 end
-end
+
 
 % save projections into a cell
 num_theta = length(theta);
@@ -67,7 +77,7 @@ end
 % output information:
 particle = struct;
 particle.filename = filename;
-particle.fileter = filter;
+particle.filter = filter;
 particle.simulated_projection = projection;
 particle.step = step;
 particle.simulated_size = [num_theta, num_psi, num_phi];

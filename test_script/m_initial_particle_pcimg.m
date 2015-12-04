@@ -5,9 +5,9 @@ function pcimg_cell = m_initial_particle_pcimg(particle, pcimg_method, weight)
 % create simulated projections
 % set intervals of siMLated projections
 step = particle.step;
-theta = 0 : step : 360;
-psi = 0 : step : 180;
-phi = 0 : step : 360;
+theta = particle.theta;
+psi = particle.psi;
+phi = particle.phi;
 
 % save projections into a cell
 num_theta = length(theta);
