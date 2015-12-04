@@ -22,12 +22,9 @@ parfor index = 1: nx*ny*nz
 end
 
 % normalization?.. is it right?
-% minimum = min(prob);
-% maximum = max(prob);
-% likelihood = (prob-minimum)./(maximum-minimum);
 
 index_of_max = find(prob == max(prob));
-% [sub_k, sub_j, sub_i] = ind2sub([nz, ny, nx], max_index); % old method
+% [sub_k, sub_j, sub_i] = ind2sub([nz, ny, nx], max_index); % old method way depend on the forloop
 [sub_i, sub_j, sub_k] = ind2sub([nx, ny, nz], index_of_max);
 
 % output information

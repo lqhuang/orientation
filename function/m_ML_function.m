@@ -24,9 +24,9 @@ for i = 1 : nx
 end
 
 % normalization?.. is it right?
-minimum = min(prob);
-maximum = max(prob);
-likelihood = (prob-minimum)./(maximum-minimum);
+% minimum = min(prob);
+% maximum = max(prob);
+% likelihood = (prob-minimum)./(maximum-minimum);
 
 index = find(prob == max(prob));
 [sub_k, sub_j, sub_i] = ind2sub([nz, ny, nx], index);
