@@ -6,7 +6,12 @@ psi = euler_angle(2) - 1;
 Phi = euler_angle(3) - 1;
 step = 30;
 
-projection = m_projector(EMD_6044_3.object,[theta*step , psi*step , Phi*step ]);
+nx = particle.simulated_size(1);
+ny = particle.simulated_size(2);
+nz = particle.simulated_size(3);
+
+
+
 % figure(1);imagesc(projection);
 % figure(2);imagesc(projection_cell{3,3,3})
 imagesc = projection-projection_cell{3,3,3};

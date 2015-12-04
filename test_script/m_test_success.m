@@ -14,9 +14,9 @@ for i= 2:2:nx-1
             for loop = 1:50;
                 exp_data = m_create_exp_data(particle.simulated_projection{i,j,k}, 3)+1;
                 switch method
-                    case 'relion'
-                        [subscript] = m_relion_function(exp_data, particle.simulated_projection);
-                    case 'correlation'
+                    case 'ML'
+                        [subscript] = m_ML_function(exp_data, particle.simulated_projection);
+                    case 'corr'
                         [subscript] = m_corr_method_function(exp_data, particle.simulated_projection, pcimg_method, weight);
                 end
                 

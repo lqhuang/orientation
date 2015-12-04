@@ -1,4 +1,4 @@
-function imP = ImToPolar (imR, rMin, rMax, M, N)
+function imP = m_ImToPolar (imR, rMin, rMax, M, N)
 
 [Mr Nr] = size(imR); % size of rectangular image
 Om = (Mr+1)/2; % co-ordinates of the center of the image
@@ -12,7 +12,7 @@ delR = (rMax - rMin)/(M-1);
 delT = 2*pi/N;
 
 % loop in radius and 
-parfor ri = 1:M
+for ri = 1:M
 	for ti = 1:N
 		r = rMin + (ri - 1)*delR;
 		t = (ti - 1)*delT;
