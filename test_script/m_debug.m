@@ -1,8 +1,29 @@
-index = [2,3,8]
-exp_projection = EMD_6044_30_noise.exp_projection{index(1),index(2),index(3)};
-projection_cell = EMD_6044_30_noise.simulated_projection;
+% index = [2,2,2]
 
-[subscript, Corr, Prob_k] = m_corr_method_function(exp_projection, projection_cell);
+euler_angle = [3,3,3]
+theta = euler_angle(1) - 1;
+psi = euler_angle(2) - 1;
+Phi = euler_angle(3) - 1;
+step = 30;
 
+nx = particle.simulated_size(1);
+ny = particle.simulated_size(2);
+nz = particle.simulated_size(3);
+
+
+
+% figure(1);imagesc(projection);
+% figure(2);imagesc(projection_cell{3,3,3})
+imagesc = projection-projection_cell{3,3,3};
+% projection = EMD_6044_3.simulated_projection{index(1),index(2),index(3)};
+
+exp_data = m_create_exp_data(projection, 1)+1;
+
+projection_cell = EMD_6044_3.simulated_projection;
+
+pcimg_method = 'none';
+weight = 'none';
+subscript = m_corr_method_function(exp_data, projection_cell, pcimg_cell, pcimg_method, weight);
 
 subscript
+

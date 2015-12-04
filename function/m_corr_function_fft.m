@@ -1,6 +1,15 @@
 function C2 = m_corr_function_fft(img, pcimg_interpolation, weight)
-    % Using imgpolarcoord function and 
-    % fourier space to creat correlation image
+    % Using different interpolation and fourier space to creat correlation image
+    % input:
+    % img: the image need to change
+    % pcimg_interpolation: 
+    %   'none' --> imgpolarcoord function
+    %   'bilinear' --> ImToPolar function
+    % weight:
+    %   'none' --> no weight
+    %   'linear' --> weight = 1:radius
+    % output:
+    % C2: the correlation image
     
     [nx, ny] = size(img);
     cx = round(nx/2);

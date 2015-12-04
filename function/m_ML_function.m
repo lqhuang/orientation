@@ -1,4 +1,13 @@
-function [subscript, varargout] = m_relion_function(exp_projection, projection_cell)
+function [subscript, varargout] = m_ML_function(exp_projection, projection_cell)
+% Maximum Likelihood method in orientation
+% input:
+% exp_projection: experiment image need to orientate
+% particle: struct of particle information. 
+%           PAY ATTENTION: all simulated projections are saved as
+%           cell format.
+% output:
+% subscript: the subscript in simulated_projection.
+% prob(optional): maximum likelihood probability.
 
 [nx, ny, nz] = size(projection_cell);
 prob = zeros(1, nx*ny*nz);

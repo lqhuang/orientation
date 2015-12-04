@@ -3,7 +3,7 @@ function pcimg_cell = m_initial_particle_pcimg(particle, pcimg_method, weight)
 % out:
 
 % create simulated projections
-% set intervals of simlated projections
+% set intervals of siMLated projections
 step = particle.step;
 theta = 0 : step : 360;
 psi = 0 : step : 180;
@@ -12,7 +12,7 @@ phi = 0 : step : 360;
 % save projections into a cell
 num_theta = length(theta);
 num_psi = length(psi);
-num_phi = length(phi);
+% num_phi = length(phi);
 
 pcimg_cell = cell(num_theta, num_psi);
 disp('begin to caculate projection');

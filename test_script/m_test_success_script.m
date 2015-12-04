@@ -1,8 +1,8 @@
-[success_relion,success_rate_relion] = m_test_success(EMD_6044_30, 'relion', 'none', 'none');
-% [success_corr_1,success_rate_1] = m_test_success(EMD_6044_30, 'correlation', 'none', 'none');
-% [success_corr_2,success_rate_2] = m_test_success(EMDCurve_6044_30, 'correlation', 'bilinear', 'none');
-% [success_corr_3,success_rate_3] = m_test_success(EMD_6044_30, 'correlation', 'none', 'linear');
-% [success_corr_4,success_rate_4] = m_test_success(EMD_6044_30, 'correlation', 'bilinear', 'linear');
+[success_relion,success_rate_relion] = m_test_success(EMD_6044_30, 'ML', 'none', 'none');
+% [success_corr_1,success_rate_1] = m_test_success(EMD_6044_30, 'corr', 'none', 'none');
+% [success_corr_2,success_rate_2] = m_test_success(EMDCurve_6044_30, 'corr', 'bilinear', 'none');
+% [success_corr_3,success_rate_3] = m_test_success(EMD_6044_30, 'corr', 'none', 'linear');
+% [success_corr_4,success_rate_4] = m_test_success(EMD_6044_30, 'corr', 'bilinear', 'linear');
 % 
 
 success_rate_relion = sum(success_relion)/ (50*108)

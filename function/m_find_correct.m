@@ -1,5 +1,5 @@
 function match = m_find_correct(index, subscript)
-[rows, cols] = size(subscript);
+[rows, ~] = size(subscript);
 
 if rows == 0
     match = 0;
