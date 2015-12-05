@@ -6,7 +6,7 @@ function a = m_readMRCfile(fname)
     % nx, ny, nz means number of x, y, z;
     %
     
-    [fid, message] = fopen(fname, 'r');
+    [fid, ~] = fopen(fname, 'r');
     if fid == -1
         error('can''t open file');
         a = -1;
@@ -31,4 +31,5 @@ function a = m_readMRCfile(fname)
     a = reshape(a, [nx ny nz]);
     if nz == 1
         a = reshape(a, [nx ny]);
+    end
 end
