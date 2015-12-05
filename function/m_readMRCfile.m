@@ -23,11 +23,11 @@ function a = m_readMRCfile(fname)
     if type == 1
         a = fread(fid, nx * ny * nz, 'int16');
     end
-    %floats
+    % floats
     if type == 2
         a =fread(fid,nx*ny*nz,'float32');
     end
-    fclose( fid);
+    fclose(fid);
     a = reshape(a, [nx ny nz]);
     if nz == 1
         a = reshape(a, [nx ny]);
