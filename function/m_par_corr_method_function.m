@@ -51,9 +51,9 @@ Prob_k= zeros(length(sub_i), nz);
 max_prob_k = zeros(1, length(sub_i));
 sub_k = zeros(1, length(sub_i));
 
-for n = 1: length(sub_i)
+for n = 1:length(sub_i)
     simulated_projection_k = cell(1, nz);
-    simulated_projection_k(:) = particle.simulated_projection_k(sub_i(n), sub_j(n),:);
+    simulated_projection_k(:) = particle.simulated_projection(sub_i(n), sub_j(n), :);
     parfor k = 1:nz
         Prob_k(n, k) = sum( sum( (exp_projection - simulated_projection_k{k}) .^2 ./ (-2 * exp_projection) ) ) ;
     end
