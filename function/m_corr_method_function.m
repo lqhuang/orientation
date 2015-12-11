@@ -57,7 +57,8 @@ sub_k = zeros(1, length(sub_i));
 
 for n = 1: length(sub_i)
     for k = 1:nz
-        Prob_k(n, k) = sum( sum( (exp_data - projection_cell{sub_i(n), sub_j(n), k}) .^2 ./ (-2 * exp_data) ) ) ;
+        scale_factor = exp_data(:) \ projection_cell{sub_i(n), sub_j(n), k}(:);
+        Prob_k(n, k) = sum( sum( (exp_data - scale_factor * projection_cell{sub_i(n), sub_j(n), k}) .^2 ./ (-2 * exp_data) ) ) ;
     end
     max_prob_k(n) = max(Prob_k(n, :));
 %     sub_k(n) = find( Prob_k(n, :) == max_prob_k(n) ); д­ДњТы
