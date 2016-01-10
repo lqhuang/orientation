@@ -2,7 +2,7 @@ function [projection, varargout] = m_projector(object, euler_angle)
 %  create a projection in certain Euler angle of object
 %  Input:
 %  object: model to be project, 3d matrix
-%  euler_angle: the orientation of the slice plane in degree
+%  euler_angle: the orientation of the slice plane in degree, "ZYZ" format£¡
 %  Output:
 %  projection:  from model, 2d matrix, size defined by input object
 
@@ -42,15 +42,25 @@ function T = m_eul2tform(euler_angle)
 % Rotation Matrix in ZXZ
 % input euler_angle in degree
 euler_angle = deg2rad(euler_angle);
-Rx=@(t)[1 0 0 0;
-        0 cos(t) -sin(t) 0;
-        0 sin(t)  cos(t) 0;
+% ZXZ
+% Rx=@(t)[1 0 0 0;
+%         0 cos(t) -sin(t) 0;
+%         0 sin(t)  cos(t) 0;
+%         0 0 0 1];
+% Rz=@(t)[cos(t) -sin(t) 0 0;
+%         sin(t)  cos(t) 0 0;
+%         0 0 1 0;
+%         0 0 0 1];
+% ZYZ
+Ry=@(t)[cos(t) 0 -sin(t) 0;
+        0      1  0      0;
+        sin(t) 0  cos(t) 0;
         0 0 0 1];
-Rz=@(t)[cos(t) -sin(t) 0 0;
-        sin(t)  cos(t) 0 0;
+Rz=@(t)[ cos(t) sin(t) 0 0;
+        -sin(t) cos(t) 0 0;
         0 0 1 0;
         0 0 0 1];
-T = Rz(euler_angle(1)) * Rx(euler_angle(2)) * Rz(euler_angle(3));
+T = Rz(euler_angle(1)) * Ry(euler_angle(2)) * Rz(euler_angle(3));
 end
 
 function rad = deg2rad(deg)

@@ -18,7 +18,7 @@ simulated_projection = particle.simulated_projection;
 parfor index = 1: nx*ny*nz
     sim_projection = simulated_projection{index};
     scale_factor = exp_projection(:) \ sim_projection(:);
-    prob(index) = sum( sum( ( exp_projection - scale_factor * sim_projection ) .^2 ./ (-2 .* exp_projection) ) );
+    prob(index) = sum( sum( ( exp_projection - scale_factor * sim_projection ) .^2 ) ) ./ ( -2 .* var(exp_projection(:)) );
 end
 
 % normalization?.. is it right?
