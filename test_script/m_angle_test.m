@@ -5,8 +5,8 @@ theta = euler_angle(1) - 1;
 psi = euler_angle(2) - 1;
 phi = euler_angle(3) - 1;
 step = particle.step;
-maximum = particle.maximum_value;
 object = particle.object;
+SNR = 5;  %%%%!!!!!!!!!!!!!!!! need to notice
 % simulated_projection = particle.simulated_projection;
 
 theta_angle_range = angle_range(1);
@@ -19,8 +19,15 @@ for iteration = 1:test_num
     angle3 = randi([-phi_angle_range*100, phi_angle_range*100])/100;
     reprojection = m_projector(object,...
                    [theta*step + angle1, psi*step + angle2, phi*step + angle3]) ;
-    reprojection = reprojection ./ maximum * 255;
-    exp_data = m_create_exp_data(reprojection, 1)+1;
+    mat_mean = mean(reprojection(:));
+    mat_var = var(reprojection(:));
+    reprojection = (reprojection - mat_mean) / sqrt(mat_var);
+    exp_data = m_create_exp_data(reprojection, SNR);
+    
+    %%%%%%%%%%%%%%%%%%%%%%%
+    exp_data = log( abs( fftshift( fft2(exp_data) ) ) );
+    %%%%%%%%%%%%%%%%%%%%%%%
+    
     switch method
         case 'ML'
             subscript = m_par_ML_function(exp_data, particle);

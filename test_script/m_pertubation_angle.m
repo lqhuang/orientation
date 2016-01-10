@@ -2,9 +2,8 @@
 angle_range = [0, 0.5, 1, 1.5, 2, 2.5, 3];
 leng = length(angle_range);
 euler_angle = [21, 21, 21]; % input euler angle 60 60 60
-particle = EMD_6044_3;
-path = '/mnt/data/lqhuang/EMD_6044_3_half/';
-test_num = 1000;
+% particle = ?;
+test_num = 500;
 
 % Maximum Likelihood
 tic
@@ -31,16 +30,16 @@ toc
 disp('Finish 2')
 
 % corr + Bilinear + none
-tic
+% tic
 total_success3 = zeros(1,leng);
-load([path,'corr_bilinear_none.mat'], 'pcimg_cell')
-for n = 1:length(angle_range)
-    success = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'corr', 'bilinear', 'none');
-    disp(['range:',num2str(n),'accuracy:',num2str(success)]);
-    total_success3(n) = success;
-end
-toc
-disp('Finish 3')
+% load([path,'corr_bilinear_none.mat'], 'pcimg_cell')
+% for n = 1:length(angle_range)
+%     success = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'corr', 'bilinear', 'none');
+%     disp(['range:',num2str(n),'accuracy:',num2str(success)]);
+%     total_success3(n) = success;
+% end
+% toc
+% disp('Finish 3')
 
 % corr + none + weight
 total_success4 = zeros(1,leng);
@@ -54,13 +53,13 @@ disp('Finish 4')
 
 % corr + bilinear + weight
 total_success5 = zeros(1,leng);
-load([path,'corr_bilinear_linear.mat'], 'pcimg_cell')
-for n = 1:length(angle_range)
-    success = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'corr', 'bilinear', 'linear');
-    disp(['range:',num2str(n),'accuracy:',num2str(success)]);
-    total_success5(n) = success;
-end
-disp('Finish 5')
+% load([path,'corr_bilinear_linear.mat'], 'pcimg_cell')
+% for n = 1:length(angle_range)
+%     success = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'corr', 'bilinear', 'linear');
+%     disp(['range:',num2str(n),'accuracy:',num2str(success)]);
+%     total_success5(n) = success;
+% end
+% disp('Finish 5')
 
 total_success = [total_success1; total_success2; total_success3; total_success4; total_success5];
 
@@ -70,5 +69,4 @@ ylabel('accuracy');
 title('input angle (60, 60, 60) degree,\it t value in sigma noise equal to 1')
 legend('Maximum Likelihood', 'Corr+None+None', 'Corr+Bilinear+None', 'Corr+None+Linear Weight', 'Corr+Bilinear+Linear Weight')
 
-save([path,'total_success.mat'], 'total_success');
-% savefig('/mnt/data/lqhuang/angle_pertubation_test.fig')
+save([path,'pertubation_test.mat'], 'total_success');
