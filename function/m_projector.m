@@ -35,7 +35,6 @@ projection(:,:) = sum(robject, 3);
 
 % output rotated object
 varargout{1} = robject;
-
 end
 
 function T = m_eul2tform(euler_angle)

@@ -25,7 +25,7 @@ for iteration = 1:test_num
     exp_data = m_create_exp_data(reprojection, SNR);
     
     %%%%%%%%%%%%%%%%%%%%%%%
-    exp_data = log( abs( fftshift( fft2(exp_data) ) ) );
+    exp_data = abs( fftshift( fft2(exp_data) ) );
     %%%%%%%%%%%%%%%%%%%%%%%
     
     switch method

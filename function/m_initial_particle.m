@@ -7,15 +7,13 @@ function particle = m_initial_particle(file, filter, step, fft)
 % Out:
 % particle: struct format. inlude different information
 
-
 if exist('fft','var') == 0
     fft = 'none';
 end
-    
 
 % read EMD map file
 if exist('file','var') == 0
-    [filename, filepath] = uigetfile([pwd,'\particle\*'],'Select the EMD map file')
+    [filename, filepath] = uigetfile([pwd,'\particle\*'],'Select the EMD map file');
     file = [filepath,filename];
 end
 object = m_readMRCfile(file);
@@ -38,7 +36,6 @@ if mod(180, step) == 0
 else
     disp('this interval is not recommended, please consider to input again.')
 end
-
 
 % save projections into a cell
 num_theta = length(theta);
@@ -64,7 +61,7 @@ switch fft
             reprojection = m_projector(object, [theta(i), psi(j), phi(k)]);
             mat_mean = mean(reprojection(:));
             mat_var = var(reprojection(:));
-            projection{index} = log( abs( fftshift( fft2( (reprojection - mat_mean) / sqrt(mat_var) ) ) ) ); % fft case
+            projection{index} = abs( fftshift( fft2( (reprojection - mat_mean) / sqrt(mat_var) ) ) ); % fft case
             disp(['i=',num2str(i),',j=',num2str(j),',k=',num2str(k)]);
         end
 end

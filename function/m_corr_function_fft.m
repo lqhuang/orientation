@@ -11,6 +11,13 @@ function C2 = m_corr_function_fft(img, pcimg_interpolation, weight)
     % output:
     % C2: the correlation image
     
+    if exist('pcimg_interpolation', 'var') == 0
+        pcimg_interpolation = 'none';
+    end
+    if exist('weight', 'var') == 0
+        pcimg_interpolation = 'none';
+    end
+    
     [nx, ny] = size(img);
     cx = round(nx/2);
     cy = round(ny/2);

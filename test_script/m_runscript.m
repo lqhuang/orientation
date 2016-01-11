@@ -10,13 +10,13 @@ disp('save finish!')
 
 particle = EMD_6044_3_fft;
 
-m_create_pcimg;
-disp('pcimg create successful!')
-
-m_pertubation_angle;
-disp('pertubation_angle test finish!');
-
-m_sigma_noise_test.m
-disp('noise_test finish!')
-
-disp('successful!')
+% m_create_pcimg;
+% disp('pcimg create successful!')
+% 
+% m_pertubation_angle;
+% disp('pertubation_angle test finish!');
+% 
+% m_sigma_noise_test.m
+% disp('noise_test finish!')
+% 
+% disp('successful!')

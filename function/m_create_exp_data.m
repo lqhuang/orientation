@@ -6,4 +6,5 @@ function exp_data = m_create_exp_data(sim_data, SNR)
 [numX, numY] = size(sim_data);
 
 exp_data = sim_data + random('norm', 0, sqrt(SNR), numX, numY);
+% exp_data = imnoise(sim_data, 'gaussian', 0, sqrt(SNR));
 end

@@ -16,7 +16,7 @@ for i= 1:length(SNR);
 		exp_data = m_create_exp_data(sim_data, t);
         
         %%%%%%%%%%%%%%%%%%
-        exp_data = log( abs( fftshift( fft2(exp_data) ) ) );
+        exp_data = abs( fftshift( fft2(exp_data) ) );
         %%%%%%%%%%%%%%%%%%%
         
         subscript=m_par_ML_function(exp_data, particle);
@@ -29,7 +29,7 @@ for i= 1:length(SNR);
         exp_data = m_create_exp_data(sim_data, t);
         
         %%%%%%%%%%%%%%%%%%%%%%
-        exp_data = log( abs( fftshift( fft2(exp_data) ) ) );
+        exp_data = abs( fftshift( fft2(exp_data) ) );
         %%%%%%%%%%%%%%%%%%%%%%%%
         
         subscript=m_par_corr_method_function(exp_data, particle, 'none', 'none');
@@ -52,7 +52,7 @@ for i= 1:length(SNR);
 		exp_data = m_create_exp_data(sim_data, t);
         
         %%%%%%%%%%%%%%%%%%%%%%%%
-        exp_data = log( abs( fftshift( fft2(exp_data) ) ) );
+        exp_data = abs( fftshift( fft2(exp_data) ) );
         %%%%%%%%%%%%%%%%%%%%%%%%
         
         subscript=m_par_corr_method_function(exp_data, particle, 'none', 'linear');
