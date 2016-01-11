@@ -10,6 +10,8 @@ disp('save finish!')
 
 particle = EMD_6044_3_fft;
 
+clear EMD_6044_3_fft
+
 % m_create_pcimg;
 % disp('pcimg create successful!')
 % 
