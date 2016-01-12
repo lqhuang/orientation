@@ -8,10 +8,10 @@ sim_data = reprojection;
 
 index = [21, 21, 21];
 Curve = zeros(5,100);
-SNR = 0:2:20;
+SNR = 0:1:10;
 for i= 1:length(SNR);
     t = SNR(i);
-    for loop=1:50
+    for loop=1:111
         % RELION
 		exp_data = m_create_exp_data(sim_data, t);
         
