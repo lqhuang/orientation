@@ -82,7 +82,7 @@ end
 
 % output information:
 particle = struct;
-particle.filename = filename;
+particle.filename = file;
 particle.filter = filter;
 particle.simulated_projection = projection;
 particle.step = step;
