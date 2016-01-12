@@ -37,7 +37,6 @@ title(['simulated experimental',10,'image SNR=0.5'])
 set(gcf,'PaperPositionMode','auto')
 % print('-painters','-depsc', [path,'\1.eps'], '-r0');
 
-
 figure(2)
 subplot(2,2,1)
 imagesc(a60_noise)

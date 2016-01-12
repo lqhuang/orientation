@@ -1,7 +1,7 @@
 % addtional information
 angle_range = [0, 0.5, 1, 1.5, 2, 2.5, 3];
 leng = length(angle_range);
-euler_angle = [21, 21, 21]; % input euler angle 60 60 60
+% euler_angle = [21, 21, 21]; % input euler angle 60 60 60
 % particle = ?;
 test_num = 111;
 
@@ -20,7 +20,7 @@ disp('Finish 1')
 % corr + none + none
 tic
 total_success2 = zeros(1,leng);
-load([path,'corr_none_none.mat'], 'pcimg_cell')
+load([path,'/corr_none_none.mat'], 'pcimg_cell')
 for n = 1:length(angle_range)
 	success = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'corr', 'none', 'none');
     disp(['range:',num2str(n),'accuracy:',num2str(success)]);
@@ -32,7 +32,7 @@ disp('Finish 2')
 % corr + Bilinear + none
 % tic
 total_success3 = zeros(1,leng);
-% load([path,'corr_bilinear_none.mat'], 'pcimg_cell')
+% load([path,'/corr_bilinear_none.mat'], 'pcimg_cell')
 % for n = 1:length(angle_range)
 %     success = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'corr', 'bilinear', 'none');
 %     disp(['range:',num2str(n),'accuracy:',num2str(success)]);
@@ -43,7 +43,7 @@ total_success3 = zeros(1,leng);
 
 % corr + none + weight
 total_success4 = zeros(1,leng);
-load([path,'corr_none_linear.mat'], 'pcimg_cell')
+load([path,'/corr_none_linear.mat'], 'pcimg_cell')
 for n = 1:length(angle_range)
     success = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'corr', 'none', 'linear');
     disp(['range:',num2str(n),'accuracy:',num2str(success)]);
@@ -53,7 +53,7 @@ disp('Finish 4')
 
 % corr + bilinear + weight
 total_success5 = zeros(1,leng);
-% load([path,'corr_bilinear_linear.mat'], 'pcimg_cell')
+% load([path,'/corr_bilinear_linear.mat'], 'pcimg_cell')
 % for n = 1:length(angle_range)
 %     success = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'corr', 'bilinear', 'linear');
 %     disp(['range:',num2str(n),'accuracy:',num2str(success)]);
@@ -69,4 +69,4 @@ ylabel('accuracy');
 title('input angle (60, 60, 60) degree,\it t value in sigma noise equal to 1')
 legend('Maximum Likelihood', 'Corr+None+None', 'Corr+Bilinear+None', 'Corr+None+Linear Weight', 'Corr+Bilinear+Linear Weight')
 
-save([path,'pertubation_test.mat'], 'total_success');
+save([path,'/pertubation_test.mat'], 'total_success');
