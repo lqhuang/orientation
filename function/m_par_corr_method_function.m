@@ -29,11 +29,13 @@ Corr = zeros(1,nx*ny);
 C2_exp = m_corr_function_fft(exp_projection, pcimg_interpolation, weight);
 C2_exp(1, :) = [];  % extreme error happens in first line
 
+sigma2 = particle.sigma2; % ugly code
+
 parfor index = 1:nx*ny
     C2_sim = pcimg_cell{index};
     C2_sim(1, :) = []; % extreme error happens in first line
     scale_factor = C2_exp(:) \ C2_sim(:);
-    Corr(index)=sum( sum( (C2_exp - scale_factor * C2_sim ) .^2 ) ) ./ ( -2 * var(C2_exp(:)) );
+    Corr(index)=sum( sum( (C2_exp - scale_factor * C2_sim ) .^2 ) ) ./ ( -2 * sigma2 );
 end
 
 % normlization ????
@@ -56,7 +58,8 @@ for n = 1:length(sub_i)
     simulated_projection_k(:) = particle.simulated_projection(sub_i(n), sub_j(n), :);
     parfor k = 1:nz
         scale_factor = exp_projection(:) \ simulated_projection_k{k}(:);
-        Prob_k(n, k) = sum( sum( ( exp_projection - scale_factor * simulated_projection_k{k} ) .^2 ) ) ./ ( -2 * var(exp_projection(:)) );
+%         Prob_k(n, k) = sum( sum( ( exp_projection - scale_factor * simulated_projection_k{k} ) .^2 ) ) ./ ( -2 * var(exp_projection(:)) );
+        Prob_k(n, k) = sum( sum( ( exp_projection - scale_factor * simulated_projection_k{k} ) .^2 ) ) ./ ( -2 * sigma2 );
     end
     max_prob_k(n) = max(Prob_k(n, :));
 %     sub_k(n) = find( Prob_k(n, :) == max_prob_k(n) ); % Ô­´úÂë

@@ -14,11 +14,13 @@ ny = particle.simulated_size(2);
 nz = particle.simulated_size(3);
 prob = zeros(1, nx*ny*nz);
 simulated_projection = particle.simulated_projection;
+sigma2 = particle.sigma2; % ugly code
 
 parfor index = 1: nx*ny*nz
     sim_projection = simulated_projection{index};
     scale_factor = exp_projection(:) \ sim_projection(:);
-    prob(index) = sum( sum( ( exp_projection - scale_factor * sim_projection ) .^2 ) ) ./ ( -2 .* var(exp_projection(:)) );
+%     prob(index) = sum( sum( ( exp_projection - scale_factor * sim_projection ) .^2 ) ) ./ ( -2 .* var(exp_projection(:)) );
+    prob(index) = sum( sum( ( exp_projection - scale_factor * sim_projection ) .^2 ) ) ./ ( -2 .* sigma2 );
 end
 
 % normalization?.. is it right?

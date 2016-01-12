@@ -6,7 +6,8 @@ psi = euler_angle(2) - 1;
 phi = euler_angle(3) - 1;
 step = particle.step;
 object = particle.object;
-SNR = 5;  %%%%!!!!!!!!!!!!!!!! need to notice
+sigma2 = 5;  %%%%!!!!!!!!!!!!!!!! need to notice
+particle.sigma2 = sigma2; %%%%
 % simulated_projection = particle.simulated_projection;
 
 theta_angle_range = angle_range(1);
@@ -22,7 +23,7 @@ for iteration = 1:test_num
     mat_mean = mean(reprojection(:));
     mat_var = var(reprojection(:));
     reprojection = (reprojection - mat_mean) / sqrt(mat_var);
-    exp_data = m_create_exp_data(reprojection, SNR);
+    exp_data = m_create_exp_data(reprojection, sigma2);
     
     %%%%%%%%%%%%%%%%%%%%%%%
     exp_data = abs( fftshift( fft2(exp_data) ) );

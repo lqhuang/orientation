@@ -7,10 +7,11 @@ reprojection = (reprojection - mat_mean) / sqrt(mat_var);
 sim_data = reprojection;
 
 index = [21, 21, 21];
-Curve = zeros(5,100);
-SNR = 0:1:10;
-for i= 1:length(SNR);
+SNR = 0:1:20;
+Curve = zeros(5, length(SNR));
+for i = 1:length(SNR);
     t = SNR(i);
+    particle.sigma2 = t;
     for loop=1:111
         % RELION
 		exp_data = m_create_exp_data(sim_data, t);
@@ -31,7 +32,7 @@ for i= 1:length(SNR);
         %%%%%%%%%%%%%%%%%%%%%%
         exp_data = abs( fftshift( fft2(exp_data) ) );
         %%%%%%%%%%%%%%%%%%%%%%%%
-        
+
         subscript=m_par_corr_method_function(exp_data, particle, 'none', 'none');
         Match = m_find_correct(index, subscript);
         if Match == 1
