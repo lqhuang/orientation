@@ -6,7 +6,7 @@ reprojection = (reprojection - mat_mean) / sqrt(mat_var);
 sim_data = reprojection;
 
 % euler_angle = [21, 21, 21];?
-SNR = 0.5:0.5:4;
+SNR = 0.1:0.1:3
 Curve = zeros(5, length(SNR));
 
 load([path,'/corr_none_linear.mat'], 'pcimg_cell')
@@ -44,7 +44,7 @@ for i = 1:length(SNR);
             Curve(2,i) = Curve(2,i)+1;
         end
 		clear Match
-        Match = m_find_correct(euler_angle(1:2,:), subscript_ij);
+        Match = m_find_correct(euler_angle(:,1:2), subscript_ij);
         if Match == 1
             Curve(3,i) = Curve(3,i)+1;
         end
@@ -63,7 +63,7 @@ for i = 1:length(SNR);
             Curve(4,i) = Curve(4,i)+1;
         end
         clear Match
-        Match = m_find_correct(euler_angle(1:2,:), subscript_ij);
+        Match = m_find_correct(euler_angle(:,1:2), subscript_ij);
         if Match == 1
             Curve(5,i) = Curve(5,i)+1;
         end

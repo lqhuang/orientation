@@ -2,7 +2,7 @@ run('/home/lqhuang/Documents/MATLAB/pathdef.m')
 addpath(ans)
 disp('add path successful!')
 
-step = 10;
+step = 30;
 
 file = '/home/lqhuang/Documents/MATLAB/orientation/particle/EMD-6044.map';
 path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_fourier'];
@@ -24,7 +24,7 @@ menu_list = ls('/mnt/data/lqhuang/');
 % save([path,'/EMD_6044_',num2str(step),'_fourier.mat'], 'particle');
 % disp('save finish!')
 
-load([path,'/EMD_6044_10_fourier.mat'], 'particle');
+load([path,'/EMD_6044_',num2str(step),'_fourier.mat'], 'particle');
 
 
 % m_create_pcimg;

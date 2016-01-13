@@ -25,7 +25,11 @@ end
 
 % normalization?.. is it right?
 
-index_of_max = find(prob == max(prob));
+% index_of_max = find(prob == max(prob));
+[~, index_sort] = sort(prob);
+index_of_max = index_sort(end-1 : end);
+
+
 % [sub_k, sub_j, sub_i] = ind2sub([nz, ny, nx], max_index); % old method way depend on the forloop
 [sub_i, sub_j, sub_k] = ind2sub([nx, ny, nz], index_of_max);
 
