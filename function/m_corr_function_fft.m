@@ -35,11 +35,11 @@ function C2 = m_corr_function_fft(img, pcimg_interpolation, weight)
         case 'none'
 
         case 'linear'
-            weight = rows:-1:1;
+            weight = 1:rows;
             weight_Matrix = repmat(weight',1,cols);
             C2 = C2 .* weight_Matrix;
     end
     
-    meanC2Row = mean(C2,2);
-    C2 = C2 - repmat(meanC2Row, 1, cols);
+%     meanC2Row = mean(C2,2);
+%     C2 = C2 - repmat(meanC2Row, 1, cols);
 end

@@ -4,7 +4,7 @@
 tic
 pcimg_cell = m_initial_particle_pcimg(particle, 'none', 'none');
 toc
-save([path,'/corr_none_none_mean.mat'], 'pcimg_cell');
+save([path,'/corr_none_none.mat'], 'pcimg_cell');
 disp('OK')
 
 % tic
@@ -14,7 +14,7 @@ disp('OK')
 % disp('OK')
 
 pcimg_cell = m_initial_particle_pcimg(particle, 'none', 'linear');
-save([path,'/corr_none_linear_reverse.mat'], 'pcimg_cell');
+save([path,'/corr_none_linear.mat'], 'pcimg_cell');
 disp('OK')
 
 % pcimg_cell = m_initial_particle_pcimg(particle, 'bilinear', 'linear');

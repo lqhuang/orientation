@@ -6,30 +6,30 @@ reprojection = (reprojection - mat_mean) / sqrt(mat_var);
 sim_data = reprojection;
 
 % euler_angle = [21, 21, 21];?
-SNR = 0.1:0.1:3;
+SNR = 0.1:0.1:3
 Curve = zeros(5, length(SNR));
 
-load([path,'/corr_none_linear_reverse.mat'], 'pcimg_cell')
+load([path,'/corr_none_linear.mat'], 'pcimg_cell')
 pcimg_cell_linear = pcimg_cell;
-load([path,'/corr_none_none_mean.mat'], 'pcimg_cell')
+load([path,'/corr_none_none.mat'], 'pcimg_cell')
 
 for i = 1:length(SNR);
     t = SNR(i);
     particle.sigma2 = t;
     for loop=1:111
         % RELION
-% 		exp_data = m_create_exp_data(sim_data, t);
-%         
-%         %%%%%%%%%%%%%%%%%%
-%         exp_data = abs( fftshift( fft2(exp_data) ) );
-%         %%%%%%%%%%%%%%%%%%%
-%         
-%         subscript=m_par_ML_function(exp_data, particle);
-%         Match = m_find_correct(euler_angle, subscript);
-%         if Match == 1
-%             Curve(1,i) = Curve(1,i)+1;       
-%         end
-%         clear Match
+		exp_data = m_create_exp_data(sim_data, t);
+        
+        %%%%%%%%%%%%%%%%%%
+        exp_data = abs( fftshift( fft2(exp_data) ) );
+        %%%%%%%%%%%%%%%%%%%
+        
+        subscript=m_par_ML_function(exp_data, particle);
+        Match = m_find_correct(euler_angle, subscript);
+        if Match == 1
+            Curve(1,i) = Curve(1,i)+1;       
+        end
+        clear Match
         
 		% Corr + None + None
         exp_data = m_create_exp_data(sim_data, t);
