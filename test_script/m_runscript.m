@@ -27,7 +27,7 @@ menu_list = ls('/mnt/data/lqhuang/');
 load([path,'/EMD_6044_',num2str(step),'_fourier.mat'], 'particle');
 
 
-% m_create_pcimg;
+m_create_pcimg;
 % disp('pcimg create successful!')
 
 euler_angle = repmat(60/step+1,1,3); % input euler angle [60 60 60]

@@ -27,13 +27,13 @@ nz = particle.simulated_size(3);
 
 Corr = zeros(1,nx*ny);
 C2_exp = m_corr_function_fft(exp_projection, pcimg_interpolation, weight);
-C2_exp(1, :) = [];  % extreme error happens in first line
+% C2_exp(1, :) = [];  % extreme error happens in first line
 
 sigma2 = particle.sigma2; % ugly code
 
 parfor index = 1:nx*ny
     C2_sim = pcimg_cell{index};
-    C2_sim(1, :) = []; % extreme error happens in first line
+%     C2_sim(1, :) = []; % extreme error happens in first line
     scale_factor = C2_exp(:) \ C2_sim(:);
     temp = C2_exp - scale_factor * C2_sim;
 %     temp( (temp ./ C2_exp) > 1 ) = 0;
