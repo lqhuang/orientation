@@ -6,7 +6,7 @@ reprojection = (reprojection - mat_mean) / sqrt(mat_var);
 sim_data = reprojection;
 
 % euler_angle = [21, 21, 21];?
-SNR = 0:1:10;
+SNR = 0.5:0.5:4;
 Curve = zeros(5, length(SNR));
 
 load([path,'/corr_none_linear.mat'], 'pcimg_cell')
@@ -38,24 +38,18 @@ for i = 1:length(SNR);
         exp_data = abs( fftshift( fft2(exp_data) ) );
         %%%%%%%%%%%%%%%%%%%%%%%%
 
-        subscript=m_par_corr_method_function(exp_data, particle, pcimg_cell, 'none', 'none');
+        [subscript, ~, ~, subscript_ij] = m_par_corr_method_function(exp_data, particle, pcimg_cell, 'none', 'none');
         Match = m_find_correct(euler_angle, subscript);
         if Match == 1
             Curve(2,i) = Curve(2,i)+1;
         end
 		clear Match
-        
-        % Corr + Biliner + None
-%         exp_data = m_create_exp_data(sim_data, t);
-%         tic
-%         subscript=m_corr_method_function(exp_data, particle.simulated_projection, 'bilinear', 'none');
-%         toc
-%         Match = m_find_correct(euler_angle, subscript);
-%         if Match == 1
-%             Curve(3,i) = Curve(3,i)+1;
-%         end
-        clear Match
-        
+        Match = m_find_correct(euler_angle(1:2,:), subscript_ij);
+        if Match == 1
+            Curve(3,i) = Curve(3,i)+1;
+        end
+		clear Match
+       
 		% Corr + None + Linear
 		exp_data = m_create_exp_data(sim_data, t);
         
@@ -63,20 +57,18 @@ for i = 1:length(SNR);
         exp_data = abs( fftshift( fft2(exp_data) ) );
         %%%%%%%%%%%%%%%%%%%%%%%%
         
-        subscript=m_par_corr_method_function(exp_data, particle, pcimg_cell_linear, 'none', 'linear');
+        [subscript, ~, ~, subscript_ij] = m_par_corr_method_function(exp_data, particle, pcimg_cell_linear, 'none', 'linear');
         Match = m_find_correct(euler_angle, subscript);
         if Match == 1
             Curve(4,i) = Curve(4,i)+1;
         end
         clear Match
-		% Corr + Biliner + Linear
-%         exp_data = m_create_exp_data(sim_data, t);
-%         subscript=m_corr_method_function(exp_data, particle.simulated_projection, 'bilinear', 'linear');
-%         Match = m_find_correct(euler_angle, subscript);
-%         if Match == 1
-%             Curve(5,i) = Curve(5,i)+1;
-%         end
-% 		clear Match
+        Match = m_find_correct(euler_angle(1:2,:), subscript_ij);
+        if Match == 1
+            Curve(5,i) = Curve(5,i)+1;
+        end
+		clear Match
+
         disp(['Now,t=',num2str(t),',in Loop:',num2str(loop),10,...
               'RELION_SN=',num2str(Curve(1,i)),10,...
               'raw_1_SN=',num2str(Curve(2,i)),10,... %               'bi_1_SN=',num2str(Curve(3,i)),10,...
