@@ -15,7 +15,7 @@ function C2 = m_corr_function_fft(img, pcimg_interpolation, weight)
         pcimg_interpolation = 'none';
     end
     if exist('weight', 'var') == 0
-        pcimg_interpolation = 'none';
+        weight = 'none';
     end
     
     [nx, ny] = size(img);
@@ -39,7 +39,6 @@ function C2 = m_corr_function_fft(img, pcimg_interpolation, weight)
             weight_Matrix = repmat(weight',1,cols);
             C2 = C2 .* weight_Matrix;
     end
-    
 %     meanC2Row = mean(C2,2);
 %     C2 = C2 - repmat(meanC2Row, 1, cols);
 end
