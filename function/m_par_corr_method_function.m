@@ -25,82 +25,58 @@ nx = particle.simulated_size(1);
 ny = particle.simulated_size(2);
 nz = particle.simulated_size(3);
 
-Corr = zeros(1,nx*ny);
-C2_exp = m_corr_function_fft(exp_projection, pcimg_interpolation, weight);
-C2_exp(1, :) = [];  % extreme error happens in first line
-
-sigma2 = particle.sigma2; % ugly code
+corr = zeros(1, nx*ny);
+exp_C2 = m_corr_function_fft(exp_projection, pcimg_interpolation, weight);
+% exp_C2(1, :) = [];  % extreme error happens in first line
 
 parfor index = 1:nx*ny
-    C2_sim = pcimg_cell{index};
-    C2_sim(1, :) = []; % extreme error happens in first line
-    scale_factor = C2_exp(:) \ C2_sim(:);
-    temp = C2_exp -  C2_sim; % scale_factor * 
-    %     temp( (temp ./ C2_exp) > 1 ) = 0;
-    Corr(index)=sum( sum( ( temp ) .^2./ ( -2 * C2_exp ) ) );
-%     Corr(index)=sum( sum( ( temp ) .^2 ) ) ./ ( -2 * sigma2 );
+    ref_C2 = pcimg_cell{index};
+%     ref_C2(1, :) = []; % extreme error happens in first line
+    scale_factor = exp_C2(:) \ ref_C2(:);
+    exp_up_term = (exp_C2 -  scale_factor * ref_C2) .^2 ./ ( -2 * exp_C2.^2 );
+    exp_up_term( isnan(exp_up_term) ) = 0;
+    exp_up_term( isinf(exp_up_term) ) = 0;
+    corr(index)=sum( exp_up_term(:) );
 end
 
-% normlization ????
-% minimum = min(Corr);
-% maximum = max(Corr);
-% Corr = (Corr-minimum)./(maximum-minimum);
+        % centrosymmetry problem
+        [corr_sort, index_sort] = sort(corr, 'descend');
+        corr_sort = diff(corr_sort);
+        num_of_ij_max = find( corr_sort(1:12) == min(corr_sort(1:12)) );
+%         num_of_ij_max = 1;
+        index_of_ij_max = index_sort(1:num_of_ij_max);
+        [sub_i, sub_j] = ind2sub([nx, ny], index_of_ij_max);
 
-% centrosymmetry problem
-[~, index_sort] = sort(Corr);
-index_of_max = index_sort(end-1 : end);
-% index_of_max = index_sort(end);
-
-[sub_i, sub_j] = ind2sub([nx, ny], index_of_max);
-
-Prob_k= zeros(length(sub_i), nz);
-max_prob_k = zeros(1, length(sub_i));
-% sub_k = zeros(1, length(sub_i));
-sub_k = zeros(1, 2 * length(sub_i));
-
-for n = 1:length(sub_i)
-    simulated_projection_k = cell(1, nz);
-    simulated_projection_k(:) = particle.simulated_projection(sub_i(n), sub_j(n), :);
-    parfor k = 1:nz
-        scale_factor = exp_projection(:) \ simulated_projection_k{k}(:);
-%         Prob_k(n, k) = sum( sum( ( exp_projection - scale_factor * simulated_projection_k{k} ) .^2 ./ ( -2 * exp_projection ) ) );
-        Prob_k(n, k) = sum( sum( ( exp_projection - scale_factor * simulated_projection_k{k} ) .^2 ) ) ./ ( -2 * sigma2 );
-    end
-%     max_prob_k(n) = max(Prob_k(n, :));
-%     sub_k(n) = find( Prob_k(n, :) == max_prob_k(n) ); % 原代码
-%%% 第三个角度出现多个相同最大值？？...bug不太好复现
-%     t = find( Prob_k(n, :) == max_prob_k(n) ); %%???
-%     if length(t) ~= 1
-%         sub_k(n) = t(1); 
-%         disp('There are more than one max Phi angle found')
-%     else
-%         sub_k(n) = t;
-%     end
-
-end
-
-for n = 1:2
-    [~, index_sort_k] = sort(Prob_k(n,:));
-    if n == 1
-        sub_k(1) = index_sort_k(end-1);
-        sub_k(3) = index_sort_k(end);
-    elseif n == 2
-        sub_k(2) = index_sort_k(end-1);
-        sub_k(4) = index_sort_k(end);
-    end
-end
-% max_sub =  max_prob_k == max(max_prob_k); % tricky method instead of ''max_sub = find( max_prob_k == max(max_prob_k) );''
-
-% Output information
-
-sub_i = [sub_i, sub_i];
-sub_j = [sub_j, sub_j];
-
-subscript = [sub_i; sub_j; sub_k]';
-% subscript = subscript(max_sub, :);
-
-varargout{1}=Corr;
-varargout{2}=Prob_k;
-subscript_ij = [sub_i', sub_j'];
-varargout{3}=subscript_ij;
+        % normalize corr curve
+        corr = exp( corr ./ 10^( round(log10(-corr_sort(1)))+1 ) );
+        
+        % calculate phi angle
+        prob_k = zeros(num_of_ij_max, nz);
+        for n = 1 : num_of_ij_max  % there is n max value in ij
+            reference_projections_k = cell(1,nz);
+            reference_projections_k(:) = particle.simulated_projection(sub_i(n), sub_j(n), :);
+            parfor k = 1:nz
+                scale_factor = exp_projection(:) \ reference_projections_k{k}(:);
+                exp_up_term = ( exp_projection - scale_factor * reference_projections_k{k} ) .^2 ./ ( -2 * exp_projection );
+                exp_up_term( isnan(exp_up_term) ) = 0;
+                exp_up_term( isinf(exp_up_term) ) = 0;
+                prob_k(n, k) = sum( exp_up_term(:) );
+            end
+        end
+        
+        % arrange the subscript
+        subscript = zeros(1,3);
+        for n = 1 : num_of_ij_max
+            [prob_k_sort, index_k_sort] = sort(prob_k(n,:), 'descend');
+            prob_k_sort = diff(prob_k_sort);
+            num_of_k_max = find( prob_k_sort(1:4) == min(prob_k_sort(1:4)) );
+            index_of_k_max = index_k_sort(1:num_of_k_max);
+            subscript_temp = [repmat([sub_i(n), sub_j(n)],[num_of_k_max,1]),index_of_k_max'];
+            subscript = [subscript; subscript_temp];
+        end
+           
+% Output information]
+subscript(1,:) = [];
+varargout{1} = corr;
+varargout{2} = prob_k;
 end

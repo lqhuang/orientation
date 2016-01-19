@@ -13,23 +13,21 @@ nx = particle.simulated_size(1);
 ny = particle.simulated_size(2);
 nz = particle.simulated_size(3);
 prob = zeros(1, nx*ny*nz);
-simulated_projection = particle.simulated_projection;
-sigma2 = particle.sigma2; % ugly code
+reference_projections = particle.simulated_projection;
 
 parfor index = 1: nx*ny*nz
-    sim_projection = simulated_projection{index};
-    scale_factor = exp_projection(:) \ sim_projection(:);
-%     prob(index) = sum( sum( ( exp_projection - scale_factor * sim_projection ) .^2 ) ) ./ ( -2 .* var(exp_projection(:)) );
-    % scale_factor *
-    prob(index) = sum( sum( ( exp_projection - sim_projection ) .^2 ) ) ./ ( -2 .* sigma2 );
+    ref_projection = reference_projections{index};
+    scale_factor = exp_projection(:) \ ref_projection(:);
+    exp_up_term = ( exp_projection - scale_factor * ref_projection ) .^2 ./ ( -2 .* exp_projection );
+    exp_up_term(isnan(exp_up_term)) = 0;
+    exp_up_term(isinf(exp_up_term)) = 0;
+    prob(index) = sum( exp_up_term(:) );
 end
 
-% normalization?.. is it right?
-
-% index_of_max = find(prob == max(prob));
-[~, index_sort] = sort(prob);
-index_of_max = index_sort(end-1 : end);
-
+[prob_sort, index_sort] = sort(prob, 'descend');
+prob_sort = diff(prob_sort);
+num_of_max = find( prob_sort(1:24) == min(prob_sort(1:24)) );
+index_of_max = index_sort(1:num_of_max);
 
 % [sub_k, sub_j, sub_i] = ind2sub([nz, ny, nx], max_index); % old method way depend on the forloop
 [sub_i, sub_j, sub_k] = ind2sub([nx, ny, nz], index_of_max);
