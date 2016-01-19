@@ -6,5 +6,5 @@ function expImage = m_create_exp_data(simImage, SNR)
 
 [rows, cols] = size(simImage);
 expImage = simImage + normrnd(0, sqrt(SNR), rows, cols);
-% expImage = ( expImage - mean(expImage(:)) ) / sqrt(var(expImage(:)));
+expImage = ( expImage - mean(expImage(:)) ) / sqrt(var(expImage(:)));
 end

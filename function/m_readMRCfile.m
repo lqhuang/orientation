@@ -1,11 +1,11 @@
-function a = m_readMRCfile(fname)
+function a = m_readMRCfile(file)
 % readMRCfile readMRCfile (fname) 
 %
 % http://ami.scripps.edu/software/mrctools/mrc_specification.php
 % nx, ny, nz means number of x, y, z;
 %
 
-[fid, ~] = fopen(fname, 'r');
+[fid, ~] = fopen(file, 'r');
 if fid == -1
     error('can''t open file');
     a = -1;

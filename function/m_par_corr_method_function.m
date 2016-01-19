@@ -35,8 +35,8 @@ parfor index = 1:nx*ny
     C2_sim = pcimg_cell{index};
     C2_sim(1, :) = []; % extreme error happens in first line
     scale_factor = C2_exp(:) \ C2_sim(:);
-    temp = C2_exp - scale_factor * C2_sim;
-%     temp( (temp ./ C2_exp) > 1 ) = 0;
+    temp = C2_exp -  C2_sim; % scale_factor * 
+    %     temp( (temp ./ C2_exp) > 1 ) = 0;
     Corr(index)=sum( sum( ( temp ) .^2./ ( -2 * C2_exp ) ) );
 %     Corr(index)=sum( sum( ( temp ) .^2 ) ) ./ ( -2 * sigma2 );
 end
@@ -63,8 +63,8 @@ for n = 1:length(sub_i)
     simulated_projection_k(:) = particle.simulated_projection(sub_i(n), sub_j(n), :);
     parfor k = 1:nz
         scale_factor = exp_projection(:) \ simulated_projection_k{k}(:);
-        Prob_k(n, k) = sum( sum( ( exp_projection - scale_factor * simulated_projection_k{k} ) .^2 ./ ( -2 * exp_projection ) ) );
-%         Prob_k(n, k) = sum( sum( ( exp_projection - scale_factor * simulated_projection_k{k} ) .^2 ) ) ./ ( -2 * sigma2 );
+%         Prob_k(n, k) = sum( sum( ( exp_projection - scale_factor * simulated_projection_k{k} ) .^2 ./ ( -2 * exp_projection ) ) );
+        Prob_k(n, k) = sum( sum( ( exp_projection - scale_factor * simulated_projection_k{k} ) .^2 ) ) ./ ( -2 * sigma2 );
     end
 %     max_prob_k(n) = max(Prob_k(n, :));
 %     sub_k(n) = find( Prob_k(n, :) == max_prob_k(n) ); % Ô­´úÂë

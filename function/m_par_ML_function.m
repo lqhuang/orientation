@@ -20,7 +20,8 @@ parfor index = 1: nx*ny*nz
     sim_projection = simulated_projection{index};
     scale_factor = exp_projection(:) \ sim_projection(:);
 %     prob(index) = sum( sum( ( exp_projection - scale_factor * sim_projection ) .^2 ) ) ./ ( -2 .* var(exp_projection(:)) );
-    prob(index) = sum( sum( ( exp_projection - scale_factor * sim_projection ) .^2 ) ) ./ ( -2 .* sigma2 );
+    % scale_factor *
+    prob(index) = sum( sum( ( exp_projection - sim_projection ) .^2 ) ) ./ ( -2 .* sigma2 );
 end
 
 % normalization?.. is it right?
