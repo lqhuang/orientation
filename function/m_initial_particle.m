@@ -31,12 +31,12 @@ object = m_readMRCfile(file);
 object(object < filter) = 0; % filter
 
 % Does the object need to resize or not
-object_size = size(object);
-disp(['The size of object now is ', num2str(object_size(1))]);
-resize_radius = input('radius after resize object, default as a cube, input a number is better:');
-object_radius = round(object_size(1)/2)-1;
-resize_range = object_radius-resize_radius+1 : object_radius+resize_radius;
-object = object(resize_range, resize_range, resize_range);
+% object_size = size(object);
+% disp(['The size of object now is ', num2str(object_size(1))]);
+% resize_radius = input('radius after resize object, default as a cube, input a number is better:');
+% object_radius = round(object_size(1)/2)-1;
+% resize_range = object_radius-resize_radius+1 : object_radius+resize_radius;
+% object = object(resize_range, resize_range, resize_range);
 
 % create simulated projections
 % save projections into a cell
@@ -80,9 +80,9 @@ particle.theta = theta;
 particle.psi = psi;
 particle.phi = phi;
 if strcmp(fft, 'none')
-    particle.space = 'Fourier';
+    particle.space = 'fourier';
 elseif strcmp(fft, 'fft')
-    particle.space = 'Real';
+    particle.space = 'real';
 end
- 
+
 end

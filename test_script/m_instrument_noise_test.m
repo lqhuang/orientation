@@ -3,15 +3,17 @@ ny = particle.simulated_size(2);
 nz = particle.simulated_size(3);
 
 % 先造一些第一层的
-subscript_first = ones(10,3);
+% subscript_first = ones(10,3);
+accuracy_first = zeros(4,10);
 for n = 1:10
-    index = randi(nx * ny);
-    [i,j] = ind2sub([nx, ny], index);
-    subscript_first(n,1:2) = [i,j];
+%     index = randi(nx * ny);
+%     [i,j] = ind2sub([nx, ny], index);
+%     subscript_first(n,1:2) = [i,j];
+    i = subscript_first(n,1);
+    j = subscript_first(n,2);
     img = particle.simulated_projection{i,j,1};
-    accuracy_first = zeros(4,10);
-    
-    for test_loop = 1:5
+   
+    for test_loop = 1:2
         % 无噪声
         % ML
         tic
@@ -24,7 +26,7 @@ for n = 1:10
         match = m_find_correct(subscript_first(n, :), subscript_output);
         accuracy_first(3, n) = accuracy_first(3, n) + match;
     end
-    for test_loop = 1:33
+    for test_loop = 1:10
 
         % poisson 噪声
         exp_img = poissrnd(img);
@@ -40,14 +42,17 @@ for n = 1:10
 end
     
 % 后面是随机的
-subscript_all = zeros(30,3);
+% subscript_all = zeros(20,3);
+accuracy_all = zeros(4,20);
 for n = 1:20
     index = randi(nx * ny * nz);
-    [i, j, k]= ind2sub([nx, ny, nz], index);
-    subscript_all(n,1:3) = [i, j, k];
+%     [i, j, k]= ind2sub([nx, ny, nz], index);
+%     subscript_all(n,1:3) = [i, j, k];
+    i = subscript_all(n,1);
+    j = subscript_all(n,2);
+    k = subscript_all(n,3);
     img = particle.simulated_projection{i,j,k};
-    accuracy_all = zeros(4,20);
-    for test_loop = 1:5
+    for test_loop = 1:2
         % 无噪声
         % ML
         subscript_output = m_par_ML_function(img, particle);
@@ -58,7 +63,7 @@ for n = 1:20
         match = m_find_correct(subscript_all(n, :), subscript_output);
         accuracy_all(3, n) = accuracy_all(3, n) + match;
     end
-    for test_loop = 1:33
+    for test_loop = 1:10
 
         % poisson 噪声
         exp_img = poissrnd(img);
@@ -72,7 +77,7 @@ for n = 1:20
         accuracy_all(4, n) = accuracy_all(4, n) + match;
     end
 end
-subscript = [subscript_first, subscript_all];
+subscript = [subscript_first; subscript_all];
 accuracy = [accuracy_first, accuracy_all];
-save([result_path, '/poission.mat'], 'accuracy', 'subscript')
+save([result_path, '/the_same_anlge_last_day_poission.mat'], 'accuracy', 'subscript')
 disp('save finish')

@@ -1,3 +1,4 @@
+m_instrument_noise_test
 run('/home/lqhuang/Documents/MATLAB/pathdef.m');
 addpath(ans)
 disp('add path successful!')
@@ -13,7 +14,7 @@ particle = m_initial_particle(file, 30.4, step, 'fft');
 disp('initial successful!')
 save([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
 disp('save finish!')
-load([path,'/EMD_6044_',num2str(step),'_fourier.mat'], 'particle');
+% load([path,'/EMD_6044_',num2str(step),'_fourier.mat'], 'particle');
 
 result_path = '/mnt/data/lqhuang/result/2016-01-20/';
 
