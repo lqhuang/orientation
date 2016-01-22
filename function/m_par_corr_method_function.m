@@ -33,7 +33,7 @@ parfor index = 1:nx*ny
     ref_C2 = pcimg_cell{index};
 %     ref_C2(1, :) = []; % extreme error happens in first line
     scale_factor = exp_C2(:) \ ref_C2(:);
-    exp_up_term = (exp_C2 -  scale_factor * ref_C2) .^2 ./ ( -2 * exp_C2.^2 );
+    exp_up_term = (exp_C2 -  scale_factor * ref_C2) .^2 ./ ( -2 * exp_C2 );
     exp_up_term( isnan(exp_up_term) ) = 0;
     exp_up_term( isinf(exp_up_term) ) = 0;
     corr(index)=sum( exp_up_term(:) );
@@ -74,8 +74,8 @@ end
             subscript_temp = [repmat([sub_i(n), sub_j(n)],[num_of_k_max,1]),index_of_k_max'];
             subscript = [subscript; subscript_temp];
         end
-           
-% Output information]
+        
+% Output information
 subscript(1,:) = [];
 varargout{1} = corr;
 varargout{2} = prob_k;
