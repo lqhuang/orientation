@@ -1,13 +1,12 @@
-function pcimg=imgpolarcoord(img,cx,cy,radius,angle)
+function polar_img=m_imgpolarcoord3(img, xs, ys, cx, cy, radius, N_r,N_theta)
 % IMGPOLARCOORD converts a given image from cartesian coordinates to polar
 % coordinates.
 %
 % Input:
-%        img  : bidimensional image.
+%      img  : bidimensional image.
 %      radius : radius length (# of pixels to be considered).
-%      angle  : # of angles to be considered for decomposition.
-%         cx  : center of x
-%         cy  : center of y
+%      Na: # of angles to be considered for decomposition.
+%
 % Output:
 %       pcimg : polar coordinate image.
 %
@@ -30,38 +29,34 @@ function pcimg=imgpolarcoord(img,cx,cy,radius,angle)
 %  support and suggestions, while studying polar-coordinates.
 %  Authors: Juan Carlos Gutierrez & Javier Montoya.
 
-	if nargin < 1
-		error('Please specify an image!');
-	end
+   if nargin < 1
+      error('Please specify an image!');
+   end
    
-    img         = double(img);
-    [rows,cols] = size(img);
-    
-	if exist('cx','var') == 0
-		cy = round(rows/2);
-	end
-	if exist('cy','var') == 0
-		cx = round(cols/2);
-	end
+   img         = double(img);
    
-	if exist('radius','var') == 0
+   if exist('radius','var') == 0
       %radius = min(round(rows/2),round(cols/2))-1;
-		radius = min([rows-cy, cols-cx])-1;
-	end
+      radius = min(rows-cy, cols-cx,cx,cy)-1;
+   end
    
-	if exist('angle','var') == 0
-		angle = 360;
-	end
+   if exist('N_theta','var') == 0
+      N_theta = 360;
+   end
   
-	pcimg = [];
-	i     = 1;
+   xs = xs - cx;
+   ys = ys - cy;
 
-	for r=0:radius
-		j = 1;
-		for a=0 : 2*pi/angle : 2*pi-2*pi/angle
-			pcimg(i,j) = img(cy+round(r*sin(a)),cx+round(r*cos(a)));
-			j = j + 1;
-		end
-		i = i + 1;
-	end
+   [theta_i, r_i] = meshgrid(1:N_theta, 1:N_r);
+ 
+   delta_angle = 2*pi/N_theta;
+   delta_r     = radius/N_r;
+
+   theta_array = theta_i * delta_angle;
+   r_array     = r_i * delta_r;
+   
+   [new_x, new_y] = pol2cart(theta_array, r_array);
+   
+   polar_img = interp2(xs, ys, img, new_x, new_y, 'linear');
+
 end
