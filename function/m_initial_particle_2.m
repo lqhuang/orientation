@@ -1,4 +1,4 @@
-function particle = m_initial_particle(file, filter, step, space, interpolation, resize_radius)
+function particle = m_initial_particle_2(file, filter, step, space, interpolation, resize_radius)
 % use to initial a EMD object
 % In:
 % file: input file. Full filepath and filename is required(.map format).
@@ -9,7 +9,7 @@ function particle = m_initial_particle(file, filter, step, space, interpolation,
 
 % check input information
 if exist('space','var') == 0
-    space = 'real';
+    space = 'none';
 end
 if exist('resize_radius','var') == 0
     resize_radius = 0;
@@ -55,9 +55,7 @@ switch space
         parfor index = 1 : num_theta * num_psi * num_phi
             [i, j, k] = ind2sub([num_theta, num_psi, num_phi], index);
             reprojection = m_projector(object, [theta(i), psi(j), phi(k)], interpolation);
-            mat_mean = mean(reprojection(:));
-            mat_var = var(reprojection(:));
-            projection{index} = (reprojection - mat_mean) / sqrt(mat_var); % real sapce case
+            projection{index} = reprojection + 1; % real space case
             disp(['i=',num2str(i),',j=',num2str(j),',k=',num2str(k)]);
         end
     case 'fourier'
