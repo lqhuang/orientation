@@ -12,7 +12,7 @@ function C2 = m_corr_function_fft(img, pcimg_interpolation, weight)
     % C2: the correlation image
     
     if exist('pcimg_interpolation', 'var') == 0
-        pcimg_interpolation = 'none';
+        pcimg_interpolation = 'nearest';
     end
     if exist('weight', 'var') == 0
         weight = 'none';
@@ -22,8 +22,12 @@ function C2 = m_corr_function_fft(img, pcimg_interpolation, weight)
     cx = round(nx/2);
     cy = round(ny/2);
     switch pcimg_interpolation
-        case 'none'
+        case 'nearest'
             pcimg = m_imgpolarcoord(img, cx, cy);
+        case 'linear'
+            [xs, ys]=meshgrid(1:nx,1:ny);
+            radius = 62;
+            pcimg = m_imgpolarcoord3(img, xs, ys, cx, cy,62,62,360);
         case 'bilinear'
             pcimg = m_ImToPolar(img, 0, 1, 60, 360);
     end

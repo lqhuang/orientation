@@ -1,4 +1,4 @@
-function [projection, varargout] = m_projector(object, euler_angle)
+function [projection, varargout] = m_projector(object, euler_angle, interpolation)
 %  create a projection in certain Euler angle of object
 %  Input:
 %  object: model to be project, 3d matrix
@@ -9,6 +9,10 @@ function [projection, varargout] = m_projector(object, euler_angle)
 % rotate matrix
 object_size = size(object);
 center = round(object_size/2);
+
+if exist('interpolation','var') == 0
+    interpolation = 'cubic';
+end
 
 % T1. Translate the center of the object to the origin.
 % T2. Rotate the object.
@@ -24,7 +28,7 @@ T3 = [1  0  0  0;
        center  1];
 T = T1 * T2 * T3;
 tform = maketform('affine', T);
-R = makeresampler('linear', 'fill'); % resampler
+R = makeresampler(interpolation, 'fill'); % resampler. default interpolation : 'cubic'
 TDIMS_A = [1 2 3];
 TDIMS_B = [1 2 3];
 output_size = object_size;
