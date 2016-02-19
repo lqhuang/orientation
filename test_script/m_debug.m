@@ -10,7 +10,6 @@ figure(1)
 imagesc( (a1_C2 - b) ./ a_C2 );
 colorbar
 
-
 figure(2)
 imagesc(a);
 axis image

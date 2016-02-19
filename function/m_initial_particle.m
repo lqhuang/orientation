@@ -1,4 +1,4 @@
-function particle = m_initial_particle(file, filter, step, fft)
+function particle = m_initial_particle(file, filter, step, fft, resize_radius)
 % use to initial a EMD object
 % In:
 % file: input file. Full filepath and filename is required(.map format).
@@ -10,6 +10,9 @@ function particle = m_initial_particle(file, filter, step, fft)
 % check input information
 if exist('fft','var') == 0
     fft = 'none';
+end
+if exist('resize_radius','var') == 0
+    fft = 0;
 end
 
 % set intervals of simlated projections
@@ -23,20 +26,20 @@ else
 end
 
 % read EMD map file
-if exist('file','var') == 0
-    [filename, filepath] = uigetfile([pwd,'\particle\*'],'Select the EMD map file');
-    file = [filepath,filename];
-end
 object = m_readMRCfile(file);
 object(object < filter) = 0; % filter
 
 % Does the object need to resize or not
-% object_size = size(object);
-% disp(['The size of object now is ', num2str(object_size(1))]);
-% resize_radius = input('radius after resize object, default as a cube, input a number is better:');
-% object_radius = round(object_size(1)/2)-1;
-% resize_range = object_radius-resize_radius+1 : object_radius+resize_radius;
-% object = object(resize_range, resize_range, resize_range);
+object_size = size(object);
+disp(['The size of object now is ', num2str(object_size(1))]);
+if resize_radius == 0
+else
+    resize_radius = input('radius after resize object, default as a cube, input a number is better:');
+    object_radius = round(object_size(1)/2)-1;
+    resize_range = object_radius-resize_radius+1 : object_radius+resize_radius;
+    object = object(resize_range, resize_range, resize_range);
+    disp('resize successful.')
+end
 
 % create simulated projections
 % save projections into a cell
@@ -55,6 +58,7 @@ switch fft
             mat_mean = mean(reprojection(:));
             mat_var = var(reprojection(:));
             projection{index} = (reprojection - mat_mean) / sqrt(mat_var); % none case
+            projection{index} = reprojection;
             disp(['i=',num2str(i),',j=',num2str(j),',k=',num2str(k)]);
         end
     case 'fft'
@@ -70,7 +74,7 @@ end
 
 % output information:
 particle = struct;
-particle.filename = file;
+particle.file = file;
 particle.filter = filter;
 particle.simulated_projection = projection;
 particle.step = step;
@@ -80,9 +84,9 @@ particle.theta = theta;
 particle.psi = psi;
 particle.phi = phi;
 if strcmp(fft, 'none')
-    particle.space = 'fourier';
-elseif strcmp(fft, 'fft')
     particle.space = 'real';
+elseif strcmp(fft, 'fft')
+    particle.space = 'fourier';
 end
 
 end
