@@ -1,8 +1,10 @@
 function match = m_find_correct(reference_subscript, experiment_subscript)
-[rows, ~] = size(experiment_subscript);
 
+[rows, ~] = size(experiment_subscript);
 if rows == 0
     match = 0;
+elseif rows > 6
+        match = 0;
 else
     match = 0;
     for i = 1:rows

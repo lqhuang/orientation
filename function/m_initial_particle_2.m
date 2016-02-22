@@ -62,9 +62,9 @@ switch space
         parfor index = 1 : num_theta * num_psi * num_phi
             [i, j, k] = ind2sub([num_theta, num_psi, num_phi], index);
             reprojection = m_projector(object, [theta(i), psi(j), phi(k)], interpolation);
-            mat_mean = mean(reprojection(:));
-            mat_var = var(reprojection(:));
-            projection{index} = abs( fftshift( fft2( (reprojection - mat_mean) / sqrt(mat_var) ) ) ); % fourier space case
+%             mat_mean = mean(reprojection(:));
+%             mat_var = var(reprojection(:));
+            projection{index} = m_oversampler; % fourier space case
             disp(['i=',num2str(i),',j=',num2str(j),',k=',num2str(k)]);
         end
 end
@@ -81,4 +81,7 @@ particle.theta = theta;
 particle.psi = psi;
 particle.phi = phi;
 particle.space = space;
+if strcmp(space, 'fourier')
+    particle.oversampling_factor = factor;
+end
 end

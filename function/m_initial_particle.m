@@ -83,4 +83,7 @@ particle.theta = theta;
 particle.psi = psi;
 particle.phi = phi;
 particle.space = space;
+if strcmp(space, 'fourier')
+    particle.oversampling_factor = factor;
+end
 end
