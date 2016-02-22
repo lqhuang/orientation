@@ -15,7 +15,7 @@ function [subscript, varargout]= m_par_corr_method_function(exp_projection, part
 % prob_k(optional): maximum likelihood probability in Phi angle.
 
 if exist('pcimg_interpolation', 'var') == 0;
-    pcimg_interpolation = 'none';
+    pcimg_interpolation = 'linear';
 end
 if exist('weight', 'var') == 0;
     weight = 'none';
