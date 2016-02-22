@@ -59,12 +59,13 @@ switch space
             disp(['i=',num2str(i),',j=',num2str(j),',k=',num2str(k)]);
         end
     case 'fourier'
+        factor = 5;
         parfor index = 1 : num_theta * num_psi * num_phi
             [i, j, k] = ind2sub([num_theta, num_psi, num_phi], index);
             reprojection = m_projector(object, [theta(i), psi(j), phi(k)], interpolation);
 %             mat_mean = mean(reprojection(:));
 %             mat_var = var(reprojection(:));
-            projection{index} = m_oversampler; % fourier space case
+            projection{index} = m_oversampler(reprojection, factor); % fourier space case
             disp(['i=',num2str(i),',j=',num2str(j),',k=',num2str(k)]);
         end
 end
