@@ -22,9 +22,19 @@ step = 10;
 space = 'real';
 path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_real_125_125_unnormalized_projector(linear)'];
 load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
+
 load([path,'/corr_linear_none.mat'], 'pcimg_cell');
+interpolation = 'linear';
+weight = 'none';
+first_num = 10;
+second_num = 20;
 [accuracy, subscript, num_first_second] = m_instrument_noise_test(particle, space, interpolation, weight, first_num, second_num);
 save([path,'result/poission_noise_test(linear_none).mat'], 'accuracy', 'subscript', 'num_first_second');
+
 load([path,'/corr_nearest_none.mat'], 'pcimg_cell');
+interpolation = 'linear';
+weight = 'none';
+first_num = 10;
+second_num = 20;
 [accuracy, subscript, num_first_second] = m_instrument_noise_test(particle, space, interpolation, weight, first_num, second_num);
 save([path,'result/poission_noise_test(nearest_none).mat'], 'accuracy', 'subscript', 'num_first_second');
