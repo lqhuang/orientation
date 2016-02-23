@@ -28,13 +28,14 @@ interpolation = 'linear';
 weight = 'none';
 first_num = 10;
 second_num = 20;
-[accuracy, subscript, num_first_second] = m_instrument_noise_test(particle, space, interpolation, weight, first_num, second_num);
+[accuracy, subscript, num_first_second] = m_instrument_noise_test(particle, pcimg_cell, space, interpolation, weight, first_num, second_num);
 save([path,'result/poission_noise_test(linear_none).mat'], 'accuracy', 'subscript', 'num_first_second');
+disp('fist test finish')
 
 load([path,'/corr_nearest_none.mat'], 'pcimg_cell');
 interpolation = 'linear';
 weight = 'none';
 first_num = 10;
 second_num = 20;
-[accuracy, subscript, num_first_second] = m_instrument_noise_test(particle, space, interpolation, weight, first_num, second_num);
+[accuracy, subscript, num_first_second] = m_instrument_noise_test(particle, pcimg_cell, space, interpolation, weight, first_num, second_num);
 save([path,'result/poission_noise_test(nearest_none).mat'], 'accuracy', 'subscript', 'num_first_second');

@@ -1,4 +1,4 @@
-function [accuracy, subscript, num_first_second] = m_instrument_noise_test(particle, space, interpolation, weight, first_num, second_num)
+function [accuracy, subscript, num_first_second] = m_instrument_noise_test(particle, pcimg_cell, space, interpolation, weight, first_num, second_num)
 nx = particle.simulated_size(1);
 ny = particle.simulated_size(2);
 nz = particle.simulated_size(3);
