@@ -2,40 +2,24 @@ run('/home/lqhuang/Documents/MATLAB/pathdef.m');
 addpath(ans)
 disp('add path successful!')
 
+mypool = parpool(10);
+
 %% initial a particle
-% step = 10;
-% file = '/home/lqhuang/Documents/MATLAB/orientation/particle/EMD-6044.map';
-% path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_fourier_125_125_unnormalized_projector(linear)'];
-% % run_path = pwd;
-% mkdir(path)
-% 
+step = 10;
+file = '/home/lqhuang/Documents/MATLAB/orientation/particle/EMD-6044.map';
+path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_fourier_125_125_unnormalized_projector(linear)'];
+% run_path = pwd;
+mkdir(path)
+
 % particle = m_initial_particle_2(file, 30.4, step, 'fourier', 'linear');
-% disp('initial successful!')
-% save([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
-% disp('save finish!')
-% 
-% m_create_pcimg;
-% disp('pcimg create successful!')
+disp('initial successful!')
+load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
+disp('load finish!')
+
+m_create_pcimg;
+disp('pcimg create successful!')
 
 %% do test 1
-step = 10;
-space = 'real';
-path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_real_125_125_unnormalized_projector(linear)'];
-load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
 
-load([path,'/corr_linear_none.mat'], 'pcimg_cell');
-interpolation = 'linear';
-weight = 'none';
-first_num = 10;
-second_num = 20;
-[accuracy, subscript, num_first_second] = m_instrument_noise_test(particle, pcimg_cell, space, interpolation, weight, first_num, second_num);
-save([path,'result/poission_noise_test(linear_none).mat'], 'accuracy', 'subscript', 'num_first_second');
-disp('fist test finish')
+[a, b] = m_instrument_noise_test();
 
-load([path,'/corr_nearest_none.mat'], 'pcimg_cell');
-interpolation = 'linear';
-weight = 'none';
-first_num = 10;
-second_num = 20;
-[accuracy, subscript, num_first_second] = m_instrument_noise_test(particle, pcimg_cell, space, interpolation, weight, first_num, second_num);
-save([path,'result/poission_noise_test(nearest_none).mat'], 'accuracy', 'subscript', 'num_first_second');
