@@ -1,19 +1,19 @@
 function [accuracy_real, accuracy_fourier] = m_instrument_noise_test()
 
 % 先随机生成等待测试的角度 分第一层的和大部分随机的
-subscript = ones(50, 3);
+subscript = ones(100, 3);
 nx = 37;
 ny = 19;
 nz = 37;
 % 第一平面上
-for n = 1:20
+for n = 1:50
     index = randi(nx * ny);
     [i, j]= ind2sub([nx, ny], index);
     subscript(n, 1) = i;
     subscript(n, 2) = j;
 end
 % 全部随机
-for n = 21:50
+for n = 51:100
     index = randi(nx * ny * nz);
     [i, j, k]= ind2sub([nx, ny, nz], index);
     while k == 1
@@ -95,7 +95,7 @@ function accuracy = test_function(subscript, particle, space, method, pcimg_cell
 
 step = particle.step;
 if strcmp(space, 'fourier');
-    factor = particle.particle.oversampling_factor;
+    factor = particle.oversampling_factor;
     object = particle.object;
 end
 
@@ -124,7 +124,7 @@ for n = 1:length
         end
     end
     
-    for test_loop = 1:66
+    for test_loop = 1:100
         % poisson noise
         switch space
             case 'real'
