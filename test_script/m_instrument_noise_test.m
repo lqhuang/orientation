@@ -1,4 +1,4 @@
-function [accuracy_real, accuracy_fourier] = m_instrument_noise_test()
+function [accuracy_real, accuracy_fourier, subscript] = m_instrument_noise_test()
 
 % 先随机生成等待测试的角度 分第一层的和大部分随机的
 subscript = ones(100, 3);
