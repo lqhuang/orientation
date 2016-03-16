@@ -20,6 +20,6 @@ mypool = parpool(20);
 % disp('pcimg create successful!')
 
 %% do test 1
-
-[a, b] = m_instrument_noise_test();
-
+result_path = '/mnt/data/lqhuang/reuslt/2016-03-16';
+mkdir(result_path);
+[accuracy_real, accuracy_fourier, subscript] = m_instrument_noise_test(result_path, subscript);
