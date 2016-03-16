@@ -64,14 +64,30 @@ for n = 1 : num_of_ij_max  % there is n max value in ij
     end
 end
 
-% arrange the subscript
+%%%%%%%% arrange the subscript
+% subscript = zeros(1,3);
+% for n = 1 : num_of_ij_max
+%     [prob_k_sort, index_k_sort] = sort(prob_k(n,:), 'descend');
+%     diff_prob_k_sort = diff(prob_k_sort);
+%     num_of_k_max = find( diff_prob_k_sort(1:4) == min(diff_prob_k_sort(1:4)) );
+%     index_of_k_max = index_k_sort(1:num_of_k_max);
+%     subscript_temp = [repmat([sub_i(n), sub_j(n)],[num_of_k_max,1]),index_of_k_max'];
+%     subscript = [subscript; subscript_temp];
+% end
+%%%%%%%%
+
+% arrange the subscript (this part need to recode!!! It is hard to understand now!!! consider function 'sortrows')
+% Time Cost increase 20%!! what? NO!
 subscript = zeros(1,3);
-for n = 1 : num_of_ij_max
-    [prob_k_sort, index_k_sort] = sort(prob_k(n,:), 'descend');
-    diff_prob_k_sort = diff(prob_k_sort);
-    num_of_k_max = find( diff_prob_k_sort(1:4) == min(diff_prob_k_sort(1:4)) );
-    index_of_k_max = index_k_sort(1:num_of_k_max);
-    subscript_temp = [repmat([sub_i(n), sub_j(n)],[num_of_k_max,1]),index_of_k_max'];
+[prob_k_sort, index_k_sort] = sort(prob_k, 2, 'descend'); % dim = 2;
+diff_prob_k_sort = diff(prob_k_sort, 1, 2); % times = 1, dim = 2;
+% sort again to find minimum diff value and index
+[~, num_of_k_max] = sort(diff_prob_k_sort(:,1:4), 2, 'ascend'); % only fisrt col is useful
+[~, max_index_k_sort] = sort(prob_k_sort(:,1), 'descend');
+for i = 1 : num_of_ij_max
+    correct_order = max_index_k_sort(i);
+    index_of_k_max = index_k_sort(correct_order, 1:num_of_k_max(correct_order,1));
+    subscript_temp = [repmat([sub_i(correct_order), sub_j(correct_order)], [num_of_k_max(correct_order,1), 1]), index_of_k_max'];
     subscript = [subscript; subscript_temp];
 end
 
