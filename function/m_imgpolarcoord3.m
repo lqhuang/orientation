@@ -1,4 +1,4 @@
-function polar_img=m_imgpolarcoord3(img, xs, ys, cx, cy, radius, N_r,N_theta)
+function polar_img=m_imgpolarcoord3(img, xs, ys, cx, cy, radius, N_r, N_theta)
 % IMGPOLARCOORD converts a given image from cartesian coordinates to polar
 % coordinates.
 %
@@ -37,7 +37,7 @@ function polar_img=m_imgpolarcoord3(img, xs, ys, cx, cy, radius, N_r,N_theta)
    
    if exist('radius','var') == 0
       %radius = min(round(rows/2),round(cols/2))-1;
-      radius = min(rows-cy, cols-cx,cx,cy)-1;
+      radius = min(rows-cy, cols-cx, cx, cy)-1;
    end
    
    if exist('N_theta','var') == 0
