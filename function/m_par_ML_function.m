@@ -25,8 +25,8 @@ parfor index = 1: nx*ny*nz
 end
 
 [prob_sort, index_sort] = sort(prob, 'descend');
-prob_sort = diff(prob_sort);
-num_of_max = find( prob_sort(1:24) == min(prob_sort(1:24)) );
+diff_prob_sort = diff(prob_sort);
+num_of_max = find( diff_prob_sort(1:24) == min(diff_prob_sort(1:24)) );
 index_of_max = index_sort(1:num_of_max);
 
 % [sub_k, sub_j, sub_i] = ind2sub([nz, ny, nx], max_index); % old method way depend on the forloop
