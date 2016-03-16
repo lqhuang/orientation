@@ -17,9 +17,9 @@ end
 
 % set intervals of simlated projections
 if mod(180, step) == 0
-    theta = 0 : step : 360;
-    psi = 0 : step : 180;
     phi = 0 : step : 360;
+    theta = 0 : step : 180;
+    psi = 0 : step : 360;
 else
     disp('this interval is not recommended, please consider to input again.')
     error('step can not be divided by 360 degree')
@@ -43,27 +43,27 @@ end
 
 % create simulated projections
 % save projections into a cell
+num_phi = length(phi);
 num_theta = length(theta);
 num_psi = length(psi);
-num_phi = length(phi);
 
-projection = cell(num_theta, num_psi, num_phi);
+projection = cell(num_phi, num_theta, num_psi);
 disp('begin to caculate projection');
 
 switch space
     case 'real'
-        parfor index = 1 : num_theta * num_psi * num_phi
-            [i, j, k] = ind2sub([num_theta, num_psi, num_phi], index);
-            reprojection = m_projector(object, [theta(i), psi(j), phi(k)], interpolation);
+        parfor index = 1 : num_phi * num_theta * num_psi
+            [i, j, k] = ind2sub([num_phi, num_theta, num_psi], index);
+            reprojection = m_projector(object, [phi(i), theta(j), psi(k)], interpolation);
             mat_mean = mean(reprojection(:));
             mat_var = var(reprojection(:));
             projection{index} = (reprojection - mat_mean) / sqrt(mat_var); % real sapce case
             disp(['i=',num2str(i),',j=',num2str(j),',k=',num2str(k)]);
         end
     case 'fourier'
-        parfor index = 1 : num_theta * num_psi * num_phi
-            [i, j, k] = ind2sub([num_theta, num_psi, num_phi], index);
-            reprojection = m_projector(object, [theta(i), psi(j), phi(k)], interpolation);
+        parfor index = 1 : num_phi * num_theta * num_psi
+            [i, j, k] = ind2sub([num_phi, num_theta, num_psi], index);
+            reprojection = m_projector(object, [phi(i), theta(j), psi(k)], interpolation);
             mat_mean = mean(reprojection(:));
             mat_var = var(reprojection(:));
             projection{index} = abs( fftshift( fft2( (reprojection - mat_mean) / sqrt(mat_var) ) ) ); % fourier space case
@@ -77,11 +77,11 @@ particle.file = file;
 particle.filter = filter;
 particle.simulated_projection = projection;
 particle.step = step;
-particle.simulated_size = [num_theta, num_psi, num_phi];
+particle.simulated_size = [num_phi, num_theta, num_psi];
 particle.object = object;
+particle.phi = phi;
 particle.theta = theta;
 particle.psi = psi;
-particle.phi = phi;
 particle.space = space;
 if strcmp(space, 'fourier')
     particle.oversampling_factor = factor;

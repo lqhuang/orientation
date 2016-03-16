@@ -5,14 +5,14 @@ function [subscript, varargout]= m_corr_method_function(exp_data, projection_cel
 % particle: struct of particle information. 
 %           PAY ATTENTION: all simulated projections are saved as
 %           matrix format. And the index increasing in order of
-%           phi(k), psi(j), thata(i)
+%           psi(k), theta(j), thata(i)
 % pcimg_cell: all C2 image in polar cart should calculate previously
 % pcimg_interpolation: the interpolation method in creating C2 image.
 % weight: weight method in C2 image.
 % output:
 % subscript: the subscript in simulated_projection.
 % corr(optional): corrlation-maximum likelihood probability.
-% prob_k(optional): maximum likelihood probability in Phi angle.
+% prob_k(optional): maximum likelihood probability in Psi angle.
 
 if exist('pcimg_interpolation', 'var') == 0;
     pcimg_interpolation = 'none';
