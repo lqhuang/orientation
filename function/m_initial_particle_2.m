@@ -6,6 +6,10 @@ function particle = m_initial_particle_2(file, filter, step, space, interpolatio
 % fft: create fourier space or not
 % Out:
 % particle: struct format. inlude different information
+% Angle Conventions
+% The first rotation is denoted by phi or rot and is around the Z-axis.
+% The second rotation is called theta or tilt and is around the new Y-axis.
+% The third rotation is denoted by psi and is around the new Z axis
 
 % check input information
 if exist('space','var') == 0
@@ -17,9 +21,9 @@ end
 
 % set intervals of simlated projections
 if mod(180, step) == 0
-    theta = 0 : step : 360;
-    psi = 0 : step : 180;
     phi = 0 : step : 360;
+    theta = 0 : step : 180;
+    psi = 0 : step : 360;
 else
     disp('this interval is not recommended, please consider to input again.')
     error('step can not be divided by 360 degree')
@@ -43,26 +47,26 @@ end
 
 % create simulated projections
 % save projections into a cell
+num_phi = length(phi);
 num_theta = length(theta);
 num_psi = length(psi);
-num_phi = length(phi);
 
-projection = cell(num_theta, num_psi, num_phi);
+projection = cell(num_phi, num_theta, num_psi);
 disp('begin to caculate projection');
 
 switch space
     case 'real'
-        parfor index = 1 : num_theta * num_psi * num_phi
-            [i, j, k] = ind2sub([num_theta, num_psi, num_phi], index);
-            reprojection = m_projector(object, [theta(i), psi(j), phi(k)], interpolation);
+        parfor index = 1 : num_phi * num_theta * num_psi
+            [i, j, k] = ind2sub([num_phi, num_theta, num_psi], index);
+            reprojection = m_projector(object, [phi(i), theta(j), psi(k)], interpolation);
             projection{index} = reprojection + 1; % real space case
             disp(['i=',num2str(i),',j=',num2str(j),',k=',num2str(k)]);
         end
     case 'fourier'
         factor = 5;
-        parfor index = 1 : num_theta * num_psi * num_phi
-            [i, j, k] = ind2sub([num_theta, num_psi, num_phi], index);
-            reprojection = m_projector(object, [theta(i), psi(j), phi(k)], interpolation);
+        parfor index = 1 : num_phi * num_theta * num_psi
+            [i, j, k] = ind2sub([num_phi, num_theta, num_psi], index);
+            reprojection = m_projector(object, [phi(i), theta(j), psi(k)], interpolation);
 %             mat_mean = mean(reprojection(:));
 %             mat_var = var(reprojection(:));
             projection{index} = m_oversampler(reprojection, factor); % fourier space case
@@ -76,11 +80,11 @@ particle.file = file;
 particle.filter = filter;
 particle.simulated_projection = projection;
 particle.step = step;
-particle.simulated_size = [num_theta, num_psi, num_phi];
+particle.simulated_size = [num_phi, num_theta, num_psi];
 particle.object = object;
+particle.phi = phi;
 particle.theta = theta;
 particle.psi = psi;
-particle.phi = phi;
 particle.space = space;
 if strcmp(space, 'fourier')
     particle.oversampling_factor = factor;

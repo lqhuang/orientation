@@ -1,12 +1,16 @@
 function [projection, varargout] = m_projector(object, euler_angle, interpolation)
-%  create a projection in certain Euler angle of object
-%  Input:
-%  object: model to be project, 3d matrix
-%  euler_angle: the orientation of the slice plane in degree, "ZYZ" format£¡
-%  Output:
-%  projection:  from model, 2d matrix, size defined by input object
+% create a projection in certain Euler angle of object
+% Input:
+% object: model to be project, 3d matrix
+% euler_angle: the orientation of the slice plane in degree, "ZYZ" format!
+% Output:
+% projection:  from model, 2d matrix, size defined by input object
+% Angle Conventions
+% The first rotation is denoted by phi or rot and is around the Z-axis.
+% The second rotation is called theta or tilt and is around the new Y-axis.
+% The third rotation is denoted by psi and is around the new Z axis
 
-% rotate matrix
+% Rotate matrix
 object_size = size(object);
 center = round(object_size/2);
 

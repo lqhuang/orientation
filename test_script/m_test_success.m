@@ -37,7 +37,7 @@ end
 figure
 plot(success/4*100)
 axis([0 length(success) 0 120])
-xlabel('index of (\theta, \psi, \Phi)')
+xlabel('index of (\phi, \theta, \Psi)')
 ylabel('success rate (%)')
 title(['Match Test of ',method]);
 
