@@ -2,8 +2,6 @@ run('/home/lqhuang/Documents/MATLAB/pathdef.m');
 addpath(ans)
 disp('add path successful!')
 
-mypool = parpool(20);
-
 %% initial a particle
 % step = 10;
 % file = '/home/lqhuang/Documents/MATLAB/orientation/particle/EMD-6044.map';
@@ -20,6 +18,6 @@ mypool = parpool(20);
 % disp('pcimg create successful!')
 
 %% do test 1
-result_path = '/mnt/data/lqhuang/reuslt/2016-03-16';
+result_path = '/mnt/data/lqhuang/result/2016-03-16';
 mkdir(result_path);
 [accuracy_real, accuracy_fourier, subscript] = m_instrument_noise_test(result_path, subscript);
