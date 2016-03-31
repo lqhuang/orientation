@@ -29,48 +29,48 @@ end
 accuracy_real = struct;
 accuracy_fourier = struct;
 
-% %% REAL SPACE
-% step = 10;
-% space = 'real';
-% path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_real_125_125_unnormalized_projector_linear'];
-% load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
-% % ML
-% accuracy_real.ML = test_function(subscript, particle, space, 'ML', 'none', 'linear', 'none');
-% disp('Finish a test_function - REAL - ML')
-% 
-% % Corr-linear-none
-% interpolation = 'linear';
-% weight = 'none';
-% clear pcimg_cell
-% load([path,'/corr_linear_none.mat'], 'pcimg_cell');
-% accuracy_real.corr_linear_none = test_function(subscript, particle, space, 'Corr', pcimg_cell, interpolation, weight);
-% disp('Finish a test_function - REAL - LN')
-% 
-% % Corr-nearest-none
-% interpolation = 'nearest';
-% weight = 'none';
-% clear pcimg_cell
-% load([path,'/corr_nearest_none.mat'], 'pcimg_cell');
-% accuracy_real.corr_nearest_none = test_function(subscript, particle, space, 'Corr', pcimg_cell, interpolation, weight);
-% disp('Finish a test_function - REAL - NN')
-% 
-% % Corr-linear-nearest
-% interpolation = 'linear';
-% weight = 'linear';
-% clear pcimg_cell
-% load([path,'/corr_linear_linear.mat'], 'pcimg_cell');
-% accuracy_real.corr_linear_linear = test_function(subscript, particle, space, 'Corr', pcimg_cell, interpolation, weight);
-% disp('Finish a test_function - REAL - LL')
-% 
-% % Corr-nearest-none
-% interpolation = 'nearest';
-% weight = 'linear';
-% clear pcimg_cell
-% load([path,'/corr_nearest_linear.mat'], 'pcimg_cell');
-% accuracy_real.corr_nearest_none = test_function(subscript, particle, space, 'Corr', pcimg_cell, interpolation, weight);
-% disp('Finish a test_function - REAL - NL')
-% 
-% save([result_path,'/accuracy_real.mat'], 'accuracy_real'); disp('save successful');
+%% REAL SPACE
+step = 10;
+space = 'real';
+path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_real_125_125_unnormalized_projector_linear'];
+load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
+% ML
+accuracy_real.ML = test_function(subscript, particle, space, 'ML', 'none', 'linear', 'none');
+disp('Finish a test_function - REAL - ML')
+
+% Corr-linear-none
+interpolation = 'linear';
+weight = 'none';
+clear pcimg_cell
+load([path,'/corr_linear_none.mat'], 'pcimg_cell');
+accuracy_real.corr_linear_none = test_function(subscript, particle, space, 'Corr', pcimg_cell, interpolation, weight);
+disp('Finish a test_function - REAL - LN')
+
+% Corr-nearest-none
+interpolation = 'nearest';
+weight = 'none';
+clear pcimg_cell
+load([path,'/corr_nearest_none.mat'], 'pcimg_cell');
+accuracy_real.corr_nearest_none = test_function(subscript, particle, space, 'Corr', pcimg_cell, interpolation, weight);
+disp('Finish a test_function - REAL - NN')
+
+% Corr-linear-nearest
+interpolation = 'linear';
+weight = 'linear';
+clear pcimg_cell
+load([path,'/corr_linear_linear.mat'], 'pcimg_cell');
+accuracy_real.corr_linear_linear = test_function(subscript, particle, space, 'Corr', pcimg_cell, interpolation, weight);
+disp('Finish a test_function - REAL - LL')
+
+% Corr-nearest-none
+interpolation = 'nearest';
+weight = 'linear';
+clear pcimg_cell
+load([path,'/corr_nearest_linear.mat'], 'pcimg_cell');
+accuracy_real.corr_nearest_none = test_function(subscript, particle, space, 'Corr', pcimg_cell, interpolation, weight);
+disp('Finish a test_function - REAL - NL')
+
+save([result_path,'/accuracy_real.mat'], 'accuracy_real'); disp('save successful');
 
 %% Fourier SPACE
 step = 10;
