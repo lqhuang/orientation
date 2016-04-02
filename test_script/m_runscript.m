@@ -5,7 +5,7 @@ disp('add path successful!')
 %% initial a particle
 % step = 10;
 % file = '/home/lqhuang/Documents/MATLAB/orientation/particle/EMD-6044.map';
-% path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_fourier_125_125_unnormalized_projector(linear)'];
+% path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_fourier_125_125_unnormalized_projector_linear'];
 % run_path = pwd;
 % mkdir(path)
 
@@ -18,6 +18,12 @@ disp('add path successful!')
 % disp('pcimg create successful!')
 
 %% do test 1
-result_path = '/mnt/data/lqhuang/result/2016-03-16';
-mkdir(result_path);
-[accuracy_real, accuracy_fourier, subscript] = m_instrument_noise_test(result_path, subscript);
+% result_path = '/mnt/data/lqhuang/result/2016-03-16';
+% mkdir(result_path);
+% [accuracy_real, accuracy_fourier, subscript] = m_instrument_noise_test(result_path, subscript);
+
+
+%% pertubation angle test
+step = 3;
+path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_fourier_125_125_unnormalized_projector_linear'];
+result_path = '/mnt/data/lqhuang/result/2016-04-02';
