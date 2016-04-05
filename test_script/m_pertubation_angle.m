@@ -6,25 +6,23 @@ test_num = 100;
 
 % corr + linear + linear
 load([path,'/corr_linear_none.mat'], 'pcimg_cell')
-success = zeros(2, leng);
+success_Corr = zeros(2, leng);
 for n = 1:length(angle_range)
-    [success(1, n), success(2, n)] = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'Corr', 'linear', 'none');
-    disp(['range:',num2str(n),'accuracy:',num2str(success)]);
+    [success_Corr(1, n), success_Corr(2, n)] = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'corr', 'linear', 'none');
 end
 
 disp('Finish')
-save([result_path,'/pertubation_test_Corr_linear_none.mat'], 'success');
+save([result_path,'/pertubation_test_Corr_linear_none.mat'], 'success_corr');
 
 % Maximum Likelihood
 pcimg_cell = cell(1);
-success = zeros(2, leng);
+success_ML = zeros(2, leng);
 for n = 1:length(angle_range)
-    [success(1, n), success(2, n)] = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'ML', 'none', 'none');
-    disp(['range:',num2str(n),'accuracy:',num2str(success)]);
+    [success_ML(1, n), success_ML(2, n)] = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'ML', 'none', 'none');
 end
 
 disp('Finish')
-save([result_path,'/pertubation_test_ML.mat'], 'success');
+save([result_path,'/pertubation_test_ML.mat'], 'success_ML');
 
 % 
 % 

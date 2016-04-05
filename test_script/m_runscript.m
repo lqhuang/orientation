@@ -25,7 +25,11 @@ disp('add path successful!')
 
 %% pertubation angle test
 step = 3;
-path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_fourier_125_125_unnormalized_projector_linear'];
-result_path = '/mnt/data/lqhuang/result/2016-04-02';
+path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_real_125_125_unnormalized_projector_linear'];
+result_path = '/mnt/data/lqhuang/result/2016-04-05';
+mkdir(result_path);
+load([path,'/EMD_6044_3.mat'], 'particle');
+disp('load successful')
+mypool = parpool(10);
 
 m_pertubation_angle

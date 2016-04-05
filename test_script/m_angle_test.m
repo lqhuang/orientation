@@ -13,11 +13,15 @@ psi = euler_angle(3) - 1;
 
 step = particle.step;
 object = particle.object;
+space = particle.space;
+fourier_factor = 1;
+if strcmp(space, 'fourier')
+    fourier_factor = particle.factor;
+end
 
 phi_angle_range = angle_range(1);
 theta_angle_range = angle_range(2);
 psi_angle_range = angle_range(3);
-space = particle.space;
 
 exp_data = cell(1, test_num);
 parfor iteration = 1:test_num
@@ -29,11 +33,15 @@ parfor iteration = 1:test_num
 %     mat_mean = mean(reprojection(:));
 %     mat_var = var(reprojection(:));
 %     reprojection = (reprojection - mat_mean) / sqrt(mat_var);
-    exp_data{iteration} = poissrnd(reprojection);
+    if strcmp(space, 'real')
+        exp_data{iteration} = poissrnd(reprojection+1);
+    elseif strcmp(space, 'fourier')
+        exp_img = poissrnd(reprojection+1);
+        exp_data{iteration} = m_oversampler(exp_img, fourier_factor);
+    end
 end
 
 for iteration = 1:test_num
-
     tic
     switch method
         case 'ML'
@@ -41,7 +49,7 @@ for iteration = 1:test_num
             [loose_match, strict_match] = m_find_correct(euler_angle, subscript, space);
             save_success(iteration) = loose_match;
             save_strict_success(iteration) = strict_match;
-        case 'Corr'
+        case 'corr'
             subscript = m_par_corr_method_function(exp_data{iteration}, particle, pcimg_cell, pcimg_method, weight);
             [loose_match, strict_match] = m_find_correct(euler_angle, subscript, space);
             save_success(iteration) = loose_match;

@@ -38,36 +38,36 @@ load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
 accuracy_real.ML = test_function(subscript, particle, space, 'ML', 'none', 'linear', 'none');
 disp('Finish a test_function - REAL - ML')
 
-% Corr-linear-none
+% corr-linear-none
 interpolation = 'linear';
 weight = 'none';
 clear pcimg_cell
 load([path,'/corr_linear_none.mat'], 'pcimg_cell');
-accuracy_real.corr_linear_none = test_function(subscript, particle, space, 'Corr', pcimg_cell, interpolation, weight);
+accuracy_real.corr_linear_none = test_function(subscript, particle, space, 'corr', pcimg_cell, interpolation, weight);
 disp('Finish a test_function - REAL - LN')
 
-% Corr-nearest-none
+% corr-nearest-none
 interpolation = 'nearest';
 weight = 'none';
 clear pcimg_cell
 load([path,'/corr_nearest_none.mat'], 'pcimg_cell');
-accuracy_real.corr_nearest_none = test_function(subscript, particle, space, 'Corr', pcimg_cell, interpolation, weight);
+accuracy_real.corr_nearest_none = test_function(subscript, particle, space, 'corr', pcimg_cell, interpolation, weight);
 disp('Finish a test_function - REAL - NN')
 
-% Corr-linear-nearest
+% corr-linear-nearest
 interpolation = 'linear';
 weight = 'linear';
 clear pcimg_cell
 load([path,'/corr_linear_linear.mat'], 'pcimg_cell');
-accuracy_real.corr_linear_linear = test_function(subscript, particle, space, 'Corr', pcimg_cell, interpolation, weight);
+accuracy_real.corr_linear_linear = test_function(subscript, particle, space, 'corr', pcimg_cell, interpolation, weight);
 disp('Finish a test_function - REAL - LL')
 
-% Corr-nearest-none
+% corr-nearest-none
 interpolation = 'nearest';
 weight = 'linear';
 clear pcimg_cell
 load([path,'/corr_nearest_linear.mat'], 'pcimg_cell');
-accuracy_real.corr_nearest_none = test_function(subscript, particle, space, 'Corr', pcimg_cell, interpolation, weight);
+accuracy_real.corr_nearest_none = test_function(subscript, particle, space, 'corr', pcimg_cell, interpolation, weight);
 disp('Finish a test_function - REAL - NL')
 
 save([result_path,'/accuracy_real.mat'], 'accuracy_real'); disp('save successful');
@@ -79,36 +79,36 @@ path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_fourier_125_125_unnormaliz
 clear particle
 load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
 
-% Corr-linear-none
+% corr-linear-none
 interpolation = 'linear';
 weight = 'none';
 clear pcimg_cell
 load([path,'/corr_linear_none.mat'], 'pcimg_cell');
-accuracy_fourier.corr_linear_none = test_function(subscript, particle, space, 'Corr', pcimg_cell, interpolation, weight);
+accuracy_fourier.corr_linear_none = test_function(subscript, particle, space, 'corr', pcimg_cell, interpolation, weight);
 disp('Finish a test_function - Fourier - LN')
 
-% Corr-nearest-none
+% corr-nearest-none
 interpolation = 'nearest';
 weight = 'none';
 clear pcimg_cell
 load([path,'/corr_nearest_none.mat'], 'pcimg_cell');
-accuracy_fourier.corr_nearest_none = test_function(subscript, particle, space, 'Corr', pcimg_cell, interpolation, weight);
+accuracy_fourier.corr_nearest_none = test_function(subscript, particle, space, 'corr', pcimg_cell, interpolation, weight);
 disp('Finish a test_function - Fourier - NN')
 
-% Corr-linear-nearest
+% corr-linear-nearest
 interpolation = 'linear';
 weight = 'linear';
 clear pcimg_cell
 load([path,'/corr_linear_linear.mat'], 'pcimg_cell');
-accuracy_fourier.corr_linear_linear = test_function(subscript, particle, space, 'Corr', pcimg_cell, interpolation, weight);
+accuracy_fourier.corr_linear_linear = test_function(subscript, particle, space, 'corr', pcimg_cell, interpolation, weight);
 disp('Finish a test_function - Fourier - LL')
 
-% Corr-nearest-none
+% corr-nearest-none
 interpolation = 'nearest';
 weight = 'linear';
 clear pcimg_cell
 load([path,'/corr_nearest_linear.mat'], 'pcimg_cell');
-accuracy_fourier.corr_nearest_none = test_function(subscript, particle, space, 'Corr', pcimg_cell, interpolation, weight);
+accuracy_fourier.corr_nearest_none = test_function(subscript, particle, space, 'corr', pcimg_cell, interpolation, weight);
 disp('Finish a test_function - Fourier - NL')
 
 save([result_path,'/accuracy_fourier.mat'], 'accuracy_fourier'); disp('save successful');
@@ -155,8 +155,8 @@ for n = 1:length
                     match = m_find_correct(subscript(n, :), subscript_output(1:2, :));
                     accuracy(3, n) = accuracy(3, n) + match;
                 end
-            case 'Corr'                
-                % Corr
+            case 'corr'                
+                % corr
                 subscript_output = m_par_corr_method_function(img, particle, pcimg_cell, interpolation, weight);
                 % loose
                 match = m_find_correct(subscript(n, :), subscript_output);
@@ -216,11 +216,11 @@ for n = 1:length
                         accuracy(4, n) = accuracy(4, n) + match;
                     end
                 end
-            case 'Corr'
-                % Corr
+            case 'corr'
+                % corr
                 tic
                 subscript_output = m_par_corr_method_function(exp_img, particle, pcimg_cell, interpolation, weight);
-                Corr_time = toc
+                corr_time = toc
                 % loose
                 match = m_find_correct(subscript(n, :), subscript_output);
                 accuracy(2, n) = accuracy(2, n) + match;
