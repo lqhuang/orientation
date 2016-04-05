@@ -1,4 +1,4 @@
-function output_image = m_oversampler(image, factor, output_size)
+function output_image = m_oversampler(image, oversample_factor, output_size)
 % Use to oversample image in fourier space.
 % input an image in Real Space
 % put it into a larger framework
@@ -11,8 +11,8 @@ function output_image = m_oversampler(image, factor, output_size)
 %
 
 % check input information
-if exist('factor', 'var') == 0
-    factor = 5;
+if exist('oversample_factor', 'var') == 0
+    oversample_factor = 5;
 end
 if exist('output_size', 'var') == 0
     output_size = 0;
@@ -25,8 +25,8 @@ if (rows/2 - floor(rows/2) == 0) || (cols/2 - floor(cols/2) == 0)
 end
 
 % oversampling
-framework_rows = factor * rows;
-framework_cols = factor * cols;
+framework_rows = oversample_factor * rows;
+framework_cols = oversample_factor * cols;
 framework = zeros(framework_rows, framework_cols);
 cx = round(framework_rows/2);
 cy = round(framework_cols/2);
