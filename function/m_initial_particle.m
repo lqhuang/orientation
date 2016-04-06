@@ -6,10 +6,17 @@ function particle = m_initial_particle(file, filter, step, space, interpolation,
 % fft: create fourier space or not
 % Out:
 % particle: struct format. inlude different information
+% Angle Conventions
+% The first rotation is denoted by phi or rot and is around the Z-axis.
+% The second rotation is called theta or tilt and is around the new Y-axis.
+% The third rotation is denoted by psi and is around the new Z axis
 
 % check input information
 if exist('space','var') == 0
     space = 'real';
+end
+if exist('interpolation','var') == 0
+    space = 'linear';
 end
 if exist('resize_radius','var') == 0
     resize_radius = 0;
@@ -17,9 +24,9 @@ end
 
 % set intervals of simlated projections
 if mod(180, step) == 0
-    phi = 0 : step : 360;
+    phi = 0 : step : 360 - step;
     theta = 0 : step : 180;
-    psi = 0 : step : 360;
+    psi = 0 : step : 360 - step;
 else
     disp('this interval is not recommended, please consider to input again.')
     error('step can not be divided by 360 degree')
@@ -57,16 +64,18 @@ switch space
             reprojection = m_projector(object, [phi(i), theta(j), psi(k)], interpolation);
             mat_mean = mean(reprojection(:));
             mat_var = var(reprojection(:));
-            projection{index} = (reprojection - mat_mean) / sqrt(mat_var); % real sapce case
+            projection{index} = (reprojection - mat_mean) ./ sqrt(mat_var); % real sapce case
             disp(['i=',num2str(i),',j=',num2str(j),',k=',num2str(k)]);
         end
     case 'fourier'
+        oversampling_factor = 5;
         parfor index = 1 : num_phi * num_theta * num_psi
             [i, j, k] = ind2sub([num_phi, num_theta, num_psi], index);
             reprojection = m_projector(object, [phi(i), theta(j), psi(k)], interpolation);
             mat_mean = mean(reprojection(:));
             mat_var = var(reprojection(:));
-            projection{index} = abs( fftshift( fft2( (reprojection - mat_mean) / sqrt(mat_var) ) ) ); % fourier space case
+            norm_projection = (reprojection - mat_mean) ./ sqrt(mat_var);
+            projection{index} = m_oversampler(norm_projection, oversampling_factor); % fourier space case
             disp(['i=',num2str(i),',j=',num2str(j),',k=',num2str(k)]);
         end
 end
@@ -84,6 +93,6 @@ particle.theta = theta;
 particle.psi = psi;
 particle.space = space;
 if strcmp(space, 'fourier')
-    particle.oversampling_factor = factor;
+    particle.oversampling_factor = oversampling_factor;
 end
 end

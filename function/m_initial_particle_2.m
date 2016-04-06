@@ -15,15 +15,18 @@ function particle = m_initial_particle_2(file, filter, step, space, interpolatio
 if exist('space','var') == 0
     space = 'none';
 end
+if exist('interpolation','var') == 0
+    space = 'linear';
+end
 if exist('resize_radius','var') == 0
     resize_radius = 0;
 end
 
 % set intervals of simlated projections
 if mod(180, step) == 0
-    phi = 0 : step : 360;
+    phi = 0 : step : 360 - step;
     theta = 0 : step : 180;
-    psi = 0 : step : 360;
+    psi = 0 : step : 360 - step;
 else
     disp('this interval is not recommended, please consider to input again.')
     error('step can not be divided by 360 degree')
@@ -59,17 +62,15 @@ switch space
         parfor index = 1 : num_phi * num_theta * num_psi
             [i, j, k] = ind2sub([num_phi, num_theta, num_psi], index);
             reprojection = m_projector(object, [phi(i), theta(j), psi(k)], interpolation);
-            projection{index} = reprojection + 1; % real space case
+            projection{index} = reprojection; % real space case
             disp(['i=',num2str(i),',j=',num2str(j),',k=',num2str(k)]);
         end
     case 'fourier'
-        factor = 5;
+        oversampling_factor = 5;
         parfor index = 1 : num_phi * num_theta * num_psi
             [i, j, k] = ind2sub([num_phi, num_theta, num_psi], index);
             reprojection = m_projector(object, [phi(i), theta(j), psi(k)], interpolation);
-%             mat_mean = mean(reprojection(:));
-%             mat_var = var(reprojection(:));
-            projection{index} = m_oversampler(reprojection, factor); % fourier space case
+            projection{index} = m_oversampler(reprojection, oversampling_factor); % fourier space case
             disp(['i=',num2str(i),',j=',num2str(j),',k=',num2str(k)]);
         end
 end
@@ -87,6 +88,6 @@ particle.theta = theta;
 particle.psi = psi;
 particle.space = space;
 if strcmp(space, 'fourier')
-    particle.oversampling_factor = factor;
+    particle.oversampling_factor = oversampling_factor;
 end
 end
