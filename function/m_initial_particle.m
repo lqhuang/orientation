@@ -16,7 +16,7 @@ if exist('space','var') == 0
     space = 'real';
 end
 if exist('interpolation','var') == 0
-    space = 'linear';
+    interpolation = 'linear';
 end
 if exist('resize_radius','var') == 0
     resize_radius = 0;

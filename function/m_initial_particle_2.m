@@ -68,10 +68,11 @@ switch space
     case 'fourier'
         oversampling_factor = 5;
         parfor index = 1 : num_phi * num_theta * num_psi
+            tic
             [i, j, k] = ind2sub([num_phi, num_theta, num_psi], index);
             reprojection = m_projector(object, [phi(i), theta(j), psi(k)], interpolation);
             projection{index} = m_oversampler(reprojection, oversampling_factor); % fourier space case
-            disp(['i=',num2str(i),',j=',num2str(j),',k=',num2str(k)]);
+            toc
         end
 end
 

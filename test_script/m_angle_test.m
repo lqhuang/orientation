@@ -36,7 +36,7 @@ parfor iteration = 1:test_num
     if strcmp(space, 'real')
         exp_data{iteration} = poissrnd(reprojection+1);
     elseif strcmp(space, 'fourier')
-        exp_img = poissrnd(reprojection+1);
+        exp_img = poissrnd(reprojection);
         exp_data{iteration} = m_oversampler(exp_img, fourier_factor);
     end
 end
