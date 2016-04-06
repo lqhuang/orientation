@@ -6,9 +6,9 @@ test_num = 100;
 
 % corr + linear + linear
 load([path,'/corr_linear_none.mat'], 'pcimg_cell')
-success_Corr = zeros(2, leng);
+success_corr = zeros(2, leng);
 for n = 1:length(angle_range)
-    [success_Corr(1, n), success_Corr(2, n)] = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'corr', 'linear', 'none');
+    [success_corr(1, n), success_corr(2, n)] = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'corr', 'linear', 'none');
 end
 
 disp('Finish')
