@@ -4,19 +4,20 @@ disp('add path successful!')
 
 %% initial a particle
 step = 3;
+space = 'real';
 file = '/home/lqhuang/Documents/MATLAB/orientation/particle/EMD-6044.map';
-path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_fourier_125_125_unnormalized_projector_linear'];
-run_path = pwd;
+path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_',space,'_125_125_unnormalized_projector_linear'];
+
 mkdir(path)
-mypool = parpool(10);
+% mypool = parpool(10);
 
-particle = m_initial_particle_2(file, 30.4, step, 'fourier', 'linear');
-disp('initial successful!')
+% particle = m_initial_particle_2(file, 30.4, step, 'fourier', 'linear');
+% disp('initial successful!')
 
-save([path,'/EMD6044_3.mat'], 'particle')
+% save([path,'/EMD6044_3.mat'], 'particle')
 
-m_create_pcimg;
-disp('pcimg create successful!')
+% m_create_pcimg;
+% disp('pcimg create successful!')
 
 
 %% do test 1
@@ -26,12 +27,8 @@ disp('pcimg create successful!')
 
 
 %% pertubation angle test
-step = 3;
-% path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_real_125_125_unnormalized_projector_linear'];
-result_path = '/mnt/data/lqhuang/result/2016-04-07';
+result_path = '/mnt/data/lqhuang/result/2016-04-13';
 mkdir(result_path);
-% load([path,'/EMD_6044_3.mat'], 'particle');
-% disp('load successful')
-% mypool = parpool(10);
-% 
+angle_range = [0, 0.5, 1, 1.5, 2, 2.5, 3];
+
 m_pertubation_angle
