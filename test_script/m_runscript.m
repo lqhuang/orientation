@@ -27,7 +27,7 @@ mkdir(path)
 
 
 %% pertubation angle test
-result_path = '/mnt/data/lqhuang/result/2016-04-13';
+result_path = '/mnt/data/lqhuang/result/2016-04-19';
 mkdir(result_path);
 angle_range = [0, 0.5, 1, 1.5, 2, 2.5, 3];
 
