@@ -3,7 +3,8 @@ function C2 = m_corr_function_fft(img, pcimg_interpolation, weight)
     % input:
     % img: the image need to change
     % pcimg_interpolation: 
-    %   'none' --> imgpolarcoord function
+    %   'nearest' --> nearest interpolation imgpolarcoord function
+    %   'linear' --> linear interpolation 
     %   'bilinear' --> ImToPolar function
     % weight:
     %   'none' --> no weight

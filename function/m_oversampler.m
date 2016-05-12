@@ -6,7 +6,9 @@ function output_image = m_oversampler(image, oversampling_factor, output_size)
 % Cut central part to a small image
 %
 % input information:
-% 
+% image:
+% oversampling_factor: default = 5
+% output_szie: default = [0 0]
 % output information:
 %
 
