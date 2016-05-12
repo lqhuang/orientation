@@ -1,4 +1,4 @@
-function [accuracy_real, accuracy_fourier, subscript] = m_instrument_noise_test(result_path, subscript)
+function [accuracy_real, accuracy_fourier, subscript] = m_instrument_noise_test_2(result_path, subscript)
 
 if exist('subscript', 'var') == 0
     % 先随机生成等待测试的角度 分第一层的和大部分随机的
@@ -41,17 +41,17 @@ path = ['/vol7/home/lqhuang/Data/lqhuang/EMD_6044_',num2str(step),'_real_125_125
 load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
 
 % % ML
-% accuracy_real.ML = test_function(subscript, particle, space, 'ML', 'none', 'linear', 'none');
-% disp('Finish a test_function - REAL - ML')
+accuracy_real.ML = test_function(subscript, particle, space, 'ML', 'none', 'linear', 'none');
+disp('Finish a test_function - REAL - ML')
 
 
 % corr-linear-none
-interpolation = 'linear';
-weight = 'none';
-clear pcimg_cell
-load([path,'/corr_linear_none.mat'], 'pcimg_cell');
-accuracy_real.corr_linear_none = test_function(subscript, particle, space, 'corr', pcimg_cell, interpolation, weight);
-disp('Finish a test_function - REAL - LN')
+% interpolation = 'linear';
+% weight = 'none';
+% clear pcimg_cell
+% load([path,'/corr_linear_none.mat'], 'pcimg_cell');
+% accuracy_real.corr_linear_none = test_function(subscript, particle, space, 'corr', pcimg_cell, interpolation, weight);
+% disp('Finish a test_function - REAL - LN')
 
 save([result_path,'/accuracy_real.mat'], 'accuracy_real'); disp('save successful');
 
@@ -92,17 +92,17 @@ path = ['/vol7/home/lqhuang/Data/lqhuang/EMD_6044_',num2str(step),'_fourier_125_
 clear particle
 load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
 
-% % ML
-% accuracy_fourier.ML = test_function(subscript, particle, space, 'ML', 'none', 'linear', 'none');
-% disp('Finish a test_function - Fourier - ML')
+% ML
+accuracy_fourier.ML = test_function(subscript, particle, space, 'ML', 'none', 'linear', 'none');
+disp('Finish a test_function - Fourier - ML')
 
 % corr-linear-none
-interpolation = 'linear';
-weight = 'none';
-clear pcimg_cell
-load([path,'/corr_linear_none.mat'], 'pcimg_cell');
-accuracy_fourier.corr_linear_none = test_function(subscript, particle, space, 'corr', pcimg_cell, interpolation, weight);
-disp('Finish a test_function - Fourier - LN')
+% interpolation = 'linear';
+% weight = 'none';
+% clear pcimg_cell
+% load([path,'/corr_linear_none.mat'], 'pcimg_cell');
+% accuracy_fourier.corr_linear_none = test_function(subscript, particle, space, 'corr', pcimg_cell, interpolation, weight);
+% disp('Finish a test_function - Fourier - LN')
 
 save([result_path,'/accuracy_fourier.mat'], 'accuracy_fourier'); disp('save successful');
 
