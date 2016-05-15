@@ -80,30 +80,30 @@ for n = 1:length(angle_range)
     [success_corr(1, n), success_corr(2, n)] = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'corr', 'linear', 'none');
 end
 disp('Finish')
-success_corr_fourier = success_corr;
-save([result_path,'/pertubation_test_corr_linear_none_fourier.mat'], 'success_corr_fourier');
+success_corr_real = success_corr;
+save([result_path,'/pertubation_test_corr_linear_none_real.mat'], 'success_corr_real');
 
-clear pcimg_cell
-clear particle
-clear m_angle_test
+% clear pcimg_cell
+% clear particle
+% clear m_angle_test
 
 % 只计算 real space 和 fourier space 的 correlation 方法..不然耗时太长了
 % fourier space
-step = 3;
-space = 'fourier';
-path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_',space,'_125_125_unnormalized_projector_linear'];
-
-load([path,'/EMD_6044_3.mat'], 'particle');
+% step = 3;
+% space = 'fourier';
+% path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_',space,'_125_125_unnormalized_projector_linear'];
+% 
+% load([path,'/EMD_6044_3.mat'], 'particle');
  
-leng = length(angle_range);
+% leng = length(angle_range);
 % euler_angle = [21, 21, 21]; % input euler angle 60 60 60
-test_num = 100;
+% test_num = 100;
 % corr + linear + linear
-load([path,'/corr_linear_none.mat'], 'pcimg_cell')
-success_corr = zeros(2, leng);
-for n = 1:length(angle_range)
-    [success_corr(1, n), success_corr(2, n)] = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'corr', 'linear', 'none');
-end
-disp('Finish')
-success_corr_real = success_corr;
-save([result_path,'/pertubation_test_corr_linear_none_real.mat'], 'success_corr_real');
+% load([path,'/corr_linear_none.mat'], 'pcimg_cell')
+% success_corr = zeros(2, leng);
+% for n = 1:length(angle_range)
+%     [success_corr(1, n), success_corr(2, n)] = m_angle_test(particle, pcimg_cell, euler_angle, [angle_range(n) angle_range(n) angle_range(n)], test_num, 'corr', 'linear', 'none');
+% end
+% disp('Finish')
+% success_corr_fourier = success_corr;
+% save([result_path,'/pertubation_test_corr_linear_none_fourier.mat'], 'success_corr_fourier');

@@ -23,10 +23,9 @@ disp('add path successful!')
 
 %% do test 1
 mypool = parpool(10);
-% result_path = '/vol7/home/lqhuang/Data/lqhuang/result/2016-05-12-1'
-result_path = '/mnt/data/lqhuang/result/2016-05-12-1'
+result_path = '/mnt/data/lqhuang/result/2016-05-12-2'
 mkdir(result_path);
-[accuracy_real, accuracy_fourier, subscript] = m_instrument_noise_test(result_path);
+[accuracy_real, accuracy_fourier, subscript] = m_instrument_noise_test_2(result_path);
 
 
 %% pertubation angle test

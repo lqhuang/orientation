@@ -24,7 +24,7 @@ nz = 120;
 % check size of input euler angle
 [num_euler_angle, ~] = size(euler_angle);
 if num_euler_angle == 0
-    num_euler_angle = 2500;
+    num_euler_angle = 100;
     euler_angle = zeros(num_euler_angle, 3);
     for n = 1:num_euler_angle
         j = 1;
