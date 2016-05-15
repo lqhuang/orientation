@@ -3,11 +3,11 @@
 #PBS -q batch 
 #PBS -l walltime=2400:00:00
 #PBS -l nodes=1:ppn=1
-#PBS -l ncpus=5
+#PBS -l ncpus=10
 #PBS -k eo
 
 ### cd work dir
-cd ~/lqhuang/Documents/MATLAB/orientation/test_script/
+cd ~/Documents/MATLAB/orientation/test_script/
 ### run
 matlab -nodesktop -nodisplay -nosplash -r "try, run('/home/lqhuang/Documents/MATLAB/orientation/test_script/m_runscript.m'), catch,  exit(1), end, exit(0);" > ~/Documents/MATLAB/orientation/test_script/run.txt
 

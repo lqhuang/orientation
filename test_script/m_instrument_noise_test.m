@@ -37,7 +37,7 @@ accuracy_fourier = struct;
 %% REAL SPACE
 step = 10;
 space = 'real';
-path = ['/vol7/home/lqhuang/Data/lqhuang/EMD_6044_',num2str(step),'_real_125_125_unnormalized_projector_linear'];
+path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_real_125_125_unnormalized_projector_linear'];
 load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
 
 % % ML
@@ -53,7 +53,7 @@ load([path,'/corr_linear_none.mat'], 'pcimg_cell');
 accuracy_real.corr_linear_none = test_function(subscript, particle, space, 'corr', pcimg_cell, interpolation, weight);
 disp('Finish a test_function - REAL - LN')
 
-save([result_path,'/accuracy_real.mat'], 'accuracy_real'); disp('save successful');
+save([result_path,'/accuracy_real.mat'], 'accuracy_real' , 'subscript'); disp('save successful');
 
 % % corr-nearest-none
 % interpolation = 'nearest';
@@ -83,15 +83,15 @@ save([result_path,'/accuracy_real.mat'], 'accuracy_real'); disp('save successful
 % accuracy_real.corr_nearest_none = test_function(subscript, particle, space, 'corr', pcimg_cell, interpolation, weight);
 % disp('Finish a test_function - REAL - NL')
 
-save([result_path,'/accuracy_real.mat'], 'accuracy_real'); disp('save successful');
+save([result_path,'/accuracy_real.mat'], 'accuracy_real', 'subscript'); disp('save successful');
 
 %% Fourier SPACE
 step = 10;
 space = 'fourier';
-path = ['/vol7/home/lqhuang/Data/lqhuang/EMD_6044_',num2str(step),'_fourier_125_125_unnormalized_projector_linear'];
+path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_fourier_125_125_unnormalized_projector_linear'];
 clear particle
 load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
-
+subscript = create_subscript(200,200);
 % % ML
 % accuracy_fourier.ML = test_function(subscript, particle, space, 'ML', 'none', 'linear', 'none');
 % disp('Finish a test_function - Fourier - ML')
@@ -104,7 +104,7 @@ load([path,'/corr_linear_none.mat'], 'pcimg_cell');
 accuracy_fourier.corr_linear_none = test_function(subscript, particle, space, 'corr', pcimg_cell, interpolation, weight);
 disp('Finish a test_function - Fourier - LN')
 
-save([result_path,'/accuracy_fourier.mat'], 'accuracy_fourier'); disp('save successful');
+% save([result_path,'/accuracy_fourier.mat'], 'accuracy_fourier'); disp('save successful');
 
 %% 
 % % corr-nearest-none
@@ -136,8 +136,8 @@ save([result_path,'/accuracy_fourier.mat'], 'accuracy_fourier'); disp('save succ
 % disp('Finish a test_function - Fourier - NL')
 
 %%
-save([result_path,'/accuracy_fourier.mat'], 'accuracy_fourier'); disp('save successful');
-save([result_path,'/subscript.mat'], 'subscript');
+save([result_path,'/accuracy_fourier.mat'], 'accuracy_fourier', 'subscript'); disp('save successful');
+% save([result_path,'/subscript.mat'], 'subscript');
 
 end
 
@@ -180,14 +180,16 @@ for n = 1:length
     end
     
     exp_img = cell(1,100);
-    parfor test_loop = 1:100
-        switch space
-            case 'real'
+    switch space
+        case 'real'
+            parfor test_loop = 1:100
                 exp_img{test_loop} = poissrnd(img);
-            case 'fourier'
+            end
+        case 'fourier'
+            parfor test_loop = 1:100
                 poissrnd_projection = poissrnd( projection  );
                 exp_img{test_loop} = m_oversampler(poissrnd_projection, factor);
-        end
+            end
     end
     
     for test_loop = 1:100
@@ -212,4 +214,35 @@ for n = 1:length
     end
 end
 
+end
+
+function subscript = create_subscript(first, second)
+    % 先随机生成等待测试的角度 分第一层的和大部分随机的
+    subscript = ones(first+second, 3);
+    nx = 36;
+    ny = 19;
+    nz = 36;
+    % 第一平面上
+    for n = 1:first
+        index = randi(nx * ny);
+        [i, j]= ind2sub([nx, ny], index);
+        while j == 1
+            index = randi(nx * ny);
+            [i, j]= ind2sub([nx, ny], index);
+        end
+        subscript(n, 1) = i;
+        subscript(n, 2) = j;
+    end
+    % 全部随机
+    for n = first+1 : first+second
+        index = randi(nx * ny * nz);
+        [i, j, k]= ind2sub([nx, ny, nz], index);
+        while or(k == 1, j == 1)
+            index = randi(nx * ny * nz);
+            [i, j, k]= ind2sub([nx, ny, nz], index);
+        end
+        subscript(n, 1) = i;
+        subscript(n, 2) = j;
+        subscript(n, 3) = k;
+    end
 end

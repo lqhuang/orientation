@@ -1,4 +1,5 @@
-run('/vol7/home/lqhuang/Documents/MATLAB/orientation/test_script/pathdef.m');
+% run('/vol7/home/lqhuang/Documents/MATLAB/orientation/test_script/pathdef.m');
+run('/home/lqhuang/Documents/MATLAB/pathdef.m');
 addpath(ans)
 disp('add path successful!')
 
@@ -21,8 +22,9 @@ disp('add path successful!')
 
 
 %% do test 1
-% mypool = parpool(10);
-result_path = '/vol7/home/lqhuang/Data/lqhuang/result/2016-05-12-1'
+mypool = parpool(10);
+% result_path = '/vol7/home/lqhuang/Data/lqhuang/result/2016-05-12-1'
+result_path = '/mnt/data/lqhuang/result/2016-05-12-1'
 mkdir(result_path);
 [accuracy_real, accuracy_fourier, subscript] = m_instrument_noise_test(result_path);
 
