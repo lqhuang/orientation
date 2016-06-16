@@ -36,8 +36,12 @@ framework(cx-floor(rows/2):cx+floor(rows/2), cy-floor(cols/2):cy+floor(cols/2)) 
 
 framework_in_fourer = abs( fftshift( fft2( framework ) ) );
 
+[~, index] = max(framework_in_fourer(:));
+[cx_in_fourier, cy_in_fourier] = ind2sub([framework_rows, framework_cols], index);
+
 if output_size == 0
-    output_image = framework_in_fourer(cx-floor(rows/2):cx+floor(rows/2), cy-floor(cols/2):cy+floor(cols/2));
+    output_image = framework_in_fourer(cx_in_fourier-floor(rows/2):cx_in_fourier+floor(rows/2),...
+                                       cy_in_fourier-floor(cols/2):cy_in_fourier+floor(cols/2));
 else
     
 end
