@@ -35,4 +35,6 @@ index_of_max = index_sort(1:num_of_max);
 % output information
 subscript = [sub_i; sub_j; sub_k]';
 varargout{1} = prob;
+varargout{2} = prob_sort;
+varargout{3} = diff_prob_sort;
 end

@@ -95,5 +95,7 @@ end
 % Output information
 subscript(1,:) = [];
 varargout{1} = corr;
-varargout{2} = prob_k;
+% varargout{2} = prob_k;
+varargout{2} = corr_sort;
+varargout{3} = diff_corr_sort;
 end
