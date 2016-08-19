@@ -1,14 +1,8 @@
-SIGMA2 = 1:1:25;
-Curve = zeros(400, length(SIGMA2));
-step = 10;
-path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_real_125_125_normalized_projector_linear'];
-load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
-% load([path,'/corr_none_linear.mat'], 'pcimg_cell')
+    SIGMA2 = 1:1:20;
+    sigma2 = SIGMA2(20);
+    
+    exp_img = cell(1,400);
 
-for loop = 1:length(SIGMA2);
-    
-    sigma2 = SIGMA2(loop);
-    
     % 先随机生成等待测试的角度 分第一层的和大部分随机的
     sim_subscript = ones(400, 3);
     nx = 36;
@@ -38,21 +32,11 @@ for loop = 1:length(SIGMA2);
         sim_subscript(n, 3) = k;
     end
     
-    parfor test_loop = 1:400
-        i = sim_subscript(test_loop, 1);
-        j = sim_subscript(test_loop, 2);
-        k = sim_subscript(test_loop, 3);
+    for test_loop = 202:203
+        i = sim_subscript(test_loop,1);
+        j = sim_subscript(test_loop,2);
+        k = sim_subscript(test_loop,3);
         proj = particle.simulated_projection{i, j, k};
+%         exp_img{test_loop} = proj;
         exp_img{test_loop} = m_create_exp_data(proj, sigma2, 'Normal');
     end
-    
-    for test_loop=1:400
-        % ML
-        subscript = m_par_ML_function_sigma(exp_img{test_loop}, particle, sigma2);
-        match = m_find_correct(sim_subscript(test_loop, :), subscript);
-        Curve(loop) = match;
-        
-        disp(['Now,t=',num2str(sigma2),',in Loop:',num2str(loop),',in test_Loop:',num2str(test_loop)])
-    end
-end
-save([result_path,'/noise_test.mat'], 'Curve');
