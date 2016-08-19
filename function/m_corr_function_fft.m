@@ -13,7 +13,7 @@ function C2 = m_corr_function_fft(img, pcimg_interpolation, weight)
     % C2: the correlation image
     
     if exist('pcimg_interpolation', 'var') == 0
-        pcimg_interpolation = 'nearest';
+        pcimg_interpolation = 'linear';
     end
     if exist('weight', 'var') == 0
         weight = 'none';

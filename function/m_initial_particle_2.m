@@ -13,10 +13,10 @@ function particle = m_initial_particle_2(file, filter, step, space, interpolatio
 
 % check input information
 if exist('space','var') == 0
-    space = 'none';
+    space = 'real';
 end
 if exist('interpolation','var') == 0
-    space = 'linear';
+    interpolation = 'linear';
 end
 if exist('resize_radius','var') == 0
     resize_radius = 0;
@@ -62,7 +62,7 @@ switch space
         parfor index = 1 : num_phi * num_theta * num_psi
             [i, j, k] = ind2sub([num_phi, num_theta, num_psi], index);
             reprojection = m_projector(object, [phi(i), theta(j), psi(k)], interpolation);
-            projection{index} = reprojection; % real space case
+            projection{index} = reprojection + 1; % real space case
             disp(['i=',num2str(i),',j=',num2str(j),',k=',num2str(k)]);
         end
     case 'fourier'

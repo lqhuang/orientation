@@ -15,7 +15,7 @@ nz = particle.simulated_size(3);
 prob = zeros(1, nx*ny*nz);
 reference_projections = particle.simulated_projection;
 
-parfor index = 1: nx*ny*nz
+parfor index = 1:nx*ny*nz
     ref_projection = reference_projections{index};
     scale_factor = exp_projection(:) \ ref_projection(:);
     exp_up_term = ( exp_projection - scale_factor * ref_projection ) .^2 ./ ( -2 .* exp_projection );
