@@ -3,7 +3,7 @@ Curve = zeros(400, length(SIGMA2));
 step = 10;
 path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_real_125_125_normalized_projector_linear'];
 load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
-% load([path,'/corr_none_linear.mat'], 'pcimg_cell')
+load([path,'/corr_linear_none.mat'], 'pcimg_cell')
 
 for loop = 1:length(SIGMA2);
     
@@ -47,12 +47,12 @@ for loop = 1:length(SIGMA2);
     end
     
     for test_loop=1:400
-        % ML
-        subscript = m_par_ML_function_sigma(exp_img{test_loop}, particle, sigma2);
+        % correlation
+        subscript = m_par_corr_method_function_sigma(exp_img{test_loop}, particle, pcimg_cell, sigma2, 'linear', 'none');
         match = m_find_correct(sim_subscript(test_loop, :), subscript);
         Curve(test_loop, loop) = match;
         
         disp(['Now,sigma2=',num2str(sigma2),',in Loop:',num2str(loop),',in test_Loop:',num2str(test_loop)])
     end
 end
-save([result_path,'/noise_test.mat'], 'Curve');
+save([result_path,'/noise_test_corr.mat'], 'Curve');

@@ -1,4 +1,4 @@
-function [subscript, varargout]= m_par_corr_method_function_sigma(exp_projection, particle, pcimg_cell, sigma, pcimg_interpolation, weight)
+function [subscript, varargout]= m_par_corr_method_function_sigma(exp_projection, particle, pcimg_cell, sigma2, pcimg_interpolation, weight)
 % parallel version of Correlation-ML method in orientation
 % input:
 % exp_projection: experiment image need to orientate
@@ -28,14 +28,14 @@ nz = particle.simulated_size(3);
 
 corr = zeros(1, nx*ny);
 exp_C2 = m_corr_function_fft(exp_projection, pcimg_interpolation, weight);
-% exp_C2(1, :) = [];  % extreme error happens in first line
+exp_C2(1, :) = [];  % extreme error happens in first line
 
 parfor index = 1:nx*ny
     ref_C2 = pcimg_cell{index};
-%     ref_C2(1, :) = []; % extreme error happens in first line
-    scale_factor = exp_C2(:) \ ref_C2(:);
-%     exp_up_term = (exp_C2 -  scale_factor * ref_C2) .^2 ./ ( -2 * exp_C2 .^2 );
-    exp_up_term = (exp_C2 -  scale_factor * ref_C2) .^2 ./ ( -2 * exp_C2 );
+    ref_C2(1, :) = []; % extreme error happens in first line
+%     scale_factor = exp_C2(:) \ ref_C2(:);
+    scale_factor = 1;
+    exp_up_term = (exp_C2 -  scale_factor * ref_C2) .^2 ./ ( -2 * 1000 * sigma2.^2 );
     exp_up_term( isnan(exp_up_term) ) = 0;
     exp_up_term( isinf(exp_up_term) ) = 0;
     corr(index)=sum( exp_up_term(:) );
@@ -58,8 +58,9 @@ for n = 1 : num_of_ij_max  % there is n max value in ij
     reference_projections_k = cell(1,nz);
     reference_projections_k(:) = particle.simulated_projection(sub_i(n), sub_j(n), :);
     parfor k = 1:nz
-        scale_factor = exp_projection(:) \ reference_projections_k{k}(:);
-        exp_up_term = ( exp_projection - scale_factor * reference_projections_k{k} ) .^2 ./ ( -2 * exp_projection );
+%         scale_factor = exp_projection(:) \ reference_projections_k{k}(:);
+        scale_factor = 1;
+        exp_up_term = ( exp_projection - scale_factor * reference_projections_k{k} ) .^2 ./ ( -2 * sigma2 );
         exp_up_term( isnan(exp_up_term) ) = 0;
         exp_up_term( isinf(exp_up_term) ) = 0;
         prob_k(n, k) = sum( exp_up_term(:) );

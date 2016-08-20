@@ -1,6 +1,5 @@
     SIGMA2 = 1:1:20;
-    sigma2 = SIGMA2(20);
-    
+    sigma2 = SIGMA2(2);
     exp_img = cell(1,400);
 
     % 先随机生成等待测试的角度 分第一层的和大部分随机的
@@ -32,7 +31,7 @@
         sim_subscript(n, 3) = k;
     end
     
-    for test_loop = 202:203
+    for test_loop = 1:400
         i = sim_subscript(test_loop,1);
         j = sim_subscript(test_loop,2);
         k = sim_subscript(test_loop,3);
