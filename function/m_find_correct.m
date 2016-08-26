@@ -14,17 +14,24 @@ else
         poission = poission + 1;
         if reference_subscript == experiment_subscript(i,:);
             loose_match = 1;
+            position = i;
             break
         end
     end
 end
 
-if strcmp(mode, 'real') && (poission == 1) % fourier space 和 找到位置== 1 要同时成立
-    varargout{1} = 1;
-elseif strcmp(mode, 'fourier') && (poission <= 2) % fourier space 和 找到位置<=2 要同时成立
-	varargout{1} = 1;
-else
+% if strcmp(mode, 'real') && (poission == 1) % fourier space 和 找到位置== 1 要同时成立
+%     varargout{1} = 1;
+% elseif strcmp(mode, 'fourier') && (poission <= 2) % fourier space 和 找到位置<=2 要同时成立
+% 	varargout{1} = 1;
+% else
+%     varargout{1} = 0;
+% end
+
+if loose_match == 0
     varargout{1} = 0;
+elseif loose_match == 1
+    varargout{1} = position;
 end
 
 end

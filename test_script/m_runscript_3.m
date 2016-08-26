@@ -5,7 +5,7 @@ disp('add path successful!')
 
 %% do test 1
 mypool = parpool(15);
-result_path = '/mnt/data/lqhuang/result/2016-08-18';
+result_path = '/mnt/data/lqhuang/result/2016-08-26';
 mkdir(result_path);
 m_sigma_noise_test_corr
 

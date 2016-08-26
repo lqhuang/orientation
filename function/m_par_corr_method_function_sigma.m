@@ -35,7 +35,7 @@ parfor index = 1:nx*ny
     ref_C2(1, :) = []; % extreme error happens in first line
 %     scale_factor = exp_C2(:) \ ref_C2(:);
     scale_factor = 1;
-    exp_up_term = (exp_C2 -  scale_factor * ref_C2) .^2 ./ ( -2 * 1000 * sigma2.^2 );
+    exp_up_term = (exp_C2 -  scale_factor * ref_C2) .^2 ./ ( -2 * 1000 * sigma2^2 );
     exp_up_term( isnan(exp_up_term) ) = 0;
     exp_up_term( isinf(exp_up_term) ) = 0;
     corr(index)=sum( exp_up_term(:) );
@@ -45,7 +45,9 @@ end
 [corr_sort, index_sort] = sort(corr, 'descend');
 diff_corr_sort = diff(corr_sort);
 num_of_ij_max = find( diff_corr_sort(1:12) == min(diff_corr_sort(1:12)) );
-% num_of_ij_max = 1;
+if num_of_ij_max < 20;
+    
+end
 index_of_ij_max = index_sort(1:num_of_ij_max);
 [sub_i, sub_j] = ind2sub([nx, ny], index_of_ij_max);
 
