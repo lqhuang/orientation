@@ -45,8 +45,8 @@ end
 [corr_sort, index_sort] = sort(corr, 'descend');
 diff_corr_sort = diff(corr_sort);
 num_of_ij_max = find( diff_corr_sort(1:12) == min(diff_corr_sort(1:12)) );
-if num_of_ij_max < 20;
-    
+if num_of_ij_max < 10;
+    num_of_ij_max = 10;
 end
 index_of_ij_max = index_sort(1:num_of_ij_max);
 [sub_i, sub_j] = ind2sub([nx, ny], index_of_ij_max);
