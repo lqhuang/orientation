@@ -1,4 +1,6 @@
-SIGMA2 = [0.1:0.1:1, 2:1:25];
+SNR = [1:-0.2:0.2, 0.2:-0.01:0.02];
+% SIGMA2 = 1:1:25;
+SIGMA2 = 1./SNR;
 Curve = zeros(400, length(SIGMA2));
 Position = zeros(400, length(SIGMA2));
 step = 10;
@@ -51,10 +53,10 @@ for loop = 1:length(SIGMA2);
         % correlation
         subscript = m_par_corr_method_function_sigma(exp_img{test_loop}, particle, pcimg_cell, sigma2, 'linear', 'none');
         [match, position] = m_find_correct(sim_subscript(test_loop, :), subscript);
-        Position(test_loop, loop) = match;
+        Position(test_loop, loop) = position;
         Curve(test_loop, loop) = match;
         
         disp(['Now,sigma2=',num2str(sigma2),',in Loop:',num2str(loop),',in test_Loop:',num2str(test_loop)])
     end
 end
-save([result_path,'/noise_test_corr_comparsion.mat'], 'Curve', 'Position');
+save([result_path,'/noise_test_corr.mat'], 'Curve', 'Position');

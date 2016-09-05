@@ -5,13 +5,12 @@ if exist('mode', 'var') == 0
 end
 
 [rows, ~] = size(experiment_subscript);
-poission = 0;
+position = 0;
 if rows == 0
     loose_match = 0;
 else
     loose_match = 0;
     for i = 1:rows
-        poission = poission + 1;
         if reference_subscript == experiment_subscript(i,:);
             loose_match = 1;
             position = i;
@@ -28,10 +27,6 @@ end
 %     varargout{1} = 0;
 % end
 
-if loose_match == 0
-    varargout{1} = 0;
-elseif loose_match == 1
-    varargout{1} = position;
-end
+varargout{1} = position;
 
 end
