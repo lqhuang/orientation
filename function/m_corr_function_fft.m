@@ -27,11 +27,11 @@ function C2 = m_corr_function_fft(img, pcimg_interpolation, weight)
             pcimg = m_imgpolarcoord(img, cx, cy);
         case 'linear'
             if (nx/2) - floor(nx/2) == 0
-                [xs, ys]=meshgrid(1:nx-1,1:ny-1);
+                [xs, ys]=meshgrid(1:nx,1:ny);
             else
                 [xs, ys]=meshgrid(1:nx,1:ny);
             end
-            radius = min([nx-cy, ny-cx]);
+            radius = min([nx-cy, ny-cx]) - 1;
             pcimg = m_imgpolarcoord3(img, xs, ys, cx, cy, radius, radius, 360);
         case 'bilinear'
             pcimg = m_ImToPolar(img, 0, 1, 60, 360);
