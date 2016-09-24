@@ -1,4 +1,4 @@
-function polar_img=m_imgpolarcoord3(img, xs, ys, cx, cy, radius, N_r, N_theta)
+function polar_img=m_imgpolarcoord3(img)
 % IMGPOLARCOORD converts a given image from cartesian coordinates to polar
 % coordinates.
 %
@@ -28,35 +28,43 @@ function polar_img=m_imgpolarcoord3(img, xs, ys, cx, cy, radius, N_r, N_theta)
 %  Javier Montoya would like to thank prof. Juan Carlos Gutierrez for his
 %  support and suggestions, while studying polar-coordinates.
 %  Authors: Juan Carlos Gutierrez & Javier Montoya.
+%
+% Image center:
+% The center of rotation of a 2D image of dimensions xdim x ydim is defined
+% by ((int)xdim/2, (int)(ydim/2)) (with the first pixel in the upper left 
+% being (0,0). Note that for both xdim=ydim=65 and for xdim=ydim=64, the 
+% center will be at (32,32). This is the same convention as used in SPIDER 
+% and XMIPP. Origin offsets reported for individual images translate the 
+% image to its center and are to be applied BEFORE rotations.
+% 
+% IN MATLAB
+% Due to the first pixel in the upper left being (1,1), the center will be
+% at (33, 33) for both xdim=ydim=65 and for xdim=ydim=64
 
-   if nargin < 1
-      error('Please specify an image!');
-   end
-   
-   img         = double(img);
-   
-   if exist('radius','var') == 0
-      %radius = min(round(rows/2),round(cols/2))-1;
-      radius = min(rows-cy, cols-cx, cx, cy)-1;
-   end
-   
-   if exist('N_theta','var') == 0
-      N_theta = 360;
-   end
-  
-   xs = xs - cx;
-   ys = ys - cy;
-
-   [theta_i, r_i] = meshgrid(1:N_theta, 1:N_r);
- 
-   delta_angle = 2*pi/N_theta;
-   delta_r     = radius/N_r;
-
-   theta_array = theta_i * delta_angle;
-   r_array     = r_i * delta_r;
-   
-   [new_x, new_y] = pol2cart(theta_array, r_array);
-   
-   polar_img = interp2(xs, ys, img, new_x, new_y, 'linear');
-
+if nargin < 1
+    error('Please specify an image!');
 end
+
+img         = double(img);
+[rows,cols] = size(img);
+
+cy = floor(rows/2)+1;
+cx = floor(cols/2)+1;
+if (cx/2)-0.5 == 0
+    radius = min([rows-cy, cols-cx]); % even size
+else
+    radius = min([rows-cy, cols-cx]) + 1; % odd size
+end
+angle = 360;
+
+x_range = -radius+1:radius-1;
+y_range = -radius+1:radius-1;
+[x_grid, y_grid] = meshgrid(x_range, y_range);
+
+rho_range = 0:radius-1;
+theta_range = 0:2*pi/angle:2*pi-2*pi/angle;
+[theta_grid, rho_grid] = meshgrid(theta_range, rho_range);
+[new_x, new_y] = pol2cart(theta_grid, rho_grid);
+
+z = img(2:cy+radius-1, 2:cx+radius-1);
+polar_img = interp2(x_grid, y_grid, z, new_x, new_y, 'linear');

@@ -1,4 +1,4 @@
-function pcimg=imgpolarcoord(img,cx,cy,radius,angle)
+function pcimg=m_imgpolarcoord(img)
 % IMGPOLARCOORD converts a given image from cartesian coordinates to polar
 % coordinates.
 %
@@ -29,39 +29,42 @@ function pcimg=imgpolarcoord(img,cx,cy,radius,angle)
 %  Javier Montoya would like to thank prof. Juan Carlos Gutierrez for his
 %  support and suggestions, while studying polar-coordinates.
 %  Authors: Juan Carlos Gutierrez & Javier Montoya.
+%
+% Image center:
+% The center of rotation of a 2D image of dimensions xdim x ydim is defined
+% by ((int)xdim/2, (int)(ydim/2)) (with the first pixel in the upper left 
+% being (0,0). Note that for both xdim=ydim=65 and for xdim=ydim=64, the 
+% center will be at (32,32). This is the same convention as used in SPIDER 
+% and XMIPP. Origin offsets reported for individual images translate the 
+% image to its center and are to be applied BEFORE rotations.
+% 
+% IN MATLAB
+% Due to the first pixel in the upper left being (1,1), the center will be
+% at (33, 33) for both xdim=ydim=65 and for xdim=ydim=64
 
-	if nargin < 1
-		error('Please specify an image!');
-	end
-   
-    img         = double(img);
-    [rows,cols] = size(img);
-    
-	if exist('cx','var') == 0
-		cy = round(rows/2);
-	end
-	if exist('cy','var') == 0
-		cx = round(cols/2);
-	end
-   
-	if exist('radius','var') == 0
-      %radius = min(round(rows/2),round(cols/2))-1;
-		radius = min([rows-cy, cols-cx])-1;
-	end
-   
-	if exist('angle','var') == 0
-		angle = 360;
-	end
-  
-	pcimg = [];
-	i     = 1;
+if nargin < 1
+	error('Please specify an image!');
+end
 
-	for r=0:radius
-		j = 1;
-		for a=0 : 2*pi/angle : 2*pi-2*pi/angle
-			pcimg(i,j) = img(cy+round(r*sin(a)),cx+round(r*cos(a)));
-			j = j + 1;
-		end
-		i = i + 1;
+img         = double(img);
+[rows,cols] = size(img);
+
+cy = floor(rows/2)+1;
+cx = floor(cols/2)+1;
+if (cx/2)-0.5 == 0
+    radius = min([rows-cy, cols-cx]); % even size
+else
+    radius = min([rows-cy, cols-cx]) + 1; % odd size
+end
+angle = 360;
+
+pcimg = zeros(radius, angle);
+i     = 1;
+for r=0:radius-1
+	j = 1;
+	for a=0:2*pi/angle:2*pi-2*pi/angle
+		pcimg(i,j) = img(cy+round(r*sin(a)),cx+round(r*cos(a)));
+		j = j + 1;
 	end
+	i = i + 1;
 end
