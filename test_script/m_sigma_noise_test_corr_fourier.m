@@ -2,10 +2,11 @@ SNR = [1:-0.2:0.2, 0.2:-0.01:0.02];
 % SIGMA2 = 1:1:25;
 SIGMA2 = 1./SNR;
 Curve = zeros(400, length(SIGMA2));
+Position = zeros(400, length(SIGMA2));
 step = 10;
-path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_real_125_125_normalized_projector_linear'];
+path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_fourier_125_125_normalized_projector_linear'];
 load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
-% load([path,'/corr_none_linear.mat'], 'pcimg_cell')
+load([path,'/corr_linear_none.mat'], 'pcimg_cell')
 
 for loop = 1:length(SIGMA2);
     
@@ -45,16 +46,18 @@ for loop = 1:length(SIGMA2);
         j = sim_subscript(test_loop, 2);
         k = sim_subscript(test_loop, 3);
         proj = particle.simulated_projection{i, j, k};
-        exp_img{test_loop} = m_create_exp_data(proj, sigma2, 'Normal');
+        exp_proj = m_create_exp_data(proj, sigma2, 'Normal');
+        exp_img{test_loop} = m_oversampler(exp_proj, particle.oversampling_factor, output_size)
     end
     
     for test_loop=1:400
-        % ML
-        subscript = m_par_ML_function_sigma(exp_img{test_loop}, particle, sigma2);
-        match = m_find_correct(sim_subscript(test_loop, :), subscript);
+        % correlation
+        subscript = m_par_corr_method_function_sigma(exp_img{test_loop}, particle, pcimg_cell, sigma2, 'linear', 'none');
+        [match, position] = m_find_correct(sim_subscript(test_loop, :), subscript);
+        Position(test_loop, loop) = position;
         Curve(test_loop, loop) = match;
         
         disp(['Now,sigma2=',num2str(sigma2),',in Loop:',num2str(loop),',in test_Loop:',num2str(test_loop)])
     end
 end
-save([result_path,'/noise_test.mat'], 'Curve');
+save([result_path,'/noise_test_corr.mat'], 'Curve', 'Position');

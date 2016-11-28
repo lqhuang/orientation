@@ -12,12 +12,12 @@ for loop = 1:length(SIGMA2);
     
     sigma2 = SIGMA2(loop);
     
-    % 先随机生成等待测试的角度 分第一层的和大部分随机的
+    % generate distribution of simulated angle
     sim_subscript = ones(400, 3);
     nx = 36;
     ny = 19;
     nz = 36;
-    % 第一平面上
+    % Class 1 where gamma angle = 0
     for n = 1:200
         index = randi(nx * ny);
         [i, j]= ind2sub([nx, ny], index);
@@ -28,7 +28,7 @@ for loop = 1:length(SIGMA2);
         sim_subscript(n, 1) = i;
         sim_subscript(n, 2) = j;
     end
-    % 全部随机
+    % Class 2 all angle lie in random distribution
     for n = 201:400
         index = randi(nx * ny * nz);
         [i, j, k]= ind2sub([nx, ny, nz], index);

@@ -3,7 +3,7 @@ SNR = [1:-0.2:0.2, 0.2:-0.01:0.02];
 SIGMA2 = 1./SNR;
 Curve = zeros(400, length(SIGMA2));
 step = 10;
-path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_real_125_125_normalized_projector_linear'];
+path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_fourier_125_125_normalized_projector_linear'];
 load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
 % load([path,'/corr_none_linear.mat'], 'pcimg_cell')
 
