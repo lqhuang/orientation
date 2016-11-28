@@ -4,9 +4,9 @@ SIGMA2 = 1./SNR;
 Curve = zeros(400, length(SIGMA2));
 Position = zeros(400, length(SIGMA2));
 step = 10;
-path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_fourier_125_125_normalized_projector_linear'];
-load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
-load([path,'/corr_linear_none.mat'], 'pcimg_cell')
+filepath = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_fourier_125_125_normalized_projector_linear'];
+load([filepath,'/EMD_6044_',num2str(step),'.mat'], 'particle');
+load([filepath,'/corr_linear_none.mat'], 'pcimg_cell')
 
 for loop = 1:length(SIGMA2);
     

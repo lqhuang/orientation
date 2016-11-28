@@ -1,5 +1,4 @@
-% run('/home/lqhuang/Documents/MATLAB/pathdef.m');
-% addpath(ans)
+addpath(genpath('../function/'))
 disp('add path successful!')
 
 

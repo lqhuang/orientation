@@ -1,19 +1,19 @@
-addpath(ans)
+addpath(genpath('../function'))
 disp('add path successful!')
 
 %% initial a particle
 % step = 3;
 % space = 'real';
 % file = '/home/lqhuang/Documents/MATLAB/orientation/particle/EMD-6044.map';
-% path = ['/vol7/home/lqhuang/Data/lqhuang/EMD_6044_',num2str(step),'_',space,'_125_125_unnormalized_projector_linear'];
+% filepath = ['/vol7/home/lqhuang/Data/lqhuang/EMD_6044_',num2str(step),'_',space,'_125_125_unnormalized_projector_linear'];
 
-% mkdir(path)
+% mkdir(filepath)
 % mypool = parpool(10);
 
 % particle = m_initial_particle_2(file, 30.4, step, 'fourier', 'linear');
 % disp('initial successful!')
 
-% save([path,'/EMD6044_3.mat'], 'particle')
+% save([filepath,'/EMD6044_3.mat'], 'particle')
 
 % m_create_pcimg;
 % disp('pcimg create successful!')

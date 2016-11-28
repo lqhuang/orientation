@@ -1,5 +1,4 @@
-run('/home/lqhuang/Documents/MATLAB/pathdef.m');
-addpath(ans)
+addpath(genpath('../function/'))
 disp('add path successful!')
 
 step = 10;
@@ -7,9 +6,9 @@ space = 'real';
 
 result_path = '/mnt/data/lqhuang/result/2016-05-26';
 mkdir result_path;
-path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_real_125_125_unnormalized_projector_linear'];
-load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
-load([path,'/corr_linear_none.mat'], 'pcimg_cell');
+filepath = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_real_125_125_unnormalized_projector_linear'];
+load([filepath,'/EMD_6044_',num2str(step),'.mat'], 'particle');
+load([filepath,'/corr_linear_none.mat'], 'pcimg_cell');
 
 mypool = parpool(10);
 %% Maximum Likelihood
@@ -66,9 +65,9 @@ space = 'fourier';
 
 result_path = '/mnt/data/lqhuang/result/2016-05-26';
 mkdir result_path;
-path = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_',space,'_125_125_unnormalized_projector_linear'];
-load([path,'/EMD_6044_',num2str(step),'.mat'], 'particle');
-load([path,'/corr_linear_none.mat'], 'pcimg_cell');
+filepath = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_',space,'_125_125_unnormalized_projector_linear'];
+load([filepath,'/EMD_6044_',num2str(step),'.mat'], 'particle');
+load([filepath,'/corr_linear_none.mat'], 'pcimg_cell');
 
 %% Maximum Likelihood
 

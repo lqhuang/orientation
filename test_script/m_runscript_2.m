@@ -1,6 +1,4 @@
-% run('/vol7/home/lqhuang/Documents/MATLAB/orientation/test_script/pathdef.m');
-run('/home/lqhuang/Documents/MATLAB/pathdef.m');
-addpath(ans)
+addpath(genpath('../function'))
 disp('add path successful!')
 
 %% initial a particle
