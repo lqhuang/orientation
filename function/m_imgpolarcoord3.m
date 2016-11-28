@@ -50,10 +50,10 @@ img         = double(img);
 
 cy = floor(rows/2)+1;
 cx = floor(cols/2)+1;
-if (cx/2)-0.5 == 0
-    radius = min([rows-cy, cols-cx]); % even size
+if floor(rows/2)-(rows/2) == 0
+    radius = min([rows-cy, cols-cx]) + 1; % even size
 else
-    radius = min([rows-cy, cols-cx]) + 1; % odd size
+    radius = min([rows-cy, cols-cx]); % odd size
 end
 angle = 360;
 
