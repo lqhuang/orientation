@@ -1,11 +1,11 @@
-SNR = [1:-0.2:0.2, 0.2:-0.01:0.02];
+SNR = [1:-0.2:0.4, 0.4:-0.02:0.02];
 % SIGMA2 = 1:1:25;
 SIGMA2 = 1./SNR;
 Curve = zeros(400, length(SIGMA2));
 Position = zeros(400, length(SIGMA2));
 step = 10;
-filepath = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_real_125_125_normalized_projector_linear'];
-load([filepath,'/EMD_6044_',num2str(step),'.mat'], 'particle');
+% filepath = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_real_125_125_normalized_projector_linear'];
+% load([filepath,'/EMD_6044_',num2str(step),'.mat'], 'particle');
 load([filepath,'/corr_linear_none.mat'], 'pcimg_cell')
 
 for loop = 1:length(SIGMA2);
@@ -21,7 +21,7 @@ for loop = 1:length(SIGMA2);
     for n = 1:200
         index = randi(nx * ny);
         [i, j]= ind2sub([nx, ny], index);
-        while j == 1
+        while or(j == 1, j == 19)
             index = randi(nx * ny);
             [i, j]= ind2sub([nx, ny], index);
         end
@@ -32,7 +32,7 @@ for loop = 1:length(SIGMA2);
     for n = 201:400
         index = randi(nx * ny * nz);
         [i, j, k]= ind2sub([nx, ny, nz], index);
-        while or(k == 1, j == 1)
+        while k == 1 || j == 1 || j == 19
             index = randi(nx * ny * nz);
             [i, j, k]= ind2sub([nx, ny, nz], index);
         end
