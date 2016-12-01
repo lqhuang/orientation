@@ -1,5 +1,7 @@
 test_loop = 240
 sim_subscript_1 = sim_subscript(test_loop, :)
+SNR = 1
+sigma2 = 1./SNR
 
 tic
 [subscript, prob] = m_par_corr_method_function_sigma(exp_img{test_loop}, particle, pcimg_cell, sigma2, 'linear', 'none');

@@ -5,8 +5,11 @@ Curve = zeros(400, length(SIGMA2));
 Position = zeros(400, length(SIGMA2));
 step = 10;
 filepath = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_fourier_125_125_normalized_projector_linear'];
-% load([filepath,'/EMD_6044_',num2str(step),'.mat'], 'particle');
+load([filepath,'/EMD_6044_',num2str(step),'.mat'], 'particle');
 load([filepath,'/corr_linear_none.mat'], 'pcimg_cell')
+object = m_readMRCfile('../particle/EMD-6044.map');
+object(object < 30.4) = 0;
+oversampling_factor = particle.oversampling_factor;
 
 for loop = 1:length(SIGMA2);
     
@@ -45,9 +48,12 @@ for loop = 1:length(SIGMA2);
         i = sim_subscript(test_loop, 1);
         j = sim_subscript(test_loop, 2);
         k = sim_subscript(test_loop, 3);
-        proj = particle.simulated_projection{i, j, k};
-        exp_proj = m_create_exp_data(proj, sigma2, 'Normal');
-        exp_img{test_loop} = m_oversampler(exp_proj, particle.oversampling_factor)
+        proj = m_projector(object, ([i, j, k] - 1).*step);
+        mat_mean = mean(proj(:));
+        mat_var = var(proj(:));
+        norm_proj = (proj - mat_mean) ./ sqrt(mat_var);
+        exp_proj = m_create_exp_data(norm_proj, sigma2, 'Normal');
+        exp_img{test_loop} = m_oversampler(exp_proj, oversampling_factor)
     end
     
     for test_loop=1:400
