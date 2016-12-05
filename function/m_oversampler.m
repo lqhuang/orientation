@@ -34,7 +34,7 @@ cx = round(framework_rows/2);
 cy = round(framework_cols/2);
 framework(cx-floor(rows/2):cx+floor(rows/2), cy-floor(cols/2):cy+floor(cols/2)) = image;
 
-framework_in_fourer = abs( fftshift( fft2( framework ) ) );
+framework_in_fourer = abs(fftshift(fft2(framework))).^2;
 
 [~, index] = max(framework_in_fourer(:));
 [cx_in_fourier, cy_in_fourier] = ind2sub([framework_rows, framework_cols], index);
