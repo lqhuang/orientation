@@ -24,7 +24,7 @@ for loop = 1:length(SIGMA2);
     for n = 1:200
         index = randi(nx * ny);
         [i, j]= ind2sub([nx, ny], index);
-        while j == 1 % || j == 19
+        while or(j == 1, j == 19)
             index = randi(nx * ny);
             [i, j]= ind2sub([nx, ny], index);
         end
@@ -35,7 +35,7 @@ for loop = 1:length(SIGMA2);
     for n = 201:400
         index = randi(nx * ny * nz);
         [i, j, k]= ind2sub([nx, ny, nz], index);
-        while k == 1 || j == 1 % || j == 19
+        while k == 1 || j == 1 || j == 19
             index = randi(nx * ny * nz);
             [i, j, k]= ind2sub([nx, ny, nz], index);
         end
