@@ -1,10 +1,10 @@
-SNR = [1:-0.2:0.4, 0.4:-0.02:0.02];
+SNR = [20:-2:2, 1:-0.2:0.2, 0.4:-0.02:0.02];
 % SIGMA2 = 1:1:25;
 SIGMA2 = 1./SNR;
 Curve = zeros(400, length(SIGMA2));
 step = 10;
 filepath = ['/mnt/data/lqhuang/EMD_6044_',num2str(step),'_fourier_125_125_normalized_projector_linear'];
-% load([filepath,'/EMD_6044_',num2str(step),'.mat'], 'particle');
+load([filepath,'/EMD_6044_',num2str(step),'.mat'], 'particle');
 object = m_readMRCfile('../particle/EMD-6044.map');
 object(object < 30.4) = 0;
 oversampling_factor = particle.oversampling_factor;
