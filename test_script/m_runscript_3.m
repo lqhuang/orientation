@@ -29,8 +29,8 @@ tic
 m_sigma_noise_test_fourier
 ml_time = toc;
 save([result_path, '/time.mat'], 'sod_time', 'ml_time')
-% m_sigma_noise_test
-% m_sigma_noise_test_corr
+m_sigma_noise_test
+m_sigma_noise_test_corr
 
 delete(mypool)
 clear all
