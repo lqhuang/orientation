@@ -1,4 +1,4 @@
-function particle = m_initial_particle_normalize(file, filter, step, space, interpolation, resize_radius)
+function particle = m_initial_particle(file, filter, step, space, interpolation, resize_radius)
 % use to initial a EMD object
 % In:
 % file: input file. Full filepath and filename is required(.map format).
